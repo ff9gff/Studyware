@@ -158,7 +158,7 @@
 		<dependency>
 			<groupId>javax.mail</groupId>
 			<artifactId>mail</artifactId>
-			<version>1.4.7</version>
+			<version>1.4</version>
 		</dependency>
 
 		<!-- Spring-JDBC 라이브러리 -->

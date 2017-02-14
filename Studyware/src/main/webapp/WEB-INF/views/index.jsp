@@ -10,7 +10,12 @@
 	<h1>Hello world!</h1>
 
 	<P>The time on the server is ${serverTime}.</P>
-	
+
 	<P>프로젝트ㅠㅠㅠㅠ</P>
+
+	<a href="memberRegister">회원가입</a>
+
+	<a href="login">로그인</a>
+
 </body>
 </html>
