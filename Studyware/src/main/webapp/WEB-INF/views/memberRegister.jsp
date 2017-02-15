@@ -11,7 +11,7 @@
 <body>
 
 	<div style="text-align: center; vertical-align: middle; background-color: white; height: 100%">
-		<!-- #ffffcc -->
+
 		<div style="display: inline-block; vertical-align: middle; background-color: white; width: 50%; height: 100%; text-align: center;">
 		
 			<!-- <br/> -->
@@ -40,10 +40,10 @@
 						<label for="nick">닉네임이름 <p style="color: red; display: inline;">(*)</p></label><br> 
 						<input type="text" id="nick" name="nick" style="width: 60%;" placeholder="닉네임"> <br><br>  
 						
-						<label for="nickname">지역 <p style="color: red; display: inline;">(*)</p></label><br> 
+						<label for="region_no">지역 <p style="color: red; display: inline;">(*)</p></label><br> 
 						<input type="text" id="region_no" name="region_no" style="width: 60%;" placeholder="지역"><br> <br> 
 						
-						<label for="nickname">지역 <p style="color: red; display: inline;">(*)</p></label><br> 
+						<label for="region_no">지역 <p style="color: red; display: inline;">(*)</p></label><br> 
 						<input type="text" id="region_no" name="region_no" style="width: 60%;" placeholder="지역"><br> <br> 
 						
 						<label for="phone">핸드폰 번호	<p style="color: red; display: inline;">(*)</p>	</label><br> 
