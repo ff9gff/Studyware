@@ -1,4 +1,4 @@
-package edu.java.studyware.domain.member;
+package edu.java.studyware.domain.study;
 
 import java.util.Date;
 
