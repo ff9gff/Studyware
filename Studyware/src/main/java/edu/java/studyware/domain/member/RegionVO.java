@@ -1,4 +1,4 @@
-package edu.java.studyware.domain;
+package edu.java.studyware.domain.member;
 
 public class RegionVO {
 	private int region_no;

@@ -1,8 +1,8 @@
-package edu.java.studyware.domain;
+package edu.java.studyware.domain.member;
 
 import java.util.Date;
 
-public class RegisterVO {
+public class RecruitVO {
 	private int board_name_no;
 	private int recruit_no;
 	private int recruit_cate_no;
@@ -20,11 +20,11 @@ public class RegisterVO {
 	private int expire;
 	private int hit;
 	
-	public RegisterVO() {
+	public RecruitVO() {
 		
 	}
 
-	public RegisterVO(int board_name_no, int recruit_no, int recruit_cate_no, int recruit_type_no, int member_no,
+	public RecruitVO(int board_name_no, int recruit_no, int recruit_cate_no, int recruit_type_no, int member_no,
 			int num_now, int num_max, int region_no, int level_no, String title, String recruit_date, String content,
 			Date reg_date, Date end_date, int expire, int hit) {
 		super();

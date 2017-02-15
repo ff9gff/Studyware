@@ -25,7 +25,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import edu.java.studyware.domain.MemberVO;
+import edu.java.studyware.domain.member.MemberVO;
 
 /**
  * Handles requests for the application home page.

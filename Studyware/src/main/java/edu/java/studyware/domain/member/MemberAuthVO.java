@@ -1,14 +1,14 @@
-package edu.java.studyware.domain;
+package edu.java.studyware.domain.member;
 
-public class MemberAuth {
+public class MemberAuthVO {
 	private int member_auth_no;
 	private String name;
 	
-	public MemberAuth() {
+	public MemberAuthVO() {
 		
 	}
 	
-	public MemberAuth(int member_auth_no, String name) {
+	public MemberAuthVO(int member_auth_no, String name) {
 		this.member_auth_no = member_auth_no;
 		this.name = name;
 	}
