@@ -1,4 +1,4 @@
-package edu.java.studyware.domain.member;
+package edu.spring.studyware.domain.member;
 
 public class MemberAuthVO {
 	private int member_auth_no;
