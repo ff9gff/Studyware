@@ -49,180 +49,64 @@ a:hover {
 	text-decoration: underline;
 }
 <!--
-a
+a:link : 클릭하지 않은 링크
 
+a:visited : 한번 클릭했던 혹은 다녀갔던 링크
 
-:link
+a:hover : 링크를 클릭하려고 마우스를 가져갔을 때
 
+decoration : 밑 줄 
 
-:
+none : 없는 상태
 
- 
-
-클릭하지
-
- 
-
-않은
-
- 
-
-링크
-
- 
-
-a
-
-
-:visited
-
-
-:
-
- 
-
-한번
-
- 
-
-클릭했던
-
- 
-
-혹은
-
- 
-
-다녀갔던
-
- 
-
-링크
-
- 
-
-a
-
-
-:hover
-
-
-:
-
- 
-
-링크를
-
- 
-
-클릭하려고
-
- 
-
-마우스를
-
- 
-
-가져갔을
-
- 
-
-때
-
- 
-
-decoration
-
-
-:
-
- 
-
-밑줄
-
- 
-
-none
-
-
-:
-
- 
-
-없는
-
- 
-
-상태
-
- 
-
-underline
-
-
-:
-
- 
-
-있는
-
- 
-
-상태
-
- 
+underline : 있는 상태
 
 -->
 </style>
 </head>
 <body>
-	<!--[if lt IE 7]>
-            <p class="chromeframe">You are using an outdated browser. <a href="http://browsehappy.com/">Upgrade your browser today</a> or <a href="http://www.google.com/chromeframe/?redirect=true">install Google Chrome Frame</a> to better experience this site.</p>
-        <![endif]-->
-
-
 
 	<div style="text-align: center; vertical-align: middle; background-color: white; height: 100%">
-		<!-- #ffffcc -->
-		<div style="display: inline-block; vertical-align: middle; background-color: white; width: 50%; height: 100%; text-align: center;">
 		
-			<!-- <br/> -->
+		<div style="display: inline-block; vertical-align: middle; background-color: white; width: 50%; height: 100%; text-align: center;">
+
 			<div style="width: 100%; text-align: center;">
 
 				<h2>로그인</h2>
 				<br /> <br />
 
-				<form action="login-post" method="post">
+				<form action="member/login-post" method="post">
 
 					<div style="margin: 5px;">
-						<input type="text" name="userid" id="userid" placeholder="아이디" required />
+						<input type="text" name="id" id="id" placeholder="아이디" required />
 					</div>
-					
+
 					<br />
-					
+
 					<div style="margin: 5px;">
 						<input type="password" name="pwd" id="pwd" placeholder="비밀번호" 	required />
 					</div>
 
-					<br /> <br /> <input type="submit" value="로그인" />
+					<br /> <br /> 
+					
+					<input type="submit" value="로그인" />
 
 					<%-- "로그인" 버튼을 클릭했을 때 서버로 쿼리 스트링을 보내기 위해서 --%>
 					<%
 						System.out.println(request.getQueryString());
 					%>
-					<input type="hidden" name="query"
-						value="<%=request.getQueryString()%>" />
+					
+					<input type="hidden" name="query" value="<%=request.getQueryString()%>" />
+					
 				</form>
 
-				<a href="find_id">아이디</a>·<a href="find_password">비밀번호 찾기</a>&nbsp;&nbsp;<a
-					href="memberRegister">회원가입</a>
+				<a href="find_id">아이디</a>·<a href="find_password">비밀번호 찾기</a>&nbsp;&nbsp;<a 	href="register">회원가입</a>
 
 			</div>
-			<!-- /#services -->
+			
 		</div>
+		
 	</div>
-
-
 
 </body>
 </html>

@@ -13,9 +13,13 @@
 
 	<P>프로젝트ㅠㅠㅠㅠ</P>
 
-	<a href="memberRegister">회원가입</a>
+	<a href="member/register">회원가입</a>
 
-	<a href="login">로그인</a>
+	<a href="member/login">로그인</a>
+	
+	<a href="search">검색</a>
+	
+	<form action=""> </form>
 
 </body>
 </html>

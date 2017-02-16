@@ -256,8 +256,8 @@
 				}
 			});
 			$("#submit_Cancel").click(function() {
-				console.log('앙기모띠');
-				location = '../studyware';
+				console.log('ㅎㅇㅎㅇ');
+				location = '../../studyware';
 			});
 		});
 	</script>

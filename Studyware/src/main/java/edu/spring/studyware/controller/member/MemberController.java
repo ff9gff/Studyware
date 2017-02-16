@@ -38,17 +38,17 @@ public class MemberController {
 	/**/
 
 	// 1. 회원가입 페이지로 이동
-	@RequestMapping(value = "/memberRegister", method = RequestMethod.GET)
-	public String home(Locale locale, Model model) {
-		return "memberRegister";
+	@RequestMapping(value = "/member/register", method = RequestMethod.GET)
+	public String memberRegister(Locale locale, Model model) {
+		return "member/register";
 	}
 
 	// 2. 아이디 중복 체크
 	@RequestMapping(value = "checkid", method = RequestMethod.POST)
-	public void checkid(@RequestBody MemberVO vo, HttpServletRequest request, HttpServletResponse response)
+	public void checkid(@RequestBody MemberVO memberVO, HttpServletRequest request, HttpServletResponse response)
 			throws IOException {
 
-		logger.info("id: " + vo.getId());
+		logger.info("id: " + memberVO.getId());
 
 		// String checkid = memberService.readUserid(vo.getId());
 		// logger.info("checkid : " + checkid);
@@ -62,10 +62,10 @@ public class MemberController {
 
 	// 3. 닉네임 중복 체크
 	@RequestMapping(value = "checknick", method = RequestMethod.POST)
-	public void checknick(@RequestBody MemberVO vo, HttpServletRequest request, HttpServletResponse response)
+	public void checknick(@RequestBody MemberVO memberVO, HttpServletRequest request, HttpServletResponse response)
 			throws IOException {
 
-		logger.info("userid: " + vo.getNick());
+		logger.info("userid: " + memberVO.getNick());
 
 		// String checknick = memberService.readNickname(vo.getNick());
 		// logger.info("checkid : " + checknick);
@@ -81,11 +81,10 @@ public class MemberController {
 
 	// 4. 데이터 받아서 회원가입하기
 	@RequestMapping(value = "sign_up", method = RequestMethod.POST)
-	public void signUp(Model model, MemberVO vo,
-			RedirectAttributes attr) {
+	public void signUp(Model model, MemberVO memberVO, RedirectAttributes attr) {
 		logger.info("sign_up 호출");
-		logger.info("아이디 : " + vo.getId());
-		logger.info("비밀번호 : " + vo.getPwd());
+		logger.info("아이디 : " + memberVO.getId());
+		logger.info("비밀번호 : " + memberVO.getPwd());
 
 		// int member_result = memberService.createMember(vo);
 		//
@@ -103,17 +102,18 @@ public class MemberController {
 //////////////////////////////////////   로  그  인      //////////////////////////////////////////
 	
 	// 1. 로그인.jsp 호출
-	@RequestMapping(value = "/login", method = RequestMethod.GET)
-	public void loginGET(HttpServletRequest request) {
+	@RequestMapping(value = "/member/login", method = RequestMethod.GET)
+	public String loginGET(HttpServletRequest request) {
 		logger.info("loginGET() 호출...");
+		return "member/login";
 	} 
 
 	// 2. 로그인 후 작업 (세션)
-	@RequestMapping(value = "/login-post", method = RequestMethod.POST)
-	public void loginPOST(MemberVO vo, Model model, String query, HttpServletRequest request) {
+	@RequestMapping(value = "/member/login-post", method = RequestMethod.POST)
+	public void loginPOST(MemberVO memberVO, Model model, String query, HttpServletRequest request) {
 		logger.info("loginPOST() 호출...");
-		logger.info("입력 ID : " + vo.getId());
-		logger.info("입력 PW : " + vo.getPwd());
+		logger.info("입력 ID : " + memberVO.getId());
+		logger.info("입력 PW : " + memberVO.getPwd());
 
 		// MemberVO result = memberService.login(vo);
 		// logger.info("result : " + result.toString()); // 로그인 실패시 result 값이

@@ -21,6 +21,11 @@
 		<beans:property name="suffix" value=".jsp" />
 	</beans:bean>
 	
-	<context:component-scan base-package="edu.spring.studyware.controller.home" />
+	<context:component-scan base-package="edu.spring.studyware.controller.**" />
+	<context:component-scan base-package="edu.spring.studyware.domain.**" />
+	<context:component-scan base-package="edu.spring.studyware.persistence.**" />
+	<context:component-scan base-package="edu.spring.studyware.service.**" />
+	<context:component-scan base-package="edu.spring.studyware.interceptor.**" />
+	
 	
 </beans:beans>

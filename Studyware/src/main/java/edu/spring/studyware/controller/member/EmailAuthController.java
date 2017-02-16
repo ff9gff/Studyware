@@ -1,4 +1,4 @@
-package edu.spring.studyware.controller.emailauth;
+package edu.spring.studyware.controller.member;
 
 import java.io.IOException;
 import java.io.PrintWriter;
