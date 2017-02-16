@@ -1,4 +1,4 @@
-package edu.spring.studyware;
+package edu.spring.studyware.controller.home;
 
 import java.text.DateFormat;
 import java.util.Date;
@@ -19,9 +19,7 @@ public class HomeController {
 	
 	private static final Logger logger = LoggerFactory.getLogger(HomeController.class);
 	
-	/**
-	 * Simply selects the home view to render by returning its name.
-	 */
+	// 1. 프로젝트 실행시 최초로 나오는 메인 페이지
 	@RequestMapping(value = "/", method = RequestMethod.GET)
 	public String home(Locale locale, Model model) {
 		logger.info("Welcome home! The client locale is {}.", locale);

@@ -257,7 +257,7 @@
 			});
 			$("#submit_Cancel").click(function() {
 				console.log('앙기모띠');
-				location = 'index';
+				location = '../studyware';
 			});
 		});
 	</script>

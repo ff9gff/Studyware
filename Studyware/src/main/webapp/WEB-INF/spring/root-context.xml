@@ -11,7 +11,7 @@
 
 	<!-- Root Context: defines shared resources visible to all other web components -->
 	<!-- 해당 패키지 아래에 어노테이션이 있는 모든 클래스를 스캔해서 bean 객체로 생성/관리 -->
-	<context:component-scan base-package="edu.spring.studyware" />
+	<context:component-scan base-package="edu.spring.studyware.controller.home" />
 
 	<!-- Bean: 스프링 프레임워크가 생성과 주입을 관리하는 객체(클래스) -->
 	<!-- Bean Property: 클래스의 멤버 변수(필드) -->

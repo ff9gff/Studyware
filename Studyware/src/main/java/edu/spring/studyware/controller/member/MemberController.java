@@ -1,4 +1,4 @@
-package edu.spring.studyware;
+package edu.spring.studyware.controller.member;
 
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -31,34 +31,19 @@ import edu.spring.studyware.domain.member.MemberVO;
  * Handles requests for the application home page.
  */
 @Controller
-public class TestController {
+public class MemberController {
 
-	private static final Logger logger = LoggerFactory.getLogger(TestController.class);
-
-	@Autowired
-	private JavaMailSenderImpl mailSender;
+	private static final Logger logger = LoggerFactory.getLogger(MemberController.class);
 	
-	@RequestMapping(value = "index", method = RequestMethod.GET)
-	public String cancelJoin(Locale locale, Model model) {
-		logger.info("Welcome home! The client locale is {}.", locale);
-		
-		Date date = new Date();
-		DateFormat dateFormat = DateFormat.getDateTimeInstance(DateFormat.LONG, DateFormat.LONG, locale);
-		
-		String formattedDate = dateFormat.format(date);
-		
-		model.addAttribute("serverTime", formattedDate );
-		
-		return "index";
-	}
+	/**/
 
-	// 회원가입하러 가기
+	// 1. 회원가입 페이지로 이동
 	@RequestMapping(value = "/memberRegister", method = RequestMethod.GET)
 	public String home(Locale locale, Model model) {
 		return "memberRegister";
 	}
 
-	// 아이디 중복 체크
+	// 2. 아이디 중복 체크
 	@RequestMapping(value = "checkid", method = RequestMethod.POST)
 	public void checkid(@RequestBody MemberVO vo, HttpServletRequest request, HttpServletResponse response)
 			throws IOException {
@@ -75,7 +60,7 @@ public class TestController {
 		// } // end if
 	} // checkid(request, response)
 
-	// 닉네임 중복 체크
+	// 3. 닉네임 중복 체크
 	@RequestMapping(value = "checknick", method = RequestMethod.POST)
 	public void checknick(@RequestBody MemberVO vo, HttpServletRequest request, HttpServletResponse response)
 			throws IOException {
@@ -92,30 +77,9 @@ public class TestController {
 		// } // end if
 	} // checkid(request, response)
 
-	// 이메일 인증
-	@RequestMapping(value = "email_auth", method = RequestMethod.POST)
-	public void email_auth(Model model, @RequestBody String email, HttpServletResponse response) throws IOException {
-		int code = (int) (Math.random() * 10000);
-		SimpleMailMessage message = new SimpleMailMessage();
-		message.setTo(email);
-		logger.info("메일 주소 : " + email);
-		message.setSubject("Studyware TuttoStudy 회원가입 인증번호");
-		message.setText("인증번호: " + code);
-		logger.info("보낸 코드 : " + code);
-		mailSender.send(message);
+	
 
-		PrintWriter out = response.getWriter();
-
-		if (code != 0 || code != Integer.valueOf("")) {
-			// out.print("OK");
-			out.print(code);
-			// model.addAttribute("code", code);
-		}
-
-		// model.addAttribute("code", code);
-	} // end email_auth(model, email)
-
-	// 데이터 받아서 회원가입하기
+	// 4. 데이터 받아서 회원가입하기
 	@RequestMapping(value = "sign_up", method = RequestMethod.POST)
 	public void signUp(Model model, MemberVO vo,
 			RedirectAttributes attr) {
@@ -136,11 +100,15 @@ public class TestController {
 		// }
 	}
 	
+//////////////////////////////////////   로  그  인      //////////////////////////////////////////
+	
+	// 1. 로그인.jsp 호출
 	@RequestMapping(value = "/login", method = RequestMethod.GET)
 	public void loginGET(HttpServletRequest request) {
 		logger.info("loginGET() 호출...");
-	} // end loginGET()
+	} 
 
+	// 2. 로그인 후 작업 (세션)
 	@RequestMapping(value = "/login-post", method = RequestMethod.POST)
 	public void loginPOST(MemberVO vo, Model model, String query, HttpServletRequest request) {
 		logger.info("loginPOST() 호출...");
@@ -164,8 +132,9 @@ public class TestController {
 			request.getSession().setAttribute("dest", dest);
 		}
 
-	} // end loginPOST()
+	} 
 
+	// 3. 로그아웃
 	@RequestMapping(value = "logout", method = RequestMethod.GET)
 	public String logout(HttpServletRequest req) {
 		logger.info("logout() 호출...");
@@ -177,5 +146,5 @@ public class TestController {
 		// session.invalidate();
 
 		return "redirect:index";
-	} // end logout()
+	} 
 }
