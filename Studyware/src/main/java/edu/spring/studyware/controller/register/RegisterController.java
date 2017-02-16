@@ -1,4 +1,4 @@
-package edu.spring.studyware.controller.admin;
+package edu.spring.studyware.controller.register;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

@@ -10,7 +10,7 @@
 </head>
 <body>
 
-	앙 검색띠
+	검색페이지
 
 	<div
 		style="text-align: center; vertical-align: middle; background-color: white; height: 100%">
