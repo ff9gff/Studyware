@@ -192,6 +192,7 @@
 	<script>
 		$(document).ready(function() {
 			
+			// id 중복 체크      
 			$('#id').change(function() {
 				$.ajax({
 					type : 'post',
@@ -286,17 +287,12 @@
 				return str;
 			}
 
-			//   var cellPhone = $('#mobile'); // document.getElementById('mobile') 와 완벽한 같은 객체는 아니다.
 			var cellPhone = document.getElementById('phone');
 			cellPhone.onkeyup = function(event) {
 				event = event || window.event;
 				var _val = this.value.trim();
 				this.value = autoHypenPhone(_val);
 			}
-
-			// 우편번호 API : https://postcodify.poesis.kr
-			// 우편번호 API 다음 서비스 : http://postcode.map.daum.net/guide#sample
-			// $("#postcodify_search_button").postcodifyPopUp();
 
 			// 이메일 인증
 			var auth_code;
