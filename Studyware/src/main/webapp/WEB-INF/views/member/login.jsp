@@ -75,7 +75,7 @@ underline : 있는 상태
 				<h2>로그인</h2>
 				<br /> <br />
 
-				<form action="member/login-post" method="post">
+				<form action="../member/login-post" method="post">
 
 					<div style="margin: 5px;">
 						<input type="text" name="id" id="id" placeholder="아이디" required />
@@ -91,7 +91,7 @@ underline : 있는 상태
 					
 					<input type="submit" value="로그인" />
 
-					<%-- "로그인" 버튼을 클릭했을 때 서버로 쿼리 스트링을 보내기 위해서 --%>
+					<%-- "로그인" 버튼을 클릭했을 때 서버로 ff쿼리 스트링을 보내기 위해서 --%>
 					<%
 						System.out.println(request.getQueryString());
 					%>
