@@ -27,7 +27,8 @@
 					<div style="margin-left: 5%; margin-right: 5%">
 
 						<input type="text" id="title" name="title" placeholder="검색어를 입력하세요" style="width: 60%;" required />
-						<button type="button" id="btn_search" name="btn_search" style="width: 30%;">검색</button>
+						<button type="button" id="btn_search" name="btn_search" style="width: 12%;">검색</button>
+						<a href="">상세검색</a>
 						
 						<hr />
 
