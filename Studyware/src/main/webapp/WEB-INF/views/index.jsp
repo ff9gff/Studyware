@@ -7,9 +7,6 @@
 <title>Home</title>
 </head>
 <body>
-	<h1>Hello world!</h1>
-
-	<P>The time on the server is ${serverTime}.</P>
 
 	<P>프로젝트ㅠㅠㅠㅠ</P>
 
@@ -20,6 +17,38 @@
 	<a href="search">검색</a>
 	
 	<form action=""> </form>
+	
+	<div
+		style="text-align: center; vertical-align: middle; background-color: white; height: 100%">
+
+		<div
+			style="display: inline-block; vertical-align: middle; background-color: white; width: 50%; height: 100%; text-align: center;">
+
+			<!-- <br/> -->
+			<div style="width: 100%; text-align: center;">
+
+				<form action="search_study" method="post">
+
+					<div style="margin-left: 5%; margin-right: 5%">
+
+						<input type="text" id="title" name="title" placeholder="검색어를 입력하세요" style="width: 60%;" required />
+						<button type="button" id="btn_search" name="btn_search" style="width: 30%;">검색</button>
+						
+						<hr />
+
+					</div>
+
+					<br />
+
+				</form>
+
+			</div>
+
+		</div>
+
+	</div>
+
+	
 
 </body>
 </html>

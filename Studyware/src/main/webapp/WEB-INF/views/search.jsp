@@ -10,7 +10,8 @@
 </head>
 <body>
 
-	검색페이지
+	검색페이지 
+	<a href="../studyware">홈으로</a>
 
 	<div
 		style="text-align: center; vertical-align: middle; background-color: white; height: 100%">
