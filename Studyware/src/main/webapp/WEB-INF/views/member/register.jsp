@@ -60,7 +60,7 @@
 }
 
 .longLink { /* 좀 더 긴 메뉴 스타일 설정 */
-	width: 190px; /* 넓이는 190px로 설정 */
+	width: 150px; /* 넓이는 190px로 설정 */
 }
 
 .submenu { /* 하위 메뉴 스타일 설정 */
@@ -77,7 +77,7 @@
 }
 
 .topMenuLi:hover .submenu { /* 상위 메뉴에 마우스 모버한 경우 그 안의 하위 메뉴 스타일 설정 */
-	height: 93px; /* 높이를 93px로 설정 */
+	height: 600px; /* 높이를 93px로 설정 */
 }
 
 .submenuLink:hover { /* 하위 메뉴의 a 태그의 마우스 오버 스타일 설정 */
@@ -123,22 +123,17 @@
 						<nav id="topMenu">
 							<ul>
 								<li class="topMenuLi"><a class="menuLink">지역1</a>
-									<ul class="submenu">
-										
-										<li><a class="submenuLink longLink">속깊은 자바스크립트 강좌</a></li>
-										<li><a class="submenuLink longLink">밑바닥부터 홈페이지 만들기</a></li>
-										<li><a class="submenuLink longLink">안드로이드 앱 개발</a></li>										
-					
-										<c:forEach begin="" end="">
-											<li><a class="submenuLink longLink">지역명</a></li>
+									<ul class="submenu">							
+										<c:forEach items="${depth1List}" var="depth1">
+											<li id="submenuLi"><a class="submenuLink longLink" id="memberRegionDepth1">${depth1}</a></li>
 										</c:forEach>
 									</ul>
 								</li>
 								<li>|</li>
 								<li class="topMenuLi"><a class="menuLink">지역2</a>
 									<ul class="submenu">
-										<c:forEach begin="" end="">
-											<li><a class="submenuLink longLink">지역명</a></li>
+										<c:forEach begin="1" end="100">
+											<li	><a class="submenuLink longLink">지역명</a></li>
 										</c:forEach>
 									</ul>
 								</li>
@@ -147,11 +142,9 @@
 							</ul>
 						</nav>
 						
-						<div>
-							<input type="text" id="region_no" name="depth1" style="width: 30%; display: inline;" placeholder="지역1">
-							<input type="text" id="region_no" name="depth2" style="width: 30%; display: inline;" placeholder="지역2">
-						</div>
-						
+						<input type="text" id="depth1Name" name="depth1" style="width: 30%; display: inline;" placeholder="지역1">
+						<input type="text" id="depth2Name" name="depth2" style="width: 30%; display: inline;" placeholder="지역2"><br> <br>
+					
 						<label for="phone">핸드폰 번호	<p style="color: red; display: inline;">(*)</p>	</label><br> 
 						<input type="text" id="phone" name="phone" style="width: 60%;" placeholder="핸드폰 번호"><br> <br>  
 						
@@ -363,7 +356,18 @@
 				console.log('ㅎㅇㅎㅇ');
 				location = '../../studyware';
 			});
+			
+			
+			$('#topMenu .topMenuLi .submenu #submenuLi #memberRegionDepth1').click(function() {
+				var depth1 = $('#memberRegionDepth1').val();
+
+				console.log(depth1);
+				alert(depth1);
+				
+				$('#depth1Name').html(depth1);
+			});
 		});
+		
 	</script>
 
 </body>

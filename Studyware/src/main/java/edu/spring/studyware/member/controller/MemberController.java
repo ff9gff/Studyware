@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.text.DateFormat;
 import java.util.Date;
+import java.util.List;
 import java.util.Locale;
 
 import javax.servlet.http.HttpServletRequest;
@@ -26,6 +27,8 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import edu.spring.studyware.member.domain.MemberVO;
+import edu.spring.studyware.member.domain.RegionVO;
+import edu.spring.studyware.member.service.MemberService;
 
 /**
  * Handles requests for the application home page.
@@ -35,11 +38,20 @@ public class MemberController {
 
 	private static final Logger logger = LoggerFactory.getLogger(MemberController.class);
 	
-	/**/
+	@Autowired
+	private MemberService memberService;
 
-	// 1. 회원가입 페이지로 이동
+	// 1. 회원 가입 페이지로 이동
 	@RequestMapping(value = "/member/register", method = RequestMethod.GET)
 	public String memberRegister(Locale locale, Model model) {
+		
+		List<RegionVO> regionList =  memberService.memberRegion();
+		
+		for (int i = 0; i < regionList.size(); i++) {
+			System.out.println(regionList.get(i).getDepth1());
+		}
+		
+		model.addAttribute("depth1List", regionList);
 		
 		return "member/register";
 	}

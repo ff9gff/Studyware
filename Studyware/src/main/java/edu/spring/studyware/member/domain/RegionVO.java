@@ -38,5 +38,10 @@ public class RegionVO {
 	public void setDepth2(String depth2) {
 		this.depth2 = depth2;
 	}
+	
+	@Override
+	public String toString() {
+		return depth1;
+	}
 	  
 }
