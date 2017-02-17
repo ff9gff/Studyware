@@ -1,4 +1,4 @@
-package edu.spring.studyware.controller.home;
+package edu.spring.studyware.home.controller;
 
 import java.text.DateFormat;
 import java.util.Date;

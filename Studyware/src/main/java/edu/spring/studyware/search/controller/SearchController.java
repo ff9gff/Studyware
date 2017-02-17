@@ -1,4 +1,4 @@
-package edu.spring.studyware.controller.search;
+package edu.spring.studyware.search.controller;
 
 import java.util.Locale;
 
@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
-import edu.spring.studyware.domain.study.RecruitVO;
+import edu.spring.studyware.study.domain.RecruitVO;
 
 /**
  * Handles requests for the application home page.

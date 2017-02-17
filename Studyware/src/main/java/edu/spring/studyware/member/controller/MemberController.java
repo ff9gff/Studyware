@@ -1,4 +1,4 @@
-package edu.spring.studyware.controller.member;
+package edu.spring.studyware.member.controller;
 
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -25,7 +25,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import edu.spring.studyware.domain.member.MemberVO;
+import edu.spring.studyware.member.domain.MemberVO;
 
 /**
  * Handles requests for the application home page.
@@ -40,6 +40,7 @@ public class MemberController {
 	// 1. 회원가입 페이지로 이동
 	@RequestMapping(value = "/member/register", method = RequestMethod.GET)
 	public String memberRegister(Locale locale, Model model) {
+		
 		return "member/register";
 	}
 

@@ -8,8 +8,6 @@
 </head>
 <body>
 
-	<P>프로젝트ㅠㅠㅠㅠ</P>
-
 	<a href="member/register">회원가입</a>
 
 	<a href="member/login">로그인</a>

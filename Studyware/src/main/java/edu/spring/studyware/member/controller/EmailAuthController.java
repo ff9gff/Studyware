@@ -1,4 +1,4 @@
-package edu.spring.studyware.controller.member;
+package edu.spring.studyware.member.controller;
 
 import java.io.IOException;
 import java.io.PrintWriter;

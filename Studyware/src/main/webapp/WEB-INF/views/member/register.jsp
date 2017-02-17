@@ -10,7 +10,6 @@
 <script src="//code.jquery.com/ui/1.8.18/jquery-ui.min.js"></script>
 <title>Insert title here</title>
 
-
 <style>
 #topMenu {
 	height: 30px; /* 메인 메뉴의 높이 */

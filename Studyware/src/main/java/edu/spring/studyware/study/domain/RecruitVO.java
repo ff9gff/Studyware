@@ -1,4 +1,4 @@
-package edu.spring.studyware.domain.study;
+package edu.spring.studyware.study.domain;
 
 import java.util.Date;
 
