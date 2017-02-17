@@ -364,7 +364,7 @@
 				console.log(depth1);
 				alert(depth1);
 				
-				$('#depth1Name').html(depth1);
+				$('#depth1Name').html("ㅎㅇㅎㅇ");
 			});
 		});
 		
