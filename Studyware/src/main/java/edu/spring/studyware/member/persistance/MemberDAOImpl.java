@@ -8,7 +8,8 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import org.springframework.stereotype.Service;
-import edu.spring.studyware.member.domain.RegionVO;
+
+import edu.spring.studyware.domain.RegionVO;
 
 /**
  * Handles requests for the application home page.

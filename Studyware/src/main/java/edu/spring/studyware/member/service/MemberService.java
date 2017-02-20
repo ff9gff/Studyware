@@ -2,7 +2,7 @@ package edu.spring.studyware.member.service;
 
 import java.util.List;
 
-import edu.spring.studyware.member.domain.RegionVO;
+import edu.spring.studyware.domain.RegionVO;
 
 public interface MemberService {
 

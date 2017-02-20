@@ -1,4 +1,4 @@
-package edu.spring.studyware.member.domain;
+package edu.spring.studyware.domain;
 
 public class RegionVO {
 	private int region_no;

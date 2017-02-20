@@ -122,18 +122,24 @@
 						
 						<nav id="topMenu">
 							<ul>
-								<li class="topMenuLi"><a class="menuLink">지역1</a>
+								<li class="topMenuLi" id="region1Menu">
+									<a class="menuLink">지역1</a>
 									<ul class="submenu">							
 										<c:forEach items="${depth1List}" var="depth1">
-											<li id="submenuLi"><a class="submenuLink longLink" id="memberRegionDepth1">${depth1}</a></li>
+											<li id="submenuLi">
+												<a class="submenuLink longLink" id="memberRegion1">${depth1}</a>
+											</li>
 										</c:forEach>
 									</ul>
 								</li>
 								<li>|</li>
-								<li class="topMenuLi"><a class="menuLink">지역2</a>
+								<li class="topMenuLi" id="region2Menu" style="display:none;">
+									<a class="menuLink">지역2</a>
 									<ul class="submenu">
 										<c:forEach begin="1" end="100">
-											<li	><a class="submenuLink longLink">지역명</a></li>
+											<li	>
+												<a class="submenuLink longLink">지역명</a>
+											</li>
 										</c:forEach>
 									</ul>
 								</li>
@@ -142,8 +148,8 @@
 							</ul>
 						</nav>
 						
-						<input type="text" id="depth1Name" name="depth1" style="width: 30%; display: inline;" placeholder="지역1">
-						<input type="text" id="depth2Name" name="depth2" style="width: 30%; display: inline;" placeholder="지역2"><br> <br>
+						<textarea id="depth1Name" name="depth1" style="width: 30%; display: inline;" placeholder="지역1"></textarea>
+						<textarea id="depth2Name" name="depth2" style="width: 30%; display: inline;" placeholder="지역2"></textarea><br> <br>
 					
 						<label for="phone">핸드폰 번호	<p style="color: red; display: inline;">(*)</p>	</label><br> 
 						<input type="text" id="phone" name="phone" style="width: 60%;" placeholder="핸드폰 번호"><br> <br>  
@@ -155,6 +161,10 @@
 						<label for="email_certification">인증번호 <p style="color: red; display: inline;">(*)</p>	</label><br /> 
 						<input type="text" id="email_certification" placeholder="인증번호" style="width: 60%;" />
 						<button type="button" id="btn_check_certification" style="width: 30%;">인증번호 확인</button> <br> <br>
+			
+						<label for="introduce">자기소개</label><br/>
+       				 	<textarea id="introduce" name="introduce" style="width: 100%" rows="15" placeholder="자기 소개"></textarea><br><br>         
+     
 			
 						<hr />
 			
@@ -302,9 +312,6 @@
 							'Content-Type' : 'application/json',
 							'X-HTTP-Method-Override' : 'POST'
 						},
-						/*           data: JSON.stringify({
-						            email: $('#email').val()
-						         }), */
 						data : $('#email').val(),
 						success : function(response) {
 							if (response != null) {
@@ -317,7 +324,6 @@
 			});
 			
 		
-
 			var final_check = 0; // 인증번호 입력시 회원가입이 되기 위하여...
 
 			// 인증번호 입력 확인
@@ -331,20 +337,6 @@
 				}
 			});
 
-			/** 
-			 * 폼요소 초기화 
-			 * Reset form element
-			 * 
-			 * @param e jQuery object
-			 */
-			/* function resetFormElement(e) {
-			   e.wrap('<form>').closest('form').get(0).reset(); 
-			   //리셋하려는 폼양식 요소를 폼(<form>) 으로 감싸고 (wrap()) , 
-			   //감싼 폼 ( closest('form')) 에서 Dom요소를 반환받고 ( get(0) ),
-			   //DOM에서 제공하는 초기화하는 메서드 reset()을 호출
-			   e.unwrap(); //감싼 <form> 태그를 제거
-			} */
-
 			$('#submit_OK').click(function() {
 				if (final_check == 1) {
 					$("#register_form").submit();
@@ -357,14 +349,22 @@
 				location = '../../studyware';
 			});
 			
-			
-			$('#topMenu .topMenuLi .submenu #submenuLi #memberRegionDepth1').click(function() {
-				var depth1 = $('#memberRegionDepth1').val();
+			// 지역 선택
+			// 1. 1차 지역 선택
+			// 2. 1차 지역에 해당되는 2차 지역 리스트 
+			// 3. 2차 지역 선택
+			// 4. 1,2차 지역 가지고 지역 코드 찾기
+			$('#topMenu .topMenuLi .submenu #submenuLi').click(function() {
+				var province = $('#topMenu .topMenuLi .submenu #submenuLi');
+				var state = province.children('#memberRegion1').val();
 
-				console.log(depth1);
-				alert(depth1);
+				console.log(state);
+				alert(state);
+				// ajax처리
 				
-				$('#depth1Name').html("ㅎㅇㅎㅇ");
+				$('#region2Menu').show();
+				
+				$('#depth1Name').html(state);
 			});
 		});
 		

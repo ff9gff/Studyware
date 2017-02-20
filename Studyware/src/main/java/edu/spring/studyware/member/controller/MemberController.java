@@ -26,8 +26,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import edu.spring.studyware.member.domain.MemberVO;
-import edu.spring.studyware.member.domain.RegionVO;
+import edu.spring.studyware.domain.MemberVO;
+import edu.spring.studyware.domain.RegionVO;
 import edu.spring.studyware.member.service.MemberService;
 
 /**
@@ -98,18 +98,11 @@ public class MemberController {
 		logger.info("sign_up 호출");
 		logger.info("아이디 : " + memberVO.getId());
 		logger.info("비밀번호 : " + memberVO.getPwd());
+		
+		// 지역1, 지역2 데이터 받아서 DB에 있는 region_no를 먼저 select한다
+		// select된 region_no를 member 테이블에 집어 넣는다
+		
 
-		// int member_result = memberService.createMember(vo);
-		//
-		// String userid = membervo.getUserid();
-		// int mno = memberService.readMnobyUserid(userid);
-		//
-		// if (member_result == 1) {
-		// logger.info("MemberVO insert complete");
-		// attr.addFlashAttribute("insert_result", "success");
-		// } else {
-		// attr.addFlashAttribute("insert_result", "fail");
-		// }
 	}
 	
 //////////////////////////////////////   로  그  인      //////////////////////////////////////////
