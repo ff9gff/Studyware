@@ -36,6 +36,8 @@ import edu.spring.studyware.member.service.MemberService;
  */
 @Controller
 public class MemberController {
+	
+	private static int member_no = 0;
 
 	private static final Logger logger = LoggerFactory.getLogger(MemberController.class);
 
@@ -47,10 +49,9 @@ public class MemberController {
 	public String memberRegister(Locale locale, Model model) {
 
 		List<RegionVO> depth1List = memberService.memberRegionDepth1();
-
 		model.addAttribute("depth1List", depth1List);
-
 		return "member/register";
+		
 	}
 
 	// 2. 회원 가입 - 지역1 선택
@@ -59,9 +60,7 @@ public class MemberController {
 		logger.info("region2_select 호출");
 		logger.info("지역1 : " + region1);
 
-		// 지역1, 지역2 데이터 받아서 DB에 있는 region_no를 먼저 select한다
-		// select된 region_no를 member 테이블에 집어 넣는다
-
+		// 지역1 데이터를 받아 지역2 리스트를 준빟
 		List<RegionVO> depth2List = memberService.memberRegionDepth2(region1);
 
 		for (int i = 0; i < depth2List.size(); i++) {
@@ -144,7 +143,9 @@ public class MemberController {
 		logger.info("핸드폰 : " + memberVO.getPhone());
 		logger.info("이메일 : " + memberVO.getEmail());
 		
-		MemberVO vo = new MemberVO(0, memberVO.getId(), memberVO.getPwd(), memberVO.getName(), memberVO.getNick(), memberVO.getPhone(), memberVO.getEmail(), memberVO.getRegion_no(), 0, null);
+		member_no++;
+		
+		MemberVO vo = new MemberVO(member_no, memberVO.getId(), memberVO.getPwd(), memberVO.getName(), memberVO.getNick(), memberVO.getPhone(), memberVO.getEmail(), memberVO.getRegion_no(), 0, null);
 
 		int signUpResult = memberService.memberSignUp(vo);
 		

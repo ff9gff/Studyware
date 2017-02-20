@@ -59,6 +59,8 @@
 							</c:forEach>
 						</select>
 						
+						
+						
 						<textarea id="depthTwo" name="depth2" placeholder="지역2"></textarea><br><br>         
 						<textarea id="region_no" style="display:none;" name="region_no" placeholder="지역 번호"></textarea><br>         
 										
