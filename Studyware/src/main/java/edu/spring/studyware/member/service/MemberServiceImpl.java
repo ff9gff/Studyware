@@ -7,6 +7,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import edu.spring.studyware.domain.MemberVO;
 import edu.spring.studyware.domain.RegionVO;
 import edu.spring.studyware.member.persistance.MemberDAO;
 
@@ -34,8 +35,12 @@ public class MemberServiceImpl implements MemberService {
 
 	@Override
 	public int memberRegionNo(String region2) {
-		// TODO Auto-generated method stub
 		return memberDAO.memberRegionNo(region2);
+	}
+
+	@Override
+	public int memberSignUp(MemberVO memberVO) {
+		return memberDAO.memberSignUp(memberVO);
 	}
 	
 	

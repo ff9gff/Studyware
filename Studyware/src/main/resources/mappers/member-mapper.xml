@@ -15,4 +15,9 @@
 	<select id="memberRegionNo" resultType="Integer">
 		select region_no from sw_region where depth2 = #{depth2}
 	</select>
+	
+	<insert id="memberSignUp">
+		insert into sw_member (member_no, id, pwd, name, nick, phone, email, region_no)
+		values (#{member_no}, #{id}, #{pwd}, #{name}, #{nick}, #{phone}, #{email}, #{region_no})
+	</insert>
 </mapper>

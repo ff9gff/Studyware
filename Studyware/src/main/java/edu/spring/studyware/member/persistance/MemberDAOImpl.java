@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import org.springframework.stereotype.Service;
 
+import edu.spring.studyware.domain.MemberVO;
 import edu.spring.studyware.domain.RegionVO;
 
 /**
@@ -38,6 +39,11 @@ public class MemberDAOImpl implements MemberDAO {
 	@Override
 	public int memberRegionNo(String region2) {
 		return sqlSession.selectOne(NAMESPACE + ".memberRegionNo", region2);
+	}
+
+	@Override
+	public int memberSignUp(MemberVO memberVO) {
+		return sqlSession.insert(NAMESPACE + ".memberSignUp", memberVO);
 	}
 
 }

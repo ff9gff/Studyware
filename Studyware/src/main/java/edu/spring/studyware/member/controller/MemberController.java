@@ -133,15 +133,25 @@ public class MemberController {
 	} // checkid(request, response)
 
 	// 4. 데이터 받아서 회원가입하기
-	@RequestMapping(value = "sign_up", method = RequestMethod.POST)
+	@RequestMapping(value = "/member/sign_up", method = RequestMethod.POST)
 	public void signUp(Model model, MemberVO memberVO, RedirectAttributes attr) {
 		logger.info("sign_up 호출");
 		logger.info("아이디 : " + memberVO.getId());
 		logger.info("비밀번호 : " + memberVO.getPwd());
+		logger.info("이름 : " + memberVO.getName());
+		logger.info("닉네임 : " + memberVO.getNick());
+		logger.info("지역번호 : " + memberVO.getRegion_no());
+		logger.info("핸드폰 : " + memberVO.getPhone());
+		logger.info("이메일 : " + memberVO.getEmail());
+		
+		MemberVO vo = new MemberVO(0, memberVO.getId(), memberVO.getPwd(), memberVO.getName(), memberVO.getNick(), memberVO.getPhone(), memberVO.getEmail(), memberVO.getRegion_no(), 0, null);
 
-		// 지역1, 지역2 데이터 받아서 DB에 있는 region_no를 먼저 select한다
-		// select된 region_no를 member 테이블에 집어 넣는다
-
+		int signUpResult = memberService.memberSignUp(vo);
+		
+		if (signUpResult > 0) {
+			logger.info("회원가입 성공");
+		}
+		
 	}
 
 	////////////////////////////////////// 로 그 인

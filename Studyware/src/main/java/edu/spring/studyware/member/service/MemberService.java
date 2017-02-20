@@ -2,6 +2,7 @@ package edu.spring.studyware.member.service;
 
 import java.util.List;
 
+import edu.spring.studyware.domain.MemberVO;
 import edu.spring.studyware.domain.RegionVO;
 
 public interface MemberService {
@@ -14,4 +15,7 @@ public interface MemberService {
 	
 	// 3. depth2를 가지고 최종 지역 번호를 찾는다.
 	public abstract int memberRegionNo(String region2);
+	
+	// 4. 모든 데이터를 가지고 회원 가입을 진행한다. DB Insert
+	public abstract int memberSignUp(MemberVO memberVO);
 }

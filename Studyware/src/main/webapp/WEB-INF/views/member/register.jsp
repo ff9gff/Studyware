@@ -43,7 +43,7 @@
 						<label for="pwd2">비밀번호 확인</label><br> 
 						<input type="password" id="pwd2" name="pwd" style="width: 60%;" placeholder="비밀번호 확인"><br><br> 
 						
-						<label for="username">이름 <p style="color: red; display: inline;">(*)</p> </label><br> 
+						<label for="name">이름 <p style="color: red; display: inline;">(*)</p> </label><br> 
 						<input type="text" id="name" name="name" style="width: 60%;" placeholder="이름을 입력해 주세요"><br><br>  
 						
 						<label for="nick">닉네임이름 <p style="color: red; display: inline;">(*)</p></label><br> 
@@ -61,11 +61,7 @@
 						
 						<textarea id="depthTwo" name="depth2" placeholder="지역2"></textarea><br><br>         
 						<textarea id="region_no" style="display:none;" name="region_no" placeholder="지역 번호"></textarea><br>         
-					
-						
-						<input id="depth1Name" name="depth1" style="width: 30%; display: inline;" placeholder="지역1" value=""/>
-						<input id="depth2Name" name="depth2" style="width: 30%; display: inline;" placeholder="지역2" value=""/><br> <br>
-					
+										
 						<label for="phone">핸드폰 번호	<p style="color: red; display: inline;">(*)</p>	</label><br> 
 						<input type="text" id="phone" name="phone" style="width: 60%;" placeholder="핸드폰 번호"><br> <br>  
 						
@@ -77,9 +73,6 @@
 						<input type="text" id="email_certification" placeholder="인증번호" style="width: 60%;" />
 						<button type="button" id="btn_check_certification" style="width: 30%;">인증번호 확인</button> <br> <br>
 			
-						<label for="introduce">자기소개</label><br/>
-       				 	<textarea id="introduce" name="introduce" style="width: 100%" rows="15" placeholder="자기 소개"></textarea><br><br>         
-     
 			
 						<hr />
 			
