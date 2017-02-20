@@ -1,6 +1,8 @@
 package edu.spring.studyware.member.controller;
 
 import java.io.IOException;
+
+
 import java.io.PrintWriter;
 import java.text.DateFormat;
 import java.util.Date;
@@ -26,6 +28,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import com.fasterxml.jackson.databind.util.JSONPObject;
+
 import edu.spring.studyware.domain.MemberVO;
 import edu.spring.studyware.domain.RegionVO;
 import edu.spring.studyware.member.service.MemberService;
@@ -45,15 +49,36 @@ public class MemberController {
 	@RequestMapping(value = "/member/register", method = RequestMethod.GET)
 	public String memberRegister(Locale locale, Model model) {
 		
-		List<RegionVO> regionList =  memberService.memberRegion();
+		List<RegionVO> depth1List =  memberService.memberRegionDepth1();
 		
-		for (int i = 0; i < regionList.size(); i++) {
-			System.out.println(regionList.get(i).getDepth1());
-		}
-		
-		model.addAttribute("depth1List", regionList);
+		model.addAttribute("depth1List", depth1List);
 		
 		return "member/register";
+	}
+	
+	@RequestMapping(value = "member/region2_select", method = RequestMethod.POST)
+	public void signUp(Model model, @RequestBody String region1, HttpServletResponse response) throws IOException {
+		logger.info("region2_select 호출");
+		logger.info("지역1 : " + region1);
+		
+		// 지역1, 지역2 데이터 받아서 DB에 있는 region_no를 먼저 select한다
+		// select된 region_no를 member 테이블에 집어 넣는다
+		
+		List<RegionVO> depth2List =  memberService.memberRegionDepth2(region1);
+		
+		for (int i = 0; i < depth2List.size(); i++) {
+			System.out.println(depth2List.get(i).getDepth2());
+		}
+	
+
+		
+		PrintWriter out = response.getWriter();
+		
+		if (depth2List.size() >= 0) {
+			out.print(depth2List);
+		}
+		
+		model.addAttribute("depth2List", depth2List);
 	}
 
 	// 2. 아이디 중복 체크
@@ -90,6 +115,7 @@ public class MemberController {
 		// } // end if
 	} // checkid(request, response)
 
+	
 	
 
 	// 4. 데이터 받아서 회원가입하기

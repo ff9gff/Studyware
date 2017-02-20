@@ -26,8 +26,13 @@ public class MemberDAOImpl implements MemberDAO {
 	private static final Logger logger = LoggerFactory.getLogger(MemberDAOImpl.class);
 
 	@Override
-	public List<RegionVO> memberRegion() {
-		return sqlSession.selectList(NAMESPACE + ".memberRegion");
+	public List<RegionVO> memberRegionDepth1() {
+		return sqlSession.selectList(NAMESPACE + ".memberRegion1");
+	}
+	
+	@Override
+	public List<RegionVO> memberRegionDepth2(String region1) {
+		return sqlSession.selectList(NAMESPACE + ".memberRegion2", region1);
 	}
 
 }

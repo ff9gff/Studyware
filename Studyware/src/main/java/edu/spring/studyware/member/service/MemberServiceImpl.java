@@ -23,8 +23,13 @@ public class MemberServiceImpl implements MemberService {
 	private MemberDAO memberDAO;
 
 	@Override
-	public List<RegionVO> memberRegion() {
-		return memberDAO.memberRegion();
+	public List<RegionVO> memberRegionDepth1() {
+		return memberDAO.memberRegionDepth1();
+	}
+	
+	@Override
+	public List<RegionVO> memberRegionDepth2(String region1) {
+		return memberDAO.memberRegionDepth2(region1);
 	}
 	
 	
