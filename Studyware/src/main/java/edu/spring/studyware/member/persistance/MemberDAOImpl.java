@@ -35,4 +35,9 @@ public class MemberDAOImpl implements MemberDAO {
 		return sqlSession.selectList(NAMESPACE + ".memberRegion2", region1);
 	}
 
+	@Override
+	public int memberRegionNo(String region2) {
+		return sqlSession.selectOne(NAMESPACE + ".memberRegionNo", region2);
+	}
+
 }

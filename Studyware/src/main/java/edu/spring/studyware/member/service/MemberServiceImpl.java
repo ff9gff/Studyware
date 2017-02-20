@@ -31,6 +31,12 @@ public class MemberServiceImpl implements MemberService {
 	public List<RegionVO> memberRegionDepth2(String region1) {
 		return memberDAO.memberRegionDepth2(region1);
 	}
+
+	@Override
+	public int memberRegionNo(String region2) {
+		// TODO Auto-generated method stub
+		return memberDAO.memberRegionNo(region2);
+	}
 	
 	
 }

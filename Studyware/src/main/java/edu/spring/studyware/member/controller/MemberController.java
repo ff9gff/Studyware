@@ -2,7 +2,6 @@ package edu.spring.studyware.member.controller;
 
 import java.io.IOException;
 
-
 import java.io.PrintWriter;
 import java.text.DateFormat;
 import java.util.Date;
@@ -28,8 +27,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import com.fasterxml.jackson.databind.util.JSONPObject;
-
 import edu.spring.studyware.domain.MemberVO;
 import edu.spring.studyware.domain.RegionVO;
 import edu.spring.studyware.member.service.MemberService;
@@ -41,44 +38,64 @@ import edu.spring.studyware.member.service.MemberService;
 public class MemberController {
 
 	private static final Logger logger = LoggerFactory.getLogger(MemberController.class);
-	
+
 	@Autowired
 	private MemberService memberService;
 
 	// 1. 회원 가입 페이지로 이동
 	@RequestMapping(value = "/member/register", method = RequestMethod.GET)
 	public String memberRegister(Locale locale, Model model) {
-		
-		List<RegionVO> depth1List =  memberService.memberRegionDepth1();
-		
+
+		List<RegionVO> depth1List = memberService.memberRegionDepth1();
+
 		model.addAttribute("depth1List", depth1List);
-		
+
 		return "member/register";
 	}
-	
+
+	// 2. 회원 가입 - 지역1 선택
 	@RequestMapping(value = "member/region2_select", method = RequestMethod.POST)
-	public void signUp(Model model, @RequestBody String region1, HttpServletResponse response) throws IOException {
+	public void region1(Model model, @RequestBody String region1, HttpServletResponse response) throws IOException {
 		logger.info("region2_select 호출");
 		logger.info("지역1 : " + region1);
-		
+
 		// 지역1, 지역2 데이터 받아서 DB에 있는 region_no를 먼저 select한다
 		// select된 region_no를 member 테이블에 집어 넣는다
-		
-		List<RegionVO> depth2List =  memberService.memberRegionDepth2(region1);
-		
+
+		List<RegionVO> depth2List = memberService.memberRegionDepth2(region1);
+
 		for (int i = 0; i < depth2List.size(); i++) {
 			System.out.println(depth2List.get(i).getDepth2());
 		}
-	
 
-		
 		PrintWriter out = response.getWriter();
-		
+
 		if (depth2List.size() >= 0) {
 			out.print(depth2List);
 		}
-		
+
 		model.addAttribute("depth2List", depth2List);
+	}
+
+	// 2. 회원 가입 - 지역2 선택 & 지역번호 받기
+	@RequestMapping(value = "member/region_no_select", method = RequestMethod.POST)
+	public void region2(Model model, @RequestBody String region2, HttpServletResponse response) throws IOException {
+		logger.info("region_no_select 호출");
+		logger.info("지역2 : " + region2);
+
+		// 지역1, 지역2 데이터 받아서 DB에 있는 region_no를 먼저 select한다
+		// select된 region_no를 member 테이블에 집어 넣는다
+
+		int region_no = memberService.memberRegionNo(region2);
+		
+		PrintWriter out = response.getWriter();
+		
+		if (region_no > 0) {
+			out.print(region_no);
+		}
+
+		logger.info("지역 번호: " + region_no);
+
 	}
 
 	// 2. 아이디 중복 체크
@@ -115,30 +132,27 @@ public class MemberController {
 		// } // end if
 	} // checkid(request, response)
 
-	
-	
-
 	// 4. 데이터 받아서 회원가입하기
 	@RequestMapping(value = "sign_up", method = RequestMethod.POST)
 	public void signUp(Model model, MemberVO memberVO, RedirectAttributes attr) {
 		logger.info("sign_up 호출");
 		logger.info("아이디 : " + memberVO.getId());
 		logger.info("비밀번호 : " + memberVO.getPwd());
-		
+
 		// 지역1, 지역2 데이터 받아서 DB에 있는 region_no를 먼저 select한다
 		// select된 region_no를 member 테이블에 집어 넣는다
-		
 
 	}
-	
-//////////////////////////////////////   로  그  인      //////////////////////////////////////////
-	
+
+	////////////////////////////////////// 로 그 인
+	////////////////////////////////////// //////////////////////////////////////////
+
 	// 1. 로그인.jsp 호출
 	@RequestMapping(value = "/member/login", method = RequestMethod.GET)
 	public String loginGET(HttpServletRequest request) {
 		logger.info("loginGET() 호출...");
 		return "member/login";
-	} 
+	}
 
 	// 2. 로그인 후 작업 (세션)
 	@RequestMapping(value = "/member/login-post", method = RequestMethod.POST)
@@ -164,7 +178,7 @@ public class MemberController {
 			request.getSession().setAttribute("dest", dest);
 		}
 
-	} 
+	}
 
 	// 3. 로그아웃
 	@RequestMapping(value = "logout", method = RequestMethod.GET)
@@ -178,5 +192,5 @@ public class MemberController {
 		// session.invalidate();
 
 		return "redirect:index";
-	} 
+	}
 }

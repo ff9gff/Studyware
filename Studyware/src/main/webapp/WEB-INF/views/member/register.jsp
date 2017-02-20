@@ -59,16 +59,9 @@
 							</c:forEach>
 						</select>
 						
-						
-						<select id='depthTwo'>
-							<option value='' selected>선택</option>
-							<c:forEach items="${depth2List}" var="depth2">
-								<option value='${depth2}'>${depth2}</option>
-							</c:forEach>
-						</select>
-											
-						<br><br>		
-						
+						<textarea id="depthTwo" name="depth2" placeholder="지역2"></textarea><br><br>         
+						<textarea id="region_no" style="display:none;" name="region_no" placeholder="지역 번호"></textarea><br>         
+					
 						
 						<input id="depth1Name" name="depth1" style="width: 30%; display: inline;" placeholder="지역1" value=""/>
 						<input id="depth2Name" name="depth2" style="width: 30%; display: inline;" placeholder="지역2" value=""/><br> <br>
@@ -281,10 +274,10 @@
 			// 2. 1차 지역에 해당되는 2차 지역 리스트 (ajax)
 			// 3. 2차 지역 선택
 			// 4. 1,2차 지역 가지고 지역 코드 찾기 (ajax)
+			var city2;
 			$('#depthOne').change(function() {
-				
 				var city1 = $(this).val();
-				var city2;
+				
 				
 				if (city1 == '선택') {
 					alert('시/도를 입력해주세요');
@@ -300,15 +293,42 @@
 						success : function(response) {
 							if (response != null) {
 								city2 = response;
-								alert(city2);
 							}
 						}
 					});
+					
+					$('#depthTwo option:selected').html(city2);
+					
 				}
-				
-				
-				
+					
 				$('#depth1Name').html( $('#depthOne option:selected').val() );
+			});
+			
+			var region_no;
+			$('#depthTwo').change(function() {
+				var city1 = $(this).val();
+				
+				
+				if (city1 == '선택') {
+					alert('시/구를 입력해주세요');
+				} else {
+					$.ajax({
+						type : 'post',
+						url : 'region_no_select',
+						headers : {
+							'Content-Type' : 'application/json',
+							'X-HTTP-Method-Override' : 'POST'
+						},
+						data : city1,
+						success : function(response) {
+							if (response != null) {
+								alert(response);
+								region_no = response;
+								$('#region_no').html(region_no);
+							}
+						}
+					});					
+				}		
 			});
 			
 			

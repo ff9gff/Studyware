@@ -11,4 +11,8 @@
 	<select id="memberRegion2" resultType="edu.spring.studyware.domain.RegionVO">
 		select depth2 from sw_region where depth1 = #{depth1}
 	</select>
+	
+	<select id="memberRegionNo" resultType="Integer">
+		select region_no from sw_region where depth2 = #{depth2}
+	</select>
 </mapper>
