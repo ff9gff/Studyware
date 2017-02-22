@@ -260,7 +260,7 @@
 				}
 			});
 			$("#submit_Cancel").click(function() {
-				console.log('ㅎㅇㅎㅇ');
+				console.log('ㅎㅇㅎㅇgd');
 				location = '../../studyware';
 			});
 			
@@ -270,7 +270,7 @@
 				
 				
 				if (city1 == '선택') {
-					alert('시/구를 입력해주세요');
+					alert('시/구를 입력해주세요gg');
 				} else {
 					$.ajax({
 						type : 'post',
