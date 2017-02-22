@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
-import edu.spring.studyware.study.domain.RecruitVO;
+import edu.spring.studyware.domain.RecruitVO;
 
 /**
  * Handles requests for the application home page.
