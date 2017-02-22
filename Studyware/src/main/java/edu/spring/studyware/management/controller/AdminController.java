@@ -1,11 +1,17 @@
 package edu.spring.studyware.management.controller;
 
+import java.util.List;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+
+import edu.spring.studyware.domain.MemberDTO;
+import edu.spring.studyware.management.service.AdminService;
 
 /**
  * Handles requests for the application home page.
@@ -16,13 +22,20 @@ public class AdminController {
 
 	private static final Logger logger = LoggerFactory.getLogger(AdminController.class);
 	
-	// ¾îµå¹Î ÆäÀÌÁö ºÒ·¯¿À±â
+	@Autowired
+	private AdminService adminService;
+	
+	
+	// ì–´ë“œë¯¼ í˜ì´ì§€ ë¶ˆëŸ¬ì˜¤ê¸°
 	@RequestMapping(method = RequestMethod.GET)
-	public String admin(){
+	public String admin(Model model){
+		List<MemberDTO> list = adminService.read();
+		model.addAttribute("memberList", list);
+		
 		return "management/admin";
 	}
 	
-	// Ã³À½ ÂÊÁö ÆË¾÷Ã¢À» ½ÇÇà
+	// ìª½ì§€ë³´ë‚´ê¸° ì²˜ìŒ íŒì—… ì‹¤í–‰
 	@RequestMapping(value = "/msg", method = RequestMethod.POST)
 	public String toggleMsg(int msg_setter, int[] msg_getter, Model model) {
 		System.out.println("setter: " + msg_setter);
