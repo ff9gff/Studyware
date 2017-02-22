@@ -264,41 +264,6 @@
 				location = '../../studyware';
 			});
 			
-			// 지역 선택
-			// 1. 1차 지역 선택
-			// 2. 1차 지역에 해당되는 2차 지역 리스트 (ajax)
-			// 3. 2차 지역 선택
-			// 4. 1,2차 지역 가지고 지역 코드 찾기 (ajax)
-			var city2;
-			$('#depthOne').change(function() {
-				var city1 = $(this).val();
-				
-				
-				if (city1 == '선택') {
-					alert('시/도를 입력해주세요');
-				} else {
-					$.ajax({
-						type : 'post',
-						url : 'region2_select',
-						headers : {
-							'Content-Type' : 'application/json',
-							'X-HTTP-Method-Override' : 'POST'
-						},
-						data : city1,
-						success : function(response) {
-							if (response != null) {
-								city2 = response;
-							}
-						}
-					});
-					
-					$('#depthTwo option:selected').html(city2);
-					
-				}
-					
-				$('#depth1Name').html( $('#depthOne option:selected').val() );
-			});
-			
 			var region_no;
 			$('#depthTwo').change(function() {
 				var city1 = $(this).val();
@@ -326,7 +291,84 @@
 				}		
 			});
 			
+			// 지역 선택
+			// 1. 1차 지역 선택
+			// 2. 1차 지역에 해당되는 2차 지역 리스트 (ajax)
+			// 3. 2차 지역 선택
+			// 4. 1,2차 지역 가지고 지역 코드 찾기 (ajax)
 			
+			var city1;
+			$('#depthOne').change(function() {
+				city1 = $(this).val();
+					
+				if (city1 == '선택') {
+					alert('시/도를 입력해주세요');
+				} else {
+					// 지역2 리스트
+					var url1 = '/member/region2/' + city1;
+					alert(url1);
+					
+					$.getJSON(url1, function(data1) {
+						console.log(url1);
+						
+						/* $(data1).each(function() {
+							Region2List.push({depth2: this.depth2});	
+							getAllRegion2();
+						}); */
+					});
+				}
+			});
+	
+			
+		
+		// 디폴트로 나오는 후기 게시글 데이터를 가져오기
+		function getAllRegion2(){
+			
+			alert('호출');
+				
+			var list = '';
+			
+			/* for(var i = 0; i<Region2List.length; i++){
+								
+				list += '<div class="portfolio-item col-md-3 col-sm-6">'
+						+'<a href="../tour/detail?trip_no=' + Region2List[i].trip_no + '">'
+						+ '<div class="portfolio-thumb">'
+							+'<img src="../' + Region2List[i].img_url + '" id="img_tour" style="position: absolute; width: 300px; height:240px; z-index:99;">'
+							+'<div style="position: absolute; height:40px; z-index:100; bottom:0; right:0;">';
+							switch(Region2List[i].condition_sex){
+								case 0: list+='<img src="../resources/theme/images/main_female.png" style="display: inline-block;z-index:100; width:40px; height:40px;">';
+									break;
+								case 1: list+='<img src="../resources/theme/images/main_male.png" style="display: inline-block;z-index:100; width:40px; height:40px;">';
+									break;
+								case 2: list+='<img src="../resources/theme/images/main_all.png" style="display: inline-block;z-index:100; width:40px; height:40px;">';
+									break;
+								default: break;
+							}	
+							switch(Region2List[i].condition_age){
+							case 1: list+='<p id="img_age">20</p>';
+								break;
+							case 2: list+='<p id="img_age">30</p>';
+								break;
+							case 3: list+='<p id="img_age">40↑</p>';
+								break;
+							case 4: list+='<p id="img_age">All</p>';
+								break;
+							default: break;
+						}
+								
+							list+='</div>'
+						+ '</div>'
+							+ '<div class="tour_title">' + Region2List[i].title + '</div>'
+							+ '<div class="tour_region">' + Region2List[i].region_name + '</div>'			
+					+'</a>'
+
+					+ '</div>';
+				}
+				
+				$('#tourDetailSearch').html(list);
+			} 
+			//end of getThumnails()*/
+		}; 
 		});
 		
 	</script>
