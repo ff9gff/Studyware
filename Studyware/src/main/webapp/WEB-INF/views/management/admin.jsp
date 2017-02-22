@@ -10,21 +10,17 @@
 </head>
 <body>
 
-<form id="msg_form1">
-	<input type="hidden" id="msg_setter" name="msg_setter" value="1"/>
-	<input type="hidden" id="msg_getter" name="msg_getter" value="2"/>
-	<input type="hidden" id="msg_address" name="msg_adress" value=""/>
-</form>
-<button id="button1">한명 팝업</button>
 
-<form id="msg_form2">
-	<input type="hidden" id="msg_setter" name="msg_setter" value="1"/>
-	<input type="hidden" id="msg_getter" name="msg_getter" value="2"/>
-	<input type="hidden" id="msg_getter" name="msg_getter" value="3"/>
-	<input type="hidden" id="msg_address" name="msg_adress" value=""/>
-</form>
-<button id="button2">두명 팝업</button>
 
+<form id="msg_form" action="admin/msg" method="post" target="testpop">
+	<input type="hidden" id="msg_setter" name="msg_setter" value="1"/>
+	<div id ="msg_getter"></div>
+</form>
+
+
+<button>전체 쪽지보내기</button>
+<button id="btn_msg">쪽지보내기</button>
+<button>강퇴</button>
 <hr>
 
 <table id ="member_list">
@@ -61,33 +57,41 @@
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
 <script>
-$('#button1').click(function(){
-	var f = document.getElementById('msg_form1');
-	
-	var url    ="admin/msg";
-	var title  = "testpop";
-	var popOption = "width=400, height=500, resizble=no, scrollbars=no, status=no";
-	
-	window.open('',title ,popOption);
-	f.target = title;       
-	f.action = url;             
-	f.method = "post";
-	f.submit();  
-}); 
 
+	// 체크박스 선택시 색깔 바꾸기
+	$('#member_list').on('click','td .rowCheck', function(){
+		var chkObj = document.getElementsByName("rowCheck");
+		for(var i=0; i<chkObj.length; i++){
+			if(chkObj[i].checked == true){
+				var styletr = chkObj[i].parentNode;
+				styletr.style.backgroundColor='#DBD9D9';
+			}else{
+				var styletr = chkObj[i].parentNode;
+				styletr.style.backgroundColor='#FFFFFF';
+			}
+		}
+	});
 
- 	$('#button2').click(function(){
-		var f = document.getElementById('msg_form2');
+ 	$('#btn_msg').click(function(){
+		// msg_getter 세팅
+		var chkObj = document.getElementsByName("rowCheck");
 		
-		var url    ="admin/msg";
-		var title  = "testpop";
+		for(var i = 0; i < chkObj.length; i++){
+			if(chkObj[i].checked == true){
+				console.log(chkObj[i].value);
+				$('#msg_getter').append('<input type="hidden" name="msg_getter" value="'+chkObj[i].value+'">');
+			}
+		}// end for
+		
+ 		// 쪽지 보내기 실행
+ 		var f = document.getElementById('msg_form');
 		var popOption = "width=400, height=500, resizble=no, scrollbars=no, status=no";
 		
-		window.open('',title ,popOption);
-		f.target = title;       
-		f.action = url;             
-		f.method = "post";
+		window.open('',"testpop" ,popOption);
 		f.submit();  
+
+		$('#msg_getter').html('');
+
 	}); 
 
 
