@@ -2,6 +2,7 @@ package edu.spring.studyware.member.persistance;
 
 import java.util.List;
 
+import edu.spring.studyware.domain.MemberDTO;
 import edu.spring.studyware.domain.MemberVO;
 import edu.spring.studyware.domain.RegionVO;
 
@@ -18,4 +19,7 @@ public interface MemberDAO {
 
 	// 4. 모든 데이터를 가지고 회원 가입을 진행한다. DB Insert
 	public abstract int memberSignUp(MemberVO memberVO);
+	
+	// 5. 모든 멤버 리스트를 조회한다
+	public abstract List<MemberDTO> selectList();
 }

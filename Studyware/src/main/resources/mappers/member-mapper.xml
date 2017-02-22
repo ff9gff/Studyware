@@ -20,4 +20,15 @@
 		insert into sw_member (id, pwd, name, nick, phone, email, region_no)
 		values (#{id}, #{pwd}, #{name}, #{nick}, #{phone}, #{email}, #{region_no})
 	</insert>
+	
+	<!-- 관리자 : 회원목록 select  -->
+	<select id="memberDTOList"
+			resultType="edu.spring.studyware.domain.MemberDTO">
+		select m.member_no, m.id, m.name, m.nick, m.phone, m.email,
+				r.depth1, r.depth2, a.name_auth, m.joindate
+		from sw_member m, sw_region r, sw_member_auth a
+		where m.region_no = r.region_no
+				and m.member_auth_no = a.member_auth_no
+		order by m.joindate asc
+	</select>
 </mapper>
