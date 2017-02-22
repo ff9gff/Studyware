@@ -90,7 +90,7 @@ public class MemberDTO {
 		return depth2;
 	}
 
-	public String getNameAuth() {
+	public String getName_auth() {
 		return name_auth;
 	}
 	
