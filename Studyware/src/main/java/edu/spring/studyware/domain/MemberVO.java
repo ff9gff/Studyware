@@ -32,6 +32,20 @@ public class MemberVO {
 		this.member_auth_no = member_auth_no;
 		this.joindate = joindate;
 	}
+	
+	public MemberVO(String id, String pwd, String name, String nick, String phone, String email,
+			int region_no, int member_auth_no, Date joindate) {
+		super();
+		this.id = id;
+		this.pwd = pwd;
+		this.name = name;
+		this.nick = nick;
+		this.phone = phone;
+		this.email = email;
+		this.region_no = region_no;
+		this.member_auth_no = member_auth_no;
+		this.joindate = joindate;
+	}
 
 	public int getMember_no() {
 		return member_no;

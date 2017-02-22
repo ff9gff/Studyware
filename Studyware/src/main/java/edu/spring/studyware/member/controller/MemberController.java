@@ -84,7 +84,6 @@ public class MemberController {
 
 		// 지역1, 지역2 데이터 받아서 DB에 있는 region_no를 먼저 select한다
 		// select된 region_no를 member 테이블에 집어 넣는다
-
 		int region_no = memberService.memberRegionNo(region2);
 		
 		PrintWriter out = response.getWriter();
@@ -142,10 +141,8 @@ public class MemberController {
 		logger.info("지역번호 : " + memberVO.getRegion_no());
 		logger.info("핸드폰 : " + memberVO.getPhone());
 		logger.info("이메일 : " + memberVO.getEmail());
-		
-		member_no++;
-		
-		MemberVO vo = new MemberVO(member_no, memberVO.getId(), memberVO.getPwd(), memberVO.getName(), memberVO.getNick(), memberVO.getPhone(), memberVO.getEmail(), memberVO.getRegion_no(), 0, null);
+			
+		MemberVO vo = new MemberVO(memberVO.getId(), memberVO.getPwd(), memberVO.getName(), memberVO.getNick(), memberVO.getPhone(), memberVO.getEmail(), memberVO.getRegion_no(), 0, null);
 
 		int signUpResult = memberService.memberSignUp(vo);
 		
@@ -155,8 +152,7 @@ public class MemberController {
 		
 	}
 
-	////////////////////////////////////// 로 그 인
-	////////////////////////////////////// //////////////////////////////////////////
+	////////////////////////////////////// 로 그 인 ////////////////////////////////////// 
 
 	// 1. 로그인.jsp 호출
 	@RequestMapping(value = "/member/login", method = RequestMethod.GET)
