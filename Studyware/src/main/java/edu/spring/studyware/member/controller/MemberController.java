@@ -113,7 +113,7 @@ public class MemberController {
 	}
 
 	// 2. 아이디 중복 체크
-	@RequestMapping(value = "checkid", method = RequestMethod.POST)
+	@RequestMapping(value = "/member/checkid", method = RequestMethod.POST)
 	public void checkid(@RequestBody MemberVO memberVO, HttpServletRequest request, HttpServletResponse response)
 			throws IOException {
 
@@ -130,7 +130,7 @@ public class MemberController {
 	} // checkid(request, response)
 
 	// 3. 닉네임 중복 체크
-	@RequestMapping(value = "checknick", method = RequestMethod.POST)
+	@RequestMapping(value = "/member/checknick", method = RequestMethod.POST)
 	public void checknick(@RequestBody MemberVO memberVO, HttpServletRequest request, HttpServletResponse response)
 			throws IOException {
 

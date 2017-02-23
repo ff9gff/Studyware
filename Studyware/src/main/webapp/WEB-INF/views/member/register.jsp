@@ -105,7 +105,7 @@
 			$('#id').change(function() {
 				$.ajax({
 					type : 'post',
-					url : 'checkid',
+					url : '../member/checkid',
 					headers : {
 						'Content-Type' : 'application/json',
 						'X-HTTP-Method-Override' : 'POST'
@@ -144,7 +144,7 @@
 			$('#nick').change(function() {
 				$.ajax({
 					type : 'post',
-					url : 'checknick',
+					url : '../member/checknick',
 					headers : {
 						'Content-Type' : 'application/json',
 						'X-HTTP-Method-Override' : 'POST'
@@ -213,7 +213,7 @@
 					alert('인증번호가 전송되었습니다.');
 					$.ajax({
 						type : 'post',
-						url : 'email_auth',
+						url : '../member/email_auth',
 						headers : {
 							'Content-Type' : 'application/json',
 							'X-HTTP-Method-Override' : 'POST'
