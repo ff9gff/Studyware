@@ -3,6 +3,9 @@ package edu.spring.studyware.member.controller;
 import java.io.IOException;
 
 import java.io.PrintWriter;
+import java.io.UnsupportedEncodingException;
+import java.net.URLDecoder;
+import java.net.URLEncoder;
 import java.text.DateFormat;
 import java.util.Date;
 import java.util.List;
@@ -31,7 +34,8 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import edu.spring.studyware.domain.MemberVO;
-import edu.spring.studyware.domain.RegionVO;
+import edu.spring.studyware.domain.Region2VO;
+import edu.spring.studyware.domain.Region1VO;
 import edu.spring.studyware.member.service.MemberService;
 
 /**
@@ -51,42 +55,41 @@ public class MemberController {
 	@RequestMapping(value = "/member/register", method = RequestMethod.GET)
 	public String memberRegister(Locale locale, Model model) {
 
-		List<RegionVO> depth1List = memberService.memberRegionDepth1();
+		List<Region1VO> depth1List = memberService.memberRegionDepth1();
 		model.addAttribute("depth1List", depth1List);
 		return "member/register";
 
 	}
 
 	// 2. 회원 가입 - 지역1 선택 후 지역2 리스트 보내주기
-	@RequestMapping(value = "/member/region2/{city1}", method = RequestMethod.GET)
-	public ResponseEntity<List<RegionVO>> ajaxRegion2Test(@PathVariable("city1") String depth1) {
-		ResponseEntity<List<RegionVO>> entity = null;
-		logger.info("지역1 에이작스놈아 : " + depth1);
+	@RequestMapping(value = "/member/region2", method = RequestMethod.POST)
+	public ResponseEntity<List<Region2VO>> ajaxRegion2Test(@RequestBody String region2) {
+						
+		ResponseEntity<List<Region2VO>> entity = null;
+		logger.info("지역1 에이작스놈아 : " + region2);
 
 		// 지역1 데이터를 받아 지역2 리스트를 준빟
-		List<RegionVO> depth2List = memberService.memberRegionDepth2(depth1);
+		List<Region2VO> list = memberService.memberRegionDepth2(region2);
+		/*
+		for (int i = 0; i < list.size(); i++) {
+			System.out.println(list.get(i).getDepth2());
+		}*/
 
-
-		if (depth2List != null) {
+		if (list != null) {
 			// select 성공 한것이다.
-			entity = new ResponseEntity<List<RegionVO>>(depth2List, HttpStatus.OK);
+			entity = new ResponseEntity<List<Region2VO>>(list, HttpStatus.OK);
 			logger.info("지역2 검색 성공 ");
 		} else {
 			// select 실패이다.
-			entity = new ResponseEntity<List<RegionVO>>(depth2List, HttpStatus.BAD_REQUEST);
+			entity = new ResponseEntity<List<Region2VO>>(list, HttpStatus.BAD_REQUEST);
 			logger.info("지역2 검색 실패 ");
 		}
 
-		logger.info("entity " + entity.getBody());
+		logger.info("entity " + entity.getBody().toString());
 
 		return entity;
 	}
 
-	
-	
-	
-	
-	
 	
 	// 2. 회원 가입 - 지역2 선택 & 지역번호 받기
 	@RequestMapping(value = "member/region_no_select", method = RequestMethod.POST)

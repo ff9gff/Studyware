@@ -8,7 +8,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import edu.spring.studyware.domain.MemberVO;
-import edu.spring.studyware.domain.RegionVO;
+import edu.spring.studyware.domain.Region2VO;
+import edu.spring.studyware.domain.Region1VO;
 import edu.spring.studyware.member.persistance.MemberDAO;
 
 
@@ -24,12 +25,12 @@ public class MemberServiceImpl implements MemberService {
 	private MemberDAO memberDAO;
 
 	@Override
-	public List<RegionVO> memberRegionDepth1() {
+	public List<Region1VO> memberRegionDepth1() {
 		return memberDAO.memberRegionDepth1();
 	}
 	
 	@Override
-	public List<RegionVO> memberRegionDepth2(String region1) {
+	public List<Region2VO> memberRegionDepth2(String region1) {
 		return memberDAO.memberRegionDepth2(region1);
 	}
 
