@@ -50,7 +50,7 @@
 						<select id='depthOne' name='depthOne'>
 							<option value='' selected>선택</option>
 							<c:forEach items="${depth1List}" var="depth1">
-								<option id='depth1' value='${depth1}' selected>${depth1}</option>
+								<option id='depth1' value='${depth1}'>${depth1}</option>
 							</c:forEach>
 						</select>
 						
@@ -303,7 +303,7 @@
 				}
 	
 				for(var i = 0; i<depth2List.length; i++){
-					list += '<option id="depth2" value=' + depth2List[i].depth2 + ' selected>' + depth2List[i].depth2 + '</option>';
+					list += '<option id="depth2" value=' + depth2List[i].depth2 + '>' + depth2List[i].depth2 + '</option>';
 				}
 				
 				$('#depthTwo').html(list);
