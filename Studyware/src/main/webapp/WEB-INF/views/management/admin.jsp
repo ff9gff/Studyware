@@ -5,7 +5,20 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=EUC-KR">
+<style>
+#member_list{
+	border-collapse:collapse;
+	text-align:center;
+}
+#member_list th,td{
+	 border: 1px solid #6d6f70;
+	 border-width:1px 0 1px 0
+}
+#member_list tr{
+	border: 1px solid #6d6f70;
+}
+</style>
+
 <title>Insert title here</title>
 </head>
 <body>
@@ -37,8 +50,8 @@
 		<th>권한</th>
 	</tr>
 	<c:forEach var="member" items="${memberList}">
-		<tr>
-			<td><input name="rowCheck" type="checkbox" value="${member.member_no}"></td>
+		<tr class="member">
+			<td><input class="rowCheck" name="rowCheck" type="checkbox" value="${member.member_no}"></td>
 			<td>${member.id}</td>
 			<td>${member.name}</td>
 			<td>${member.nick}</td>
@@ -58,20 +71,53 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
 <script>
 
+	// 체크박스 전체 선택
+	$('#member_list').on('click','#allCheck',function(){
+		var chkObj = document.getElementsByName("rowCheck");
+		var check = $(this).context.checked;
+		if(check){
+			for(var i=0; i<chkObj.length; i++){
+				chkObj[i].checked = true;
+				var styletr = chkObj[i].parentNode.parentNode;
+				styletr.style.backgroundColor = '#DBD9D9';
+			}// end for
+		}else{
+			for(var i=0; i<chkObj.length; i++){
+				chkObj[i].checked = false;
+				var styletr = chkObj[i].parentNode.parentNode;
+				styletr.style.backgroundColor = '#FFFFFF';
+			}// end for
+		}// end if
+	});
+	
+
+
 	// 체크박스 선택시 색깔 바꾸기
-	$('#member_list').on('click','td .rowCheck', function(){
+	$('#member_list').on('click','tr td .rowCheck', function(){
 		var chkObj = document.getElementsByName("rowCheck");
 		for(var i=0; i<chkObj.length; i++){
 			if(chkObj[i].checked == true){
-				var styletr = chkObj[i].parentNode;
+				var styletr = chkObj[i].parentNode.parentNode;
 				styletr.style.backgroundColor='#DBD9D9';
 			}else{
-				var styletr = chkObj[i].parentNode;
+				var styletr = chkObj[i].parentNode.parentNode;
 				styletr.style.backgroundColor='#FFFFFF';
 			}
 		}
 	});
+	
+	// member_list table 마우스오버시 색 바꾸기
+	$('#member_list').on('mouseover','.member',function(){
+		$(this).context.style.backgroundColor='#DBD9D9';
+	});
+	$('#member_list').on('mouseout','.member',function(){
+		var chk = $(this).children().children();
+		if(chk[0].checked == false){
+			$(this).context.style.backgroundColor='#FFFFFF';
+		}
+	});
 
+	// 쪽지 보내기
  	$('#btn_msg').click(function(){
 		// msg_getter 세팅
 		var chkObj = document.getElementsByName("rowCheck");
