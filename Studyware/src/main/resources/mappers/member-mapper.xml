@@ -13,7 +13,7 @@
 	</select>
 	
 	<select id="memberRegionNo" resultType="Integer">
-		select region_no from sw_region where depth2 = #{depth2}
+		select region_no from sw_region where depth1 = #{depth1} and depth2 = #{depth2}
 	</select>
 	
 	<insert id="memberSignUp">

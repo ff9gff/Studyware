@@ -14,6 +14,11 @@ public class Region1VO {
 		this.depth1 = depth1;
 		this.depth2 = depth2;
 	}
+	
+	public Region1VO (String depth1, String depth2) {
+		this.depth1 = depth1;
+		this.depth2 = depth2;
+	}
 
 	public int getRegion_no() {
 		return region_no;

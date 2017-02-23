@@ -16,7 +16,7 @@ public interface MemberDAO {
 	public abstract List<Region2VO> memberRegionDepth2(String region1);
 
 	// 3. depth2를 가지고 최종 지역 번호를 찾는다.
-	public abstract int memberRegionNo(String region2);
+	public abstract int memberRegionNo(Region1VO region1vo);
 
 	// 4. 모든 데이터를 가지고 회원 가입을 진행한다. DB Insert
 	public abstract int memberSignUp(MemberVO memberVO);

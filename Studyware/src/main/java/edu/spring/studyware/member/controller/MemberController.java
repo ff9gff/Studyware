@@ -66,40 +66,41 @@ public class MemberController {
 	public ResponseEntity<List<Region2VO>> ajaxRegion2Test(@RequestBody String region2) {
 						
 		ResponseEntity<List<Region2VO>> entity = null;
-		logger.info("지역1 에이작스놈아 : " + region2);
+		// logger.info("지역1 에이작스놈아 : " + region2);
 
 		// 지역1 데이터를 받아 지역2 리스트를 준빟
 		List<Region2VO> list = memberService.memberRegionDepth2(region2);
-		/*
-		for (int i = 0; i < list.size(); i++) {
-			System.out.println(list.get(i).getDepth2());
-		}*/
+
 
 		if (list != null) {
 			// select 성공 한것이다.
 			entity = new ResponseEntity<List<Region2VO>>(list, HttpStatus.OK);
-			logger.info("지역2 검색 성공 ");
+			// logger.info("지역2 검색 성공 ");
 		} else {
 			// select 실패이다.
 			entity = new ResponseEntity<List<Region2VO>>(list, HttpStatus.BAD_REQUEST);
 			logger.info("지역2 검색 실패 ");
 		}
 
-		logger.info("entity " + entity.getBody().toString());
+		// logger.info("entity " + entity.getBody().toString());
 
 		return entity;
 	}
 
 	
 	// 2. 회원 가입 - 지역2 선택 & 지역번호 받기
-	@RequestMapping(value = "member/region_no_select", method = RequestMethod.POST)
-	public void region2(Model model, @RequestBody String region2, HttpServletResponse response) throws IOException {
+	@RequestMapping(value = "/member/region_no_select", method = RequestMethod.GET)
+	public void region2(Model model, @RequestParam(value="city1") String region1, @RequestParam(value="city2") String region2, HttpServletResponse response) throws IOException {
 		logger.info("region_no_select 호출");
+		logger.info("지역1 : " + region1);
 		logger.info("지역2 : " + region2);
 
 		// 지역1, 지역2 데이터 받아서 DB에 있는 region_no를 먼저 select한다
 		// select된 region_no를 member 테이블에 집어 넣는다
-		int region_no = memberService.memberRegionNo(region2);
+		
+		Region1VO vo = new Region1VO(region1, region2);
+		
+		int region_no = memberService.memberRegionNo(vo);
 
 		PrintWriter out = response.getWriter();
 

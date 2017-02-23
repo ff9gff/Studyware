@@ -98,12 +98,8 @@
 	
 			
 	<script>
+	
 		$(document).ready(function() {
-			
-			 $( function() {
-				    $( "#menu" ).menu();
-				  } );
-			
 			
 			// id 중복 체크      
 			$('#id').change(function() {
@@ -141,7 +137,6 @@
 				} else {
 					$('#check-pwd').html('비밀번호가 일치합니다');
 					$('#check-pwd').css('color', 'blue');
-
 				}
 			});
 
@@ -255,37 +250,12 @@
 					alert('이메일 인증 및 이메일 인증번호 확인을 해 주세요!');
 				}
 			});
+			
 			$("#submit_Cancel").click(function() {
-				console.log('ㅎㅇㅎㅇgd');
 				location = '../../studyware';
 			});
 			
-			var region_no;
-			$('#depthTwo').change(function() {
-				var city1 = $(this).val();
-				
-				
-				if (city1 == '선택') {
-					alert('시/구를 입력해주세요gg');
-				} else {
-					$.ajax({
-						type : 'post',
-						url : 'region_no_select',
-						headers : {
-							'Content-Type' : 'application/json',
-							'X-HTTP-Method-Override' : 'POST'
-						},
-						data : city1,
-						success : function(response) {
-							if (response != null) {
-								alert(response);
-								region_no = response;
-								$('#region_no').html(region_no);
-							}
-						}
-					});					
-				}		
-			});
+			
 			
 			// 지역 선택
 			// 1. 1차 지역 선택
@@ -296,17 +266,17 @@
 			list += '<option value="" selected>선택</option>'
 			$('#depthTwo').html(list);
 			
+			var city1;
+			var city2;
+			
 			depth2List = [];
+			
 			$('#depthOne').change(function() {
-				var city1 = $(this).val();
+				city1 = $(this).val();
 		
 				if (city1 == '선택') {
 					alert('시/도를 입력해주세요');
-				} else {
-					// 지역2 리스트
-					
-					console.log(city1);
-					
+				} else {		
 					$.ajax({
 						type : 'post',
 						url : '../member/region2',
@@ -319,32 +289,57 @@
 							$(data).each(function() {
 								depth2List.push({depth2: this.depth2});	
 							});	
-							
 							getAllRegion2(depth2List);
 						}
 					});
 				}
 			});
 	
-			
-		
-		// 디폴트로 나오는 후기 게시글 데이터를 가져오기
-		function getAllRegion2(depth2List){
-
-			for(var i=0; i<depth2List.length; i++){
-				console.log(depth2List[i].depth2);
-			}
-
-			for(var i = 0; i<depth2List.length; i++){
-								
-				list += '<option id="depth2" value=' + depth2List[i].depth2 + ' selected>' + depth2List[i].depth2 + '</option>';
+			// 디폴트로 나오는 후기 게시글 데이터를 가져오기
+			function getAllRegion2(depth2List) {
+	
+				for(var i=0; i<depth2List.length; i++){
+					console.log(depth2List[i].depth2);
 				}
-			
+	
+				for(var i = 0; i<depth2List.length; i++){
+					list += '<option id="depth2" value=' + depth2List[i].depth2 + ' selected>' + depth2List[i].depth2 + '</option>';
+				}
+				
 				$('#depthTwo').html(list);
 			} 
-			//end of getThumnails()*/
-		});
+				//end of getThumnails()*/
 		
+		
+			var region_no;
+			
+			$('#depthTwo').change(function() {
+				city2 = $(this).val();
+				
+				if (city2 == '선택') {
+					alert('시/구를 입력해주세요');
+				} else {
+					$.ajax({
+						type : 'get',
+						url : '../member/region_no_select',
+						headers : {
+							'Content-Type' : 'application/json',
+							'X-HTTP-Method-Override' : 'POST'
+						},
+						data : {'city1': city1, 'city2': city2},
+						success : function(response) {
+							if (response != null) {
+								alert(response);
+								region_no = response;
+								$('#region_no').html(region_no);
+							}
+						}
+					});					
+				}		
+			});
+		
+		});
+
 	</script>
 
 </body>

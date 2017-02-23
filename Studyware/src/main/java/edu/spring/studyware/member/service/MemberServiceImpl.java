@@ -35,8 +35,8 @@ public class MemberServiceImpl implements MemberService {
 	}
 
 	@Override
-	public int memberRegionNo(String region2) {
-		return memberDAO.memberRegionNo(region2);
+	public int memberRegionNo(Region1VO region1vo) {
+		return memberDAO.memberRegionNo(region1vo);
 	}
 
 	@Override
