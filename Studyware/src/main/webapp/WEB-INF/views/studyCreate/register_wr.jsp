@@ -24,15 +24,27 @@
 					<div style="margin-left: 5%; margin-right: 5%">
 						<span>
 							<p style="color: red; display: inline;">(*)</p> 항목은 반드시 입력해 주세요.
-						</span> <br /> <br /> 
+						</span> <br /> <br />
+						
+						<label for="recruitOption">모집 구분 <p style="color: red; display: inline;">(*)</p></label><br> 
+						<select id='recruitType' name='recruitType'>
+							<option value='' selected>선택</option>
+							<c:forEach items="${recruitTypeList}" var="name_recruit_type">
+								<option id='recruit_type' value='${name_recruit_type}'>${name_recruit_type}</option>
+							</c:forEach>
+						</select><br> <br>  
+						<textarea id="recruit_type_no" style="display:none;" name="recruit_type_no" placeholder="모집 구분 번호"></textarea> 
+						
 	
-						<label for="studyOption">스터디 분류 <p style="color: red; display: inline;">(*)</p></label><br> 
+						<label for="studyCate">스터디 분류 <p style="color: red; display: inline;">(*)</p></label><br> 
 						<select id='studyCate' name='studyCate'>
 							<option value='' selected>선택</option>
 							<c:forEach items="${recruitCateList}" var="name_recruit_cate">
-								<option id='depth1' value='${name_recruit_cate}'>${name_recruit_cate}</option>
+								<option id='study_cate' value='${name_recruit_cate}'>${name_recruit_cate}</option>
 							</c:forEach>
 						</select><br> <br> 
+						<textarea id="recruit_cate_no" style="display:none;" name="recruit_cate_no" placeholder="스터디 분류 번호"></textarea> 
+						
 						
 						<label for="depthOne">지역 선택 <p style="color: red; display: inline;">(*)</p></label><br> 
 						<select id='depthOne' name='depthOne'>
@@ -47,39 +59,44 @@
 						<textarea id="region_no" style="display:none;" name="region_no" placeholder="지역 번호"></textarea> 
 					
 						<label for="study_name">스터디 제목 <p style="color: red; display: inline;">(*)</p> </label><br> 
-						<input type="text" id="study_name" name="study_name" style="width: 60%;" placeholder="스터디 제목을 입력해 주세요"><br><br>  
+						<input type="text" id="study_name" name="study_name" placeholder="스터디 제목을 입력해 주세요" style="width: 60%;"><br><br>  
 							
 						
 						<!--<textarea id="depthTwo" name="depth2" placeholder="지역2"></textarea><br><br>-->      
 						       
 										
-						<label for="phone">핸드폰 번호	<p style="color: red; display: inline;">(*)</p>	</label><br> 
-						<input type="text" id="phone" name="phone" style="width: 60%;" placeholder="핸드폰 번호"><br> <br>  
+						<div id="region_plus">
+							<table id="regionTable">
+								<tr>
+									<td>
+										<input type="text" name="region_name" placeholder="지역" />
+										<input id="addButton" name="addButton" type="button" style="cursor:hand;" value="추가" />
+									</td>
+								</tr>
+							</table>						
+						</div> <br /> 	
 						
-						<label for="email">이메일	<p style="color: red; display: inline;">(*)</p> </label><br /> 
-						<input type="email" id="email" name="email" placeholder="이메일" 	style="width: 60%;" required />
-						<button type="button" id="btn_send_certification" name="btn_send_certification" style="width: 30%;">인증번호 전송</button><br><br> 
-						
-						<label for="email_certification">인증번호 <p style="color: red; display: inline;">(*)</p>	</label><br /> 
-						<input type="text" id="email_certification" placeholder="인증번호" style="width: 60%;" />
-						<button type="button" id="btn_check_certification" style="width: 30%;">인증번호 확인</button> <br> <br>
-			
-			
-						<hr />
-			
+						<div>
+							<textarea id="study_content" name="content" style="width: 100%" rows="15" placeholder="스터디 소개" required></textarea>
+						</div>					
+
 					</div>
 			
 					<br />
 			
 					<div style="width: 100%; display: inline-block; text-align: center;">
 						<div style="width: 25%; display: inline-block;; text-align: center;">
-							<button type="button" id="submit_OK">회원가입</button>
+							<button type="button" id="study_submit_OK">스터디 등록</button>
 						</div>
 			
 						<div style="text-align: center; width: 25%; display: inline-block;">
-							<button type="button" id="submit_Cancel">가입취소</button>
+							<button type="button" id="study_submit_Cancel">등록 취소</button>
 						</div>
-					</div>
+					</div><br /><br />
+					
+					<hr />
+					
+					
 				</form>
 				
 			</div>
@@ -92,11 +109,7 @@
 	
 		$(document).ready(function() {
 
-			// 지역 선택
-			// 1. 1차 지역 선택
-			// 2. 1차 지역에 해당되는 2차 지역 리스트 (ajax)
-			// 3. 2차 지역 선택
-			// 4. 1,2차 지역 가지고 지역 코드 찾기 (ajax)
+			// 1. 스터디 진행할 지역 선택
 			var list = '';
 			list += '<option value="" selected>선택</option>'
 			$('#depthTwo').html(list);
@@ -130,7 +143,9 @@
 				}
 			});
 	
-			// 디폴트로 나오는 후기 게시글 데이터를 가져오기
+////////////////////////////////////////////////////////////////////////////////////////////
+			
+			// 2. 지역1을 통해 받아온 지역2 리스트를 뿌려준다
 			function getAllRegion2(depth2List) {
 
 				for(var i=0; i<depth2List.length; i++){
@@ -146,9 +161,10 @@
 			} 
 				//end of getThumnails()*/
 		
+////////////////////////////////////////////////////////////////////////////////////////////
 		
+			// 3. 지역1과 지역2 정보를 가지고 최종적인 지역 번호를 찾는다
 			var region_no;
-			
 			$('#depthTwo').change(function() {
 				city2 = $(this).val();
 				
@@ -173,9 +189,125 @@
 					});					
 				}		
 			});
+			
+////////////////////////////////////////////////////////////////////////////////////////////
+			
+			// 4. 스터디 모집글을 등록한다
+	        $('#study_submit_OK').click(function() {
+	        	alert('일해라');
+				/* if (final_check == 1) {
+					$("#register_form").submit();
+				} else {
+					alert('똑바로서라');
+				} */
+			});
+			
+			// 5. 스터디 모집글 작성을 취소한다
+			$("#study_submit_Cancel").click(function() {
+				location = '../../studyware';
+			});
+			
+////////////////////////////////////////////////////////////////////////////////////////////
 		
-		});
+			// 공부 내용 추가/삭제 (최소 1개, 최대 5개)
+			var oTbl;
+			var click = 0;;
+			//Row 추가
+			$("#addButton").click(function() {
+				click++;
+				if (click < 5) {
+					oTbl = document.getElementById("regionTable");
+					var oRow = oTbl.insertRow();
+					oRow.onmouseover=function(){
+						oTbl.clickedRowIndex=this.rowIndex
+					}; //clickedRowIndex - 클릭한 Row의 위치를 확인;
+					var oCell = oRow.insertCell();
+					
+					//삽입될 Form Tag
+					var frmTag = "<input type=text name=region_name placeholder=지역>";
+					frmTag += " <input type=button value='삭제' onClick='removeRow()' style='cursor:hand'>";
+					oCell.innerHTML = frmTag;
+				} else {
+					alert("공부 항목은 최대 5개까지 입니다!");
+				}
+			});
+		
+			//Row 삭제
+			function removeRow() {
+				oTbl.deleteRow(oTbl.clickedRowIndex);
+				click--;
+				
+				if (click == 1) {
+					click = 0;
+				}
+			}
+			
+	        $('#delButton').click(function() {
+	        	$('#regionTable > tbody:last > tr:last').remove();
+	        });
+	        
+////////////////////////////////////////////////////////////////////////////////////////////
+			
+			var recruit_type_no;
+			var recruit_type_name;
 
+			$('#recruitType').change(function() {
+				
+				recruit_type_name = $(this).val();
+				
+				alert(recruit_type_name);
+				
+				if (recruit_type_name == '선택') {
+					alert('모집 구분을 선택하세요');
+				} else {	
+					$.ajax({
+						type : 'POST',
+						url : '../studyCreate/studyType',
+						headers : {
+							'Content-Type' : 'application/json',
+							'X-HTTP-Method-Override' : 'POST'
+						},	
+						data : recruit_type_name,
+						success : function(data){	
+							recruit_type_no = data;
+							alert("모집 구분 번호: " + recruit_type_no);
+						}
+					});
+				}
+			});
+			
+////////////////////////////////////////////////////////////////////////////////////////////
+
+			var recruit_cate_no;
+			var recruit_cate_name;
+
+			$('#studyCate').change(function() {
+				
+				recruit_cate_name = $(this).val();
+				
+				alert(recruit_cate_name);
+				
+				if (recruit_cate_name == '선택') {
+					alert('스터디 종류를 선택하세요');
+				} else {	
+					$.ajax({
+						type : 'POST',
+						url : '../studyCreate/studyCate',
+						headers : {
+							'Content-Type' : 'application/json',
+							'X-HTTP-Method-Override' : 'POST'
+						},	
+						data : recruit_cate_name,
+						success : function(data){	
+							recruit_cate_no = data;
+							alert("모집 구분 번호: " + recruit_cate_no);
+						}
+					});
+				}
+			});
+        
+		});
+		
 	</script>
 
 

@@ -8,6 +8,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import edu.spring.studyware.domain.RecruitCateVO;
+import edu.spring.studyware.domain.RecruitTypeVO;
 import edu.spring.studyware.member.persistance.MemberDAOImpl;
 
 @Repository
@@ -23,6 +24,21 @@ public class StudyCreateDAOImpl implements StudyCreateDAO {
 	@Override
 	public List<RecruitCateVO> recruitCateName() {
 		return sqlSession.selectList(NAMESPACE + ".studyCateList");
+	}
+
+	@Override
+	public List<RecruitTypeVO> recruitTypeName() {
+		return sqlSession.selectList(NAMESPACE + ".studyTypeList");
+	}
+
+	@Override
+	public int recruitTypeNo(String recruitType) {
+		return sqlSession.selectOne(NAMESPACE + ".studyTypeNo", recruitType);
+	}
+
+	@Override
+	public int recruitCateNo(String studyCate) {
+		return sqlSession.selectOne(NAMESPACE + ".studyCateNo", studyCate);
 	}
 	
 

@@ -3,38 +3,23 @@ package edu.spring.studyware.member.controller;
 import java.io.IOException;
 
 import java.io.PrintWriter;
-import java.io.UnsupportedEncodingException;
-import java.net.URLDecoder;
-import java.net.URLEncoder;
-import java.text.DateFormat;
-import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
-import org.springframework.mail.SimpleMailMessage;
-import org.springframework.mail.javamail.JavaMailSenderImpl;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.ui.ModelMap;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import edu.spring.studyware.domain.MemberVO;
-import edu.spring.studyware.domain.Region2VO;
 import edu.spring.studyware.domain.Region1VO;
 import edu.spring.studyware.member.service.MemberService;
 //import project.spring.groupware.member.domain.LoginVO;
@@ -44,8 +29,6 @@ import edu.spring.studyware.member.service.MemberService;
  */
 @Controller
 public class MemberController {
-
-	private static int member_no = 0;
 
 	private static final Logger logger = LoggerFactory.getLogger(MemberController.class);
 
@@ -71,14 +54,6 @@ public class MemberController {
 
 		logger.info("id: " + memberVO.getId());
 
-		// String checkid = memberService.readUserid(vo.getId());
-		// logger.info("checkid : " + checkid);
-
-		PrintWriter out = response.getWriter();
-
-		// if (checkid != null) {
-		// out.print("NOK");
-		// } // end if
 	} // checkid(request, response)
 
 	// 3. 닉네임 중복 체크
@@ -93,9 +68,9 @@ public class MemberController {
 
 		PrintWriter out = response.getWriter();
 
-		// if (checknick != null) {
-		// out.print("NOK");
-		// } // end if
+		 if (memberVO.getNick() != null) {
+			 out.print("NOK");
+		 } // end if
 	} // checkid(request, response)
 
 	// 4. 데이터 받아서 회원가입하기
@@ -121,9 +96,8 @@ public class MemberController {
 
 	}
 
-	////////////////////////////////////// 로 그 인
-	////////////////////////////////////// //////////////////////////////////////
-
+	////////////////////////////////////// 로 그 인  ////////////////////////////////////// 
+	
 	// 1. 로그인.jsp 호출
 	@RequestMapping(value = "/member/login", method = RequestMethod.GET)
 	public String loginGET(HttpServletRequest request) {
@@ -180,12 +154,6 @@ public class MemberController {
 			}
 		}*/
 	}
-	
-	
-	
-	
-	
-	
 
 	// 3. 로그아웃
 	@RequestMapping(value = "logout", method = RequestMethod.GET)

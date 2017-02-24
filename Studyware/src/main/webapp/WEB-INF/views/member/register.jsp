@@ -262,14 +262,15 @@
 			// 2. 1차 지역에 해당되는 2차 지역 리스트 (ajax)
 			// 3. 2차 지역 선택
 			// 4. 1,2차 지역 가지고 지역 코드 찾기 (ajax)
-			var list = '';
-			list += '<option value="" selected>선택</option>'
+			var list = '<option value="" selected>선택</option>';
 			$('#depthTwo').html(list);
 			
 			var city1;
 			var city2;
 			
 			$('#depthOne').change(function() {
+				list = '';
+				list += '<option value="" selected>선택</option>';
 				
 				depth2List = [];
 				city1 = $(this).val();
@@ -325,7 +326,7 @@
 						url : '../member/region_no_select',
 						headers : {
 							'Content-Type' : 'application/json',
-							'X-HTTP-Method-Override' : 'POST'
+							'X-HTTP-Method-Override' : 'get'
 						},
 						data : {'city1': city1, 'city2': city2},
 						success : function(response) {

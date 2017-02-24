@@ -54,13 +54,13 @@ public class RegionController {
 
 	// 2. 회원 가입 - 지역1 선택 후 지역2 리스트 보내주기
 	@RequestMapping(value = "/member/region2", method = RequestMethod.POST)
-	public ResponseEntity<List<Region2VO>> ajaxRegion2Test(@RequestBody String region2) {
+	public ResponseEntity<List<Region2VO>> ajaxRegion2Test(@RequestBody String region1) {
 
 		ResponseEntity<List<Region2VO>> entity = null;
-		// logger.info("지역1 에이작스놈아 : " + region2);
+		// logger.info("지역1 에이작스놈아 : " + region1);
 
 		// 지역1 데이터를 받아 지역2 리스트를 준빟
-		List<Region2VO> list = memberService.memberRegionDepth2(region2);
+		List<Region2VO> list = memberService.memberRegionDepth2(region1);
 
 		if (list != null) {
 			// select 성공 한것이다.
@@ -77,7 +77,7 @@ public class RegionController {
 		return entity;
 	}
 
-	// 2. 회원 가입 - 지역2 선택 & 지역번호 받기
+	// 2. 회원 가입 - 지역1&지역2 데이터를 이용해서 지역번호 받기
 	@RequestMapping(value = "/member/region_no_select", method = RequestMethod.GET)
 	public void region2(Model model, @RequestParam(value = "city1") String region1,
 			@RequestParam(value = "city2") String region2, HttpServletResponse response) throws IOException {
