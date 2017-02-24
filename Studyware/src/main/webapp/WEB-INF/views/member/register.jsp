@@ -1,20 +1,15 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8"%>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
-
+    pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>Insert title here</title>
 <script src="//ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
 <script src="//code.jquery.com/ui/1.8.18/jquery-ui.min.js"></script>
 
 <title>Insert title here</title>
-
-<style>
- 
-</style>
-
 
 </head>
 <body>
@@ -51,17 +46,18 @@
 						
 						
 						
-						
-						<select id='depthOne'>
+						<label for="depthOne">지역 선택 <p style="color: red; display: inline;">(*)</p></label><br> 
+						<select id='depthOne' name='depthOne'>
 							<option value='' selected>선택</option>
 							<c:forEach items="${depth1List}" var="depth1">
-								<option value='${depth1}'>${depth1}</option>
+								<option id='depth1' value='${depth1}'>${depth1}</option>
 							</c:forEach>
 						</select>
 						
+						<select id='depthTwo' name='depthTwo'>
+						</select><br />
 						
-						
-						<textarea id="depthTwo" name="depth2" placeholder="지역2"></textarea><br><br>         
+						<!--<textarea id="depthTwo" name="depth2" placeholder="지역2"></textarea><br><br>-->      
 						<textarea id="region_no" style="display:none;" name="region_no" placeholder="지역 번호"></textarea><br>         
 										
 						<label for="phone">핸드폰 번호	<p style="color: red; display: inline;">(*)</p>	</label><br> 
@@ -102,18 +98,14 @@
 	
 			
 	<script>
+	
 		$(document).ready(function() {
-			
-			 $( function() {
-				    $( "#menu" ).menu();
-				  } );
-			
 			
 			// id 중복 체크      
 			$('#id').change(function() {
 				$.ajax({
 					type : 'post',
-					url : 'checkid',
+					url : '../member/checkid',
 					headers : {
 						'Content-Type' : 'application/json',
 						'X-HTTP-Method-Override' : 'POST'
@@ -145,7 +137,6 @@
 				} else {
 					$('#check-pwd').html('비밀번호가 일치합니다');
 					$('#check-pwd').css('color', 'blue');
-
 				}
 			});
 
@@ -153,7 +144,7 @@
 			$('#nick').change(function() {
 				$.ajax({
 					type : 'post',
-					url : 'checknick',
+					url : '../member/checknick',
 					headers : {
 						'Content-Type' : 'application/json',
 						'X-HTTP-Method-Override' : 'POST'
@@ -222,7 +213,7 @@
 					alert('인증번호가 전송되었습니다.');
 					$.ajax({
 						type : 'post',
-						url : 'email_auth',
+						url : '../member/email_auth',
 						headers : {
 							'Content-Type' : 'application/json',
 							'X-HTTP-Method-Override' : 'POST'
@@ -259,62 +250,83 @@
 					alert('이메일 인증 및 이메일 인증번호 확인을 해 주세요!');
 				}
 			});
+			
 			$("#submit_Cancel").click(function() {
-				console.log('ㅎㅇㅎㅇ');
 				location = '../../studyware';
 			});
+			
+			
 			
 			// 지역 선택
 			// 1. 1차 지역 선택
 			// 2. 1차 지역에 해당되는 2차 지역 리스트 (ajax)
 			// 3. 2차 지역 선택
 			// 4. 1,2차 지역 가지고 지역 코드 찾기 (ajax)
+			var list = '';
+			list += '<option value="" selected>선택</option>'
+			$('#depthTwo').html(list);
+			
+			var city1;
 			var city2;
+			
+			depth2List = [];
+			
 			$('#depthOne').change(function() {
-				var city1 = $(this).val();
-				
-				
+				city1 = $(this).val();
+		
 				if (city1 == '선택') {
 					alert('시/도를 입력해주세요');
-				} else {
+				} else {		
 					$.ajax({
 						type : 'post',
-						url : 'region2_select',
+						url : '../member/region2',
 						headers : {
 							'Content-Type' : 'application/json',
 							'X-HTTP-Method-Override' : 'POST'
-						},
+						},	
 						data : city1,
-						success : function(response) {
-							if (response != null) {
-								city2 = response;
-							}
+						success : function(data){	
+							$(data).each(function() {
+								depth2List.push({depth2: this.depth2});	
+							});	
+							getAllRegion2(depth2List);
 						}
 					});
-					
-					$('#depthTwo option:selected').html(city2);
-					
 				}
-					
-				$('#depth1Name').html( $('#depthOne option:selected').val() );
 			});
-			
+	
+			// 디폴트로 나오는 후기 게시글 데이터를 가져오기
+			function getAllRegion2(depth2List) {
+	
+				for(var i=0; i<depth2List.length; i++){
+					console.log(depth2List[i].depth2);
+				}
+	
+				for(var i = 0; i<depth2List.length; i++){
+					list += '<option id="depth2" value=' + depth2List[i].depth2 + '>' + depth2List[i].depth2 + '</option>';
+				}
+				
+				$('#depthTwo').html(list);
+			} 
+				//end of getThumnails()*/
+		
+		
 			var region_no;
+			
 			$('#depthTwo').change(function() {
-				var city1 = $(this).val();
+				city2 = $(this).val();
 				
-				
-				if (city1 == '선택') {
+				if (city2 == '선택') {
 					alert('시/구를 입력해주세요');
 				} else {
 					$.ajax({
-						type : 'post',
-						url : 'region_no_select',
+						type : 'get',
+						url : '../member/region_no_select',
 						headers : {
 							'Content-Type' : 'application/json',
 							'X-HTTP-Method-Override' : 'POST'
 						},
-						data : city1,
+						data : {'city1': city1, 'city2': city2},
 						success : function(response) {
 							if (response != null) {
 								alert(response);
@@ -325,10 +337,9 @@
 					});					
 				}		
 			});
-			
-			
-		});
 		
+		});
+
 	</script>
 
 </body>

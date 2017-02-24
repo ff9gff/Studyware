@@ -9,8 +9,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import org.springframework.stereotype.Service;
 
+import edu.spring.studyware.domain.MemberDTO;
 import edu.spring.studyware.domain.MemberVO;
-import edu.spring.studyware.domain.RegionVO;
+import edu.spring.studyware.domain.Region2VO;
+import edu.spring.studyware.domain.Region1VO;
 
 /**
  * Handles requests for the application home page.
@@ -27,23 +29,28 @@ public class MemberDAOImpl implements MemberDAO {
 	private static final Logger logger = LoggerFactory.getLogger(MemberDAOImpl.class);
 
 	@Override
-	public List<RegionVO> memberRegionDepth1() {
+	public List<Region1VO> memberRegionDepth1() {
 		return sqlSession.selectList(NAMESPACE + ".memberRegion1");
 	}
 	
 	@Override
-	public List<RegionVO> memberRegionDepth2(String region1) {
+	public List<Region2VO> memberRegionDepth2(String region1) {
 		return sqlSession.selectList(NAMESPACE + ".memberRegion2", region1);
 	}
 
 	@Override
-	public int memberRegionNo(String region2) {
-		return sqlSession.selectOne(NAMESPACE + ".memberRegionNo", region2);
+	public int memberRegionNo(Region1VO region1vo) {
+		return sqlSession.selectOne(NAMESPACE + ".memberRegionNo", region1vo);
 	}
 
 	@Override
 	public int memberSignUp(MemberVO memberVO) {
 		return sqlSession.insert(NAMESPACE + ".memberSignUp", memberVO);
+	}
+	
+	@Override
+	public List<MemberDTO> selectList() {
+		return sqlSession.selectList(NAMESPACE + ".memberDTOList");
 	}
 
 }

@@ -31,7 +31,7 @@ public class EmailAuthController {
 	private JavaMailSenderImpl mailSender;
 	
 	// 이메일 인증
-	@RequestMapping(value = "member/email_auth", method = RequestMethod.POST)
+	@RequestMapping(value = "/member/email_auth", method = RequestMethod.POST)
 	public void email_auth(Model model, @RequestBody String email, HttpServletResponse response) throws IOException {
 		int code = (int) (Math.random() * 10000);
 		SimpleMailMessage message = new SimpleMailMessage();

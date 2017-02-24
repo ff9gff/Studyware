@@ -1,16 +1,21 @@
 package edu.spring.studyware.domain;
 
-public class RegionVO {
+public class Region1VO {
 	private int region_no;
 	private String depth1;
 	private String depth2;
 	
-	public RegionVO() {
+	public Region1VO() {
 		
 	}
 	
-	public RegionVO (int region_no, String depth1, String depth2) {
+	public Region1VO (int region_no, String depth1, String depth2) {
 		this.region_no = region_no;
+		this.depth1 = depth1;
+		this.depth2 = depth2;
+	}
+	
+	public Region1VO (String depth1, String depth2) {
 		this.depth1 = depth1;
 		this.depth2 = depth2;
 	}
@@ -38,10 +43,10 @@ public class RegionVO {
 	public void setDepth2(String depth2) {
 		this.depth2 = depth2;
 	}
-	
+	 
 	@Override
 	public String toString() {
+		// TODO Auto-generated method stub
 		return depth1;
 	}
-	  
 }
