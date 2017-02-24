@@ -258,16 +258,12 @@
 			
 			
 			// 지역 선택
-			// 1. 1차 지역 선택
-			// 2. 1차 지역에 해당되는 2차 지역 리스트 (ajax)
-			// 3. 2차 지역 선택
-			// 4. 1,2차 지역 가지고 지역 코드 찾기 (ajax)
 			var list = '<option value="" selected>선택</option>';
 			$('#depthTwo').html(list);
 			
 			var city1;
 			var city2;
-			
+				
 			$('#depthOne').change(function() {
 				list = '';
 				list += '<option value="" selected>선택</option>';
