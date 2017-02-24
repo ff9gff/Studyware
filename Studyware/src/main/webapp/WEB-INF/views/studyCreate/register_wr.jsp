@@ -24,9 +24,17 @@
 					<div style="margin-left: 5%; margin-right: 5%">
 						<span>
 							<p style="color: red; display: inline;">(*)</p> 항목은 반드시 입력해 주세요.
-						</span> <br /> 
+						</span> <br /> <br /> 
 	
 						<label for="studyOption">스터디 분류 <p style="color: red; display: inline;">(*)</p></label><br> 
+						<select id='studyCate' name='studyCate'>
+							<option value='' selected>선택</option>
+							<c:forEach items="${recruitCateList}" var="name_recruit_cate">
+								<option id='depth1' value='${name_recruit_cate}'>${name_recruit_cate}</option>
+							</c:forEach>
+						</select><br> <br> 
+						
+						<label for="depthOne">지역 선택 <p style="color: red; display: inline;">(*)</p></label><br> 
 						<select id='depthOne' name='depthOne'>
 							<option value='' selected>선택</option>
 							<c:forEach items="${depth1List}" var="depth1">
@@ -34,23 +42,16 @@
 							</c:forEach>
 						</select>
 						
-						<label for="id">아이디 <p style="color: red; display: inline;">(*)</p> </label><br>
-						<input type="text" pattern="[A-Za-z0-9]*" style="ime-mode: disabled; width: 60%;" id="id" name="id" placeholder="아이디" /><br><br>  
-						
-						<label for="pwd">비밀번호 	<p style="color: red; display: inline;">(*)</p> </label><br> 
-						<input type="password" id="pwd" style="width: 60%;"	placeholder="비밀번호" /><br><br>
-						
-						<label for="pwd2">비밀번호 확인</label><br> 
-						<input type="password" id="pwd2" name="pwd" style="width: 60%;" placeholder="비밀번호 확인"><br><br> 
-						
-						<label for="name">이름 <p style="color: red; display: inline;">(*)</p> </label><br> 
-						<input type="text" id="name" name="name" style="width: 60%;" placeholder="이름을 입력해 주세요"><br><br>  
-						
-						<label for="nick">닉네임이름 <p style="color: red; display: inline;">(*)</p></label><br> 
-						<input type="text" id="nick" name="nick" style="width: 60%;" placeholder="닉네임"> <br><br>  
+						<select id='depthTwo' name='depthTwo'>
+						</select><br> <br> 
+						<textarea id="region_no" style="display:none;" name="region_no" placeholder="지역 번호"></textarea> 
+					
+						<label for="study_name">스터디 제목 <p style="color: red; display: inline;">(*)</p> </label><br> 
+						<input type="text" id="study_name" name="study_name" style="width: 60%;" placeholder="스터디 제목을 입력해 주세요"><br><br>  
+							
 						
 						<!--<textarea id="depthTwo" name="depth2" placeholder="지역2"></textarea><br><br>-->      
-						<textarea id="region_no" style="display:none;" name="region_no" placeholder="지역 번호"></textarea><br>         
+						       
 										
 						<label for="phone">핸드폰 번호	<p style="color: red; display: inline;">(*)</p>	</label><br> 
 						<input type="text" id="phone" name="phone" style="width: 60%;" placeholder="핸드폰 번호"><br> <br>  
@@ -87,7 +88,95 @@
 		
 	</div>
 	
+	<script>
+	
+		$(document).ready(function() {
 
+			// 지역 선택
+			// 1. 1차 지역 선택
+			// 2. 1차 지역에 해당되는 2차 지역 리스트 (ajax)
+			// 3. 2차 지역 선택
+			// 4. 1,2차 지역 가지고 지역 코드 찾기 (ajax)
+			var list = '';
+			list += '<option value="" selected>선택</option>'
+			$('#depthTwo').html(list);
+			
+			var city1;
+			var city2;
+			
+			$('#depthOne').change(function() {
+				
+				depth2List = [];
+				city1 = $(this).val();
+				
+				if (city1 == '선택') {
+					alert('시/도를 입력해주세요');
+				} else {	
+					$.ajax({
+						type : 'post',
+						url : '../member/region2',
+						headers : {
+							'Content-Type' : 'application/json',
+							'X-HTTP-Method-Override' : 'POST'
+						},	
+						data : city1,
+						success : function(data){	
+							$(data).each(function() {	
+								depth2List.push({depth2: this.depth2});	
+							});	
+							getAllRegion2(depth2List);
+						}
+					});
+				}
+			});
+	
+			// 디폴트로 나오는 후기 게시글 데이터를 가져오기
+			function getAllRegion2(depth2List) {
+
+				for(var i=0; i<depth2List.length; i++){
+					console.log(depth2List[i].depth2);
+				}
+	
+				for(var i = 0; i<depth2List.length; i++){
+					list += '<option id="depth2" value=' + depth2List[i].depth2 + '>' + depth2List[i].depth2 + '</option>';
+				}
+				
+				$('#depthTwo').html(list);
+				list = '';
+			} 
+				//end of getThumnails()*/
+		
+		
+			var region_no;
+			
+			$('#depthTwo').change(function() {
+				city2 = $(this).val();
+				
+				if (city2 == '선택') {
+					alert('시/구를 입력해주세요');
+				} else {
+					$.ajax({
+						type : 'get',
+						url : '../member/region_no_select',
+						headers : {
+							'Content-Type' : 'application/json',
+							'X-HTTP-Method-Override' : 'POST'
+						},
+						data : {'city1': city1, 'city2': city2},
+						success : function(response) {
+							if (response != null) {
+								alert(response);
+								region_no = response;
+								$('#region_no').html(region_no);
+							}
+						}
+					});					
+				}		
+			});
+		
+		});
+
+	</script>
 
 
 
