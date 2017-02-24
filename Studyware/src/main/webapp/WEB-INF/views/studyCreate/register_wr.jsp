@@ -110,14 +110,15 @@
 		$(document).ready(function() {
 
 			// 1. 스터디 진행할 지역 선택
-			var list = '';
-			list += '<option value="" selected>선택</option>'
+			var list = '<option value="" selected>선택</option>';
 			$('#depthTwo').html(list);
 			
 			var city1;
 			var city2;
 			
 			$('#depthOne').change(function() {
+				list = '';
+				list += '<option value="" selected>선택</option>';
 				
 				depth2List = [];
 				city1 = $(this).val();
