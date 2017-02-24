@@ -75,7 +75,7 @@ underline : 있는 상태
 				<h2>로그인</h2>
 				<br /> <br />
 
-				<form action="../member/login-post" method="post">
+				<form id="form">
 
 					<div style="margin: 5px;">
 						<input type="text" name="id" id="id" placeholder="아이디" required />
@@ -89,7 +89,7 @@ underline : 있는 상태
 
 					<br /> <br /> 
 					
-					<input type="submit" value="로그인" />
+					<input type="submit" id=login_btn value="login" />
 
 					<%-- "로그인" 버튼을 클릭했을 때 서버로 ff쿼리 스트링을 보내기 위해서 --%>
 					<%
@@ -107,6 +107,50 @@ underline : 있는 상태
 		</div>
 		
 	</div>
+	
+	 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+ 
+	<script>
+	$(document).ready(function(){
+		$('#login_btn').click(function(){
+		var id=$('#id').val();
+		var pwd=$('#pwd').val();
+		
+		
+		$.ajax({
+			type: 'post',
+			url:'/studyware/member/login-check',
+			data:{
+				userid:id,
+				password:pwd
+				
+			},
+			success:function(res, status, xhr){
+				
+				if(res=='OK'){
+					$('#form').attr("action","/studyware/member/main");
+					$("#form").attr("method","post");
+					$("#form").submit();
+				
+				}else if(res=='1'){
+					alert('존재하지 않은 아이디입니다');
+				}else if(res=="NOK"){
+					alert('비밀번호가 틀렸습니다');
+				}
+				
+				
+			}
+			
+			
+		})
+		
+			
+		})
+		
+		
+		
+	})
+	</script>
 
 </body>
 </html>
