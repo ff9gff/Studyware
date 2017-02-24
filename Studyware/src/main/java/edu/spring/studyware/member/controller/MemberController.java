@@ -37,6 +37,7 @@ import edu.spring.studyware.domain.MemberVO;
 import edu.spring.studyware.domain.Region2VO;
 import edu.spring.studyware.domain.Region1VO;
 import edu.spring.studyware.member.service.MemberService;
+//import project.spring.groupware.member.domain.LoginVO;
 
 /**
  * Handles requests for the application home page.
@@ -204,6 +205,36 @@ public class MemberController {
 		}
 
 	}
+	
+	//login check
+	@RequestMapping(value="/login_check", method=RequestMethod.POST)
+	public void loginCheck(HttpServletResponse response, String userid, String password) throws IOException{
+		logger.info("아이디:"+userid);
+		logger.info("비번:"+password);
+		
+		//LoginVO vo = service.loginCheck(userid);
+		//PrintWriter out = response.getWriter();
+		
+		/*logger.info("아이디는:"+vo.getId());
+		logger.info("비밀번호"+vo.getPwd());*/
+		
+		/*if(vo==null){
+			out.print("1");
+		}else{
+			logger.info("왜 안찍혀");
+			if(password.equals(vo.getPwd())){
+				out.print("OK");
+			}else{
+				out.print("NOK");
+			}
+		}*/
+	}
+	
+	
+	
+	
+	
+	
 
 	// 3. 로그아웃
 	@RequestMapping(value = "logout", method = RequestMethod.GET)
