@@ -95,8 +95,7 @@
 					</div><br /><br />
 					
 					<hr />
-					
-					
+						
 				</form>
 				
 			</div>
@@ -108,8 +107,72 @@
 	<script>
 	
 		$(document).ready(function() {
+			
+////////////////////////////////////////////////////////////////////////////////////////////
+			
+			// 1. 모집구분 내용을 가지고 모집구분 번호를 찾는다
+			var recruit_type_no;
+			var recruit_type_name;
 
-			// 1. 스터디 진행할 지역 선택
+			$('#recruitType').change(function() {
+				
+				recruit_type_name = $(this).val();
+				
+				alert(recruit_type_name);
+				
+				if (recruit_type_name == '선택') {
+					alert('모집 구분을 선택하세요');
+				} else {	
+					$.ajax({
+						type : 'POST',
+						url : '../studyCreate/studyType',
+						headers : {
+							'Content-Type' : 'application/json',
+							'X-HTTP-Method-Override' : 'POST'
+						},	
+						data : recruit_type_name,
+						success : function(data){	
+							recruit_type_no = data;
+							alert("모집 구분 번호: " + recruit_type_no);
+						}
+					});
+				}
+			});
+			
+////////////////////////////////////////////////////////////////////////////////////////////
+			
+			// 2. 스터디종류 내용을 가지고 스터디종류 번호를 찾는다
+			var recruit_cate_no;
+			var recruit_cate_name;
+
+			$('#studyCate').change(function() {
+				
+				recruit_cate_name = $(this).val();
+				
+				alert(recruit_cate_name);
+				
+				if (recruit_cate_name == '선택') {
+					alert('스터디 종류를 선택하세요');
+				} else {	
+					$.ajax({
+						type : 'POST',
+						url : '../studyCreate/studyCate',
+						headers : {
+							'Content-Type' : 'application/json',
+							'X-HTTP-Method-Override' : 'POST'
+						},	
+						data : recruit_cate_name,
+						success : function(data){	
+							recruit_cate_no = data;
+							alert("모집 구분 번호: " + recruit_cate_no);
+						}
+					});
+				}
+			});
+			
+////////////////////////////////////////////////////////////////////////////////////////////
+						
+			// 3. 스터디 진행할 지역 선택
 			var list = '<option value="" selected>선택</option>';
 			$('#depthTwo').html(list);
 			
@@ -146,7 +209,7 @@
 	
 ////////////////////////////////////////////////////////////////////////////////////////////
 			
-			// 2. 지역1을 통해 받아온 지역2 리스트를 뿌려준다
+			// 4. 지역1을 통해 받아온 지역2 리스트를 뿌려준다
 			function getAllRegion2(depth2List) {
 
 				for(var i=0; i<depth2List.length; i++){
@@ -164,7 +227,7 @@
 		
 ////////////////////////////////////////////////////////////////////////////////////////////
 		
-			// 3. 지역1과 지역2 정보를 가지고 최종적인 지역 번호를 찾는다
+			// 5. 지역1과 지역2 정보를 가지고 최종적인 지역 번호를 찾는다
 			var region_no;
 			$('#depthTwo').change(function() {
 				city2 = $(this).val();
@@ -177,7 +240,7 @@
 						url : '../member/region_no_select',
 						headers : {
 							'Content-Type' : 'application/json',
-							'X-HTTP-Method-Override' : 'POST'
+							'X-HTTP-Method-Override' : 'get'
 						},
 						data : {'city1': city1, 'city2': city2},
 						success : function(response) {
@@ -193,24 +256,7 @@
 			
 ////////////////////////////////////////////////////////////////////////////////////////////
 			
-			// 4. 스터디 모집글을 등록한다
-	        $('#study_submit_OK').click(function() {
-	        	alert('일해라');
-				/* if (final_check == 1) {
-					$("#register_form").submit();
-				} else {
-					alert('똑바로서라');
-				} */
-			});
-			
-			// 5. 스터디 모집글 작성을 취소한다
-			$("#study_submit_Cancel").click(function() {
-				location = '../../studyware';
-			});
-			
-////////////////////////////////////////////////////////////////////////////////////////////
-		
-			// 공부 내용 추가/삭제 (최소 1개, 최대 5개)
+			// 6. 공부 내용 추가/삭제 (최소 1개, 최대 5개)
 			var oTbl;
 			var click = 0;;
 			//Row 추가
@@ -249,64 +295,23 @@
 	        
 ////////////////////////////////////////////////////////////////////////////////////////////
 			
-			var recruit_type_no;
-			var recruit_type_name;
-
-			$('#recruitType').change(function() {
-				
-				recruit_type_name = $(this).val();
-				
-				alert(recruit_type_name);
-				
-				if (recruit_type_name == '선택') {
-					alert('모집 구분을 선택하세요');
-				} else {	
-					$.ajax({
-						type : 'POST',
-						url : '../studyCreate/studyType',
-						headers : {
-							'Content-Type' : 'application/json',
-							'X-HTTP-Method-Override' : 'POST'
-						},	
-						data : recruit_type_name,
-						success : function(data){	
-							recruit_type_no = data;
-							alert("모집 구분 번호: " + recruit_type_no);
-						}
-					});
-				}
+			// 7. 스터디 모집글을 등록한다
+	        $('#study_submit_OK').click(function() {
+	        	alert('일해라');
+				/* if (final_check == 1) {
+					$("#register_form").submit();
+				} else {
+					alert('똑바로서라');
+				} */
+			});
+			
+			// 8. 스터디 모집글 작성을 취소한다
+			$("#study_submit_Cancel").click(function() {
+				location = '../../studyware';
 			});
 			
 ////////////////////////////////////////////////////////////////////////////////////////////
-
-			var recruit_cate_no;
-			var recruit_cate_name;
-
-			$('#studyCate').change(function() {
-				
-				recruit_cate_name = $(this).val();
-				
-				alert(recruit_cate_name);
-				
-				if (recruit_cate_name == '선택') {
-					alert('스터디 종류를 선택하세요');
-				} else {	
-					$.ajax({
-						type : 'POST',
-						url : '../studyCreate/studyCate',
-						headers : {
-							'Content-Type' : 'application/json',
-							'X-HTTP-Method-Override' : 'POST'
-						},	
-						data : recruit_cate_name,
-						success : function(data){	
-							recruit_cate_no = data;
-							alert("모집 구분 번호: " + recruit_cate_no);
-						}
-					});
-				}
-			});
-        
+			
 		});
 		
 	</script>
