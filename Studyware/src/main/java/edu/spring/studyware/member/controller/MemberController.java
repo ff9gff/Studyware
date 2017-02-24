@@ -75,7 +75,7 @@ public class MemberController {
 
 	// 4. 데이터 받아서 회원가입하기
 	@RequestMapping(value = "/member/sign_up", method = RequestMethod.POST)
-	public void signUp(Model model, MemberVO memberVO, RedirectAttributes attr) {
+	public String signUp(Model model, MemberVO memberVO, RedirectAttributes attr) {
 		logger.info("sign_up 호출");
 		logger.info("아이디 : " + memberVO.getId());
 		logger.info("비밀번호 : " + memberVO.getPwd());
@@ -93,6 +93,8 @@ public class MemberController {
 		if (signUpResult > 0) {
 			logger.info("회원가입 성공");
 		}
+		
+		return "member/welcome";
 
 	}
 
