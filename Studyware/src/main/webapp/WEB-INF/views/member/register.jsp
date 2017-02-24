@@ -269,14 +269,14 @@
 			var city1;
 			var city2;
 			
-			depth2List = [];
-			
 			$('#depthOne').change(function() {
+				
+				depth2List = [];
 				city1 = $(this).val();
-		
+				
 				if (city1 == '선택') {
 					alert('시/도를 입력해주세요');
-				} else {		
+				} else {	
 					$.ajax({
 						type : 'post',
 						url : '../member/region2',
@@ -286,7 +286,7 @@
 						},	
 						data : city1,
 						success : function(data){	
-							$(data).each(function() {
+							$(data).each(function() {	
 								depth2List.push({depth2: this.depth2});	
 							});	
 							getAllRegion2(depth2List);
@@ -297,7 +297,7 @@
 	
 			// 디폴트로 나오는 후기 게시글 데이터를 가져오기
 			function getAllRegion2(depth2List) {
-	
+
 				for(var i=0; i<depth2List.length; i++){
 					console.log(depth2List[i].depth2);
 				}
@@ -307,6 +307,7 @@
 				}
 				
 				$('#depthTwo').html(list);
+				list = '';
 			} 
 				//end of getThumnails()*/
 		

@@ -82,7 +82,7 @@ public class MemberController {
 			logger.info("지역2 검색 실패 ");
 		}
 
-		// logger.info("entity " + entity.getBody().toString());
+		logger.info("entity " + entity.getBody().toString());
 
 		return entity;
 	}
