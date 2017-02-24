@@ -70,7 +70,12 @@
 								<tr>
 									<td>
 										<input type="text" name="region_name" placeholder="내용" style="width: 20%;"/>
-										<input type="text" name="region_name" placeholder="수준" style="width: 20%;"/>
+										<select id='studyLevel' name='studyLevel'>
+											<option value='' selected>선택</option>
+											<option value='상'>상</option>
+											<option value='중'>중</option>
+											<option value='하'>하</option>
+										</select>
 										<input id="addButton" name="addButton" type="button" style="cursor:hand;" onclick="insRow()" value="추가">
 									</td>
 								</tr>
@@ -272,7 +277,12 @@
 				
 				//삽입될 Form Tag
 				var frmTag = "<input type=text name=region_name placeholder=내용 style='width: 20%;'>";
-				frmTag += " <input type=text name=region_name placeholder=수준 style='width: 20%;'>";
+				frmTag += " <select id='studyLevel' name='studyLevel'> ";
+				frmTag += " <option value='' selected>선택</option>";
+				frmTag += " <option value='상'>상</option>";
+				frmTag += " <option value='중'>중</option>";
+				frmTag += " <option value='하'>하</option>";
+				frmTag += "	</select>";
 				frmTag += " <input type=button value='삭제' onClick='removeRow()' style='cursor:hand'>";
 				oCell.innerHTML = frmTag;
 			} else {
@@ -290,6 +300,10 @@
 				click = 0;
 			}
 		}
+		
+		$('#studyLevel').change(function() {
+			alert($(this).val());
+		});
 	        
 ////////////////////////////////////////////////////////////////////////////////////////////
 			
