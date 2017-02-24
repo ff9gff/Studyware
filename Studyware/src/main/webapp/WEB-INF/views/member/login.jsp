@@ -100,7 +100,8 @@ underline : 있는 상태
 					
 				</form>
 
-				<a href="find_id">아이디</a>·<a href="find_password">비밀번호 찾기</a>&nbsp;&nbsp;<a 	href="register">회원가입</a>
+				<a href="find_id">아이디</a>·<a href="find_password">비밀번호 찾기</a>&nbsp;&nbsp;<a 	href="register">회원가입</a></br></br>
+				<a href="../../studyware">홈으로</a>
 
 			</div>
 			

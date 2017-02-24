@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+   pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -69,12 +69,13 @@
 							<table id="regionTable">
 								<tr>
 									<td>
-										<input type="text" name="region_name" placeholder="지역" />
-										<input id="addButton" name="addButton" type="button" style="cursor:hand;" value="추가" />
+										<input type="text" name="region_name" placeholder="내용" style="width: 20%;"/>
+										<input type="text" name="region_name" placeholder="수준" style="width: 20%;"/>
+										<input id="addButton" name="addButton" type="button" style="cursor:hand;" onclick="insRow()" value="추가">
 									</td>
 								</tr>
 							</table>						
-						</div> <br /> 	
+						</div> <br /> 
 						
 						<div>
 							<textarea id="study_content" name="content" style="width: 100%" rows="15" placeholder="스터디 소개" required></textarea>
@@ -105,214 +106,211 @@
 	</div>
 	
 	<script>
-	
-		$(document).ready(function() {
+		
+////////////////////////////////////////////////////////////////////////////////////////////
+			
+		// 1. 모집구분 내용을 가지고 모집구분 번호를 찾는다
+		var recruit_type_no;
+		var recruit_type_name;
+
+		$('#recruitType').change(function() {
+			
+			recruit_type_name = $(this).val();
+			
+			alert(recruit_type_name);
+			
+			if (recruit_type_name == '선택') {
+				alert('모집 구분을 선택하세요');
+			} else {	
+				$.ajax({
+					type : 'POST',
+					url : '../studyCreate/studyType',
+					headers : {
+						'Content-Type' : 'application/json',
+						'X-HTTP-Method-Override' : 'POST'
+					},	
+					data : recruit_type_name,
+					success : function(data){	
+						recruit_type_no = data;
+						alert("모집 구분 번호: " + recruit_type_no);
+					}
+				});
+			}
+		});
 			
 ////////////////////////////////////////////////////////////////////////////////////////////
 			
-			// 1. 모집구분 내용을 가지고 모집구분 번호를 찾는다
-			var recruit_type_no;
-			var recruit_type_name;
+		// 2. 스터디종류 내용을 가지고 스터디종류 번호를 찾는다
+		var recruit_cate_no;
+		var recruit_cate_name;
 
-			$('#recruitType').change(function() {
-				
-				recruit_type_name = $(this).val();
-				
-				alert(recruit_type_name);
-				
-				if (recruit_type_name == '선택') {
-					alert('모집 구분을 선택하세요');
-				} else {	
-					$.ajax({
-						type : 'POST',
-						url : '../studyCreate/studyType',
-						headers : {
-							'Content-Type' : 'application/json',
-							'X-HTTP-Method-Override' : 'POST'
-						},	
-						data : recruit_type_name,
-						success : function(data){	
-							recruit_type_no = data;
-							alert("모집 구분 번호: " + recruit_type_no);
-						}
-					});
-				}
-			});
+		$('#studyCate').change(function() {
 			
-////////////////////////////////////////////////////////////////////////////////////////////
+			recruit_cate_name = $(this).val();
 			
-			// 2. 스터디종류 내용을 가지고 스터디종류 번호를 찾는다
-			var recruit_cate_no;
-			var recruit_cate_name;
-
-			$('#studyCate').change(function() {
-				
-				recruit_cate_name = $(this).val();
-				
-				alert(recruit_cate_name);
-				
-				if (recruit_cate_name == '선택') {
-					alert('스터디 종류를 선택하세요');
-				} else {	
-					$.ajax({
-						type : 'POST',
-						url : '../studyCreate/studyCate',
-						headers : {
-							'Content-Type' : 'application/json',
-							'X-HTTP-Method-Override' : 'POST'
-						},	
-						data : recruit_cate_name,
-						success : function(data){	
-							recruit_cate_no = data;
-							alert("모집 구분 번호: " + recruit_cate_no);
-						}
-					});
-				}
-			});
+			alert(recruit_cate_name);
+			
+			if (recruit_cate_name == '선택') {
+				alert('스터디 종류를 선택하세요');
+			} else {	
+				$.ajax({
+					type : 'POST',
+					url : '../studyCreate/studyCate',
+					headers : {
+						'Content-Type' : 'application/json',
+						'X-HTTP-Method-Override' : 'POST'
+					},	
+					data : recruit_cate_name,
+					success : function(data){	
+						recruit_cate_no = data;
+						alert("모집 구분 번호: " + recruit_cate_no);
+					}
+				});
+			}
+		});
 			
 ////////////////////////////////////////////////////////////////////////////////////////////
 						
-			// 3. 스터디 진행할 지역 선택
-			var list = '<option value="" selected>선택</option>';
-			$('#depthTwo').html(list);
+		// 3. 스터디 진행할 지역 선택
+		var list = '<option value="" selected>선택</option>';
+		$('#depthTwo').html(list);
+		
+		var city1;
+		var city2;
+		
+		$('#depthOne').change(function() {
+			list = '';
+			list += '<option value="" selected>선택</option>';
 			
-			var city1;
-			var city2;
+			depth2List = [];
+			city1 = $(this).val();
 			
-			$('#depthOne').change(function() {
-				list = '';
-				list += '<option value="" selected>선택</option>';
-				
-				depth2List = [];
-				city1 = $(this).val();
-				
-				if (city1 == '선택') {
-					alert('시/도를 입력해주세요');
-				} else {	
-					$.ajax({
-						type : 'post',
-						url : '../member/region2',
-						headers : {
-							'Content-Type' : 'application/json',
-							'X-HTTP-Method-Override' : 'POST'
-						},	
-						data : city1,
-						success : function(data){	
-							$(data).each(function() {	
-								depth2List.push({depth2: this.depth2});	
-							});	
-							getAllRegion2(depth2List);
-						}
-					});
-				}
-			});
+			if (city1 == '선택') {
+				alert('시/도를 입력해주세요');
+			} else {	
+				$.ajax({
+					type : 'post',
+					url : '../member/region2',
+					headers : {
+						'Content-Type' : 'application/json',
+						'X-HTTP-Method-Override' : 'POST'
+					},	
+					data : city1,
+					success : function(data){	
+						$(data).each(function() {	
+							depth2List.push({depth2: this.depth2});	
+						});	
+						getAllRegion2(depth2List);
+					}
+				});
+			}
+		});
 	
 ////////////////////////////////////////////////////////////////////////////////////////////
 			
-			// 4. 지역1을 통해 받아온 지역2 리스트를 뿌려준다
-			function getAllRegion2(depth2List) {
+		// 4. 지역1을 통해 받아온 지역2 리스트를 뿌려준다
+		function getAllRegion2(depth2List) {
 
-				for(var i=0; i<depth2List.length; i++){
-					console.log(depth2List[i].depth2);
-				}
-	
-				for(var i = 0; i<depth2List.length; i++){
-					list += '<option id="depth2" value=' + depth2List[i].depth2 + '>' + depth2List[i].depth2 + '</option>';
-				}
-				
-				$('#depthTwo').html(list);
-				list = '';
-			} 
-				//end of getThumnails()*/
-		
-////////////////////////////////////////////////////////////////////////////////////////////
-		
-			// 5. 지역1과 지역2 정보를 가지고 최종적인 지역 번호를 찾는다
-			var region_no;
-			$('#depthTwo').change(function() {
-				city2 = $(this).val();
-				
-				if (city2 == '선택') {
-					alert('시/구를 입력해주세요');
-				} else {
-					$.ajax({
-						type : 'get',
-						url : '../member/region_no_select',
-						headers : {
-							'Content-Type' : 'application/json',
-							'X-HTTP-Method-Override' : 'get'
-						},
-						data : {'city1': city1, 'city2': city2},
-						success : function(response) {
-							if (response != null) {
-								alert(response);
-								region_no = response;
-								$('#region_no').html(region_no);
-							}
-						}
-					});					
-				}		
-			});
-			
-////////////////////////////////////////////////////////////////////////////////////////////
-			
-			// 6. 공부 내용 추가/삭제 (최소 1개, 최대 5개)
-			var oTbl;
-			var click = 0;;
-			//Row 추가
-			$("#addButton").click(function() {
-				click++;
-				if (click < 5) {
-					oTbl = document.getElementById("regionTable");
-					var oRow = oTbl.insertRow();
-					oRow.onmouseover=function(){
-						oTbl.clickedRowIndex=this.rowIndex
-					}; //clickedRowIndex - 클릭한 Row의 위치를 확인;
-					var oCell = oRow.insertCell();
-					
-					//삽입될 Form Tag
-					var frmTag = "<input type=text name=region_name placeholder=지역>";
-					frmTag += " <input type=button value='삭제' onClick='removeRow()' style='cursor:hand'>";
-					oCell.innerHTML = frmTag;
-				} else {
-					alert("공부 항목은 최대 5개까지 입니다!");
-				}
-			});
-		
-			//Row 삭제
-			function removeRow() {
-				oTbl.deleteRow(oTbl.clickedRowIndex);
-				click--;
-				
-				if (click == 1) {
-					click = 0;
-				}
+			for(var i=0; i<depth2List.length; i++){
+				console.log(depth2List[i].depth2);
+			}
+
+			for(var i = 0; i<depth2List.length; i++){
+				list += '<option id="depth2" value=' + depth2List[i].depth2 + '>' + depth2List[i].depth2 + '</option>';
 			}
 			
-	        $('#delButton').click(function() {
-	        	$('#regionTable > tbody:last > tr:last').remove();
-	        });
+			$('#depthTwo').html(list);
+			list = '';
+		} 
+			//end of getThumnails()*/
+		
+////////////////////////////////////////////////////////////////////////////////////////////
+		
+		// 5. 지역1과 지역2 정보를 가지고 최종적인 지역 번호를 찾는다
+		var region_no;
+		$('#depthTwo').change(function() {
+			city2 = $(this).val();
+			
+			if (city2 == '선택') {
+				alert('시/구를 입력해주세요');
+			} else {
+				$.ajax({
+					type : 'get',
+					url : '../member/region_no_select',
+					headers : {
+						'Content-Type' : 'application/json',
+						'X-HTTP-Method-Override' : 'get'
+					},
+					data : {'city1': city1, 'city2': city2},
+					success : function(response) {
+						if (response != null) {
+							alert(response);
+							region_no = response;
+							$('#region_no').html(region_no);
+						}
+					}
+				});					
+			}		
+		});
+			
+////////////////////////////////////////////////////////////////////////////////////////////
+			
+		// 6. 공부 내용 추가/삭제 (최소 1개, 최대 5개)
+
+     	// Region Table
+		var oTbl;
+		var click = 0;
+	
+		//Row 추가
+		function insRow() {
+			click++;
+			if (click < 5) {
+				oTbl = document.getElementById("regionTable");
+				var oRow = oTbl.insertRow();
+				oRow.onmouseover=function(){oTbl.clickedRowIndex=this.rowIndex}; //clickedRowIndex - 클릭한 Row의 위치를 확인;
+				var oCell = oRow.insertCell();
+				
+				//삽입될 Form Tag
+				var frmTag = "<input type=text name=region_name placeholder=내용 style='width: 20%;'>";
+				frmTag += " <input type=text name=region_name placeholder=수준 style='width: 20%;'>";
+				frmTag += " <input type=button value='삭제' onClick='removeRow()' style='cursor:hand'>";
+				oCell.innerHTML = frmTag;
+			} else {
+				alert("공부 항목은 최대 5개까지 입니다!");
+			}
+			
+		}
+	
+		//Row 삭제
+		function removeRow() {
+			oTbl.deleteRow(oTbl.clickedRowIndex);
+			click--;
+			
+			if (click == 1) {
+				click = 0;
+			}
+		}
 	        
 ////////////////////////////////////////////////////////////////////////////////////////////
 			
-			// 7. 스터디 모집글을 등록한다
-	        $('#study_submit_OK').click(function() {
-	        	alert('일해라');
-				/* if (final_check == 1) {
-					$("#register_form").submit();
-				} else {
-					alert('똑바로서라');
-				} */
-			});
-			
-			// 8. 스터디 모집글 작성을 취소한다
-			$("#study_submit_Cancel").click(function() {
-				location = '../../studyware';
-			});
-			
+		// 7. 스터디 모집글을 등록한다
+        $('#study_submit_OK').click(function() {
+        	alert('일해라');
+			/* if (final_check == 1) {
+				$("#register_form").submit();
+			} else {
+				alert('똑바로서라');
+			} */
+		});
+		
+		// 8. 스터디 모집글 작성을 취소한다
+		$("#study_submit_Cancel").click(function() {
+			location = '../../studyware';
+		});
+		
 ////////////////////////////////////////////////////////////////////////////////////////////
 			
-		});
+		
 		
 	</script>
 
