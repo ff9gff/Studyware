@@ -47,5 +47,13 @@ public class AdminController {
 		return "msg";
 	}
 	
+	// 이력보기 실행
+	@RequestMapping(value = "/history", method = RequestMethod.GET)
+	public String toggleHistory(int meber_no, Model model){
+		
+		model.addAttribute("member_no", meber_no);
+		return "history";
+	}
+	
 
 }// end class AdminController
