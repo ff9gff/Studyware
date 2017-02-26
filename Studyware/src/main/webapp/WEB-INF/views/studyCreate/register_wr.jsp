@@ -26,6 +26,13 @@
 							<p style="color: red; display: inline;">(*)</p> 항목은 반드시 입력해 주세요.
 						</span> <br /> <br />
 						
+						<input type="hidden" name="board_name_no" value="1" readonly="readonly" /> 
+						
+						<input type="hidden" name="member_no" value="1" readonly="readonly" /> 
+						
+						<input type="hidden" name="num_now" value="1" readonly="readonly" /> 
+						
+						
 						<label for="recruitOption">모집 구분 <p style="color: red; display: inline;">(*)</p></label><br> 
 						<select id='recruitType' name='recruitType'>
 							<option value='' selected>선택</option>
@@ -59,22 +66,21 @@
 						<textarea id="region_no" style="display:none;" name="region_no" placeholder="지역 번호"></textarea> 
 					
 						<label for="study_name">스터디 제목 <p style="color: red; display: inline;">(*)</p> </label><br> 
-						<input type="text" id="study_name" name="study_name" placeholder="스터디 제목을 입력해 주세요" style="width: 60%;"><br><br>  
-							
+						<input type="text" id="recruit_title" name="recruit_title" placeholder="스터디 제목을 입력해 주세요" style="width: 60%;"><br><br>  						       
 						
-						<!--<textarea id="depthTwo" name="depth2" placeholder="지역2"></textarea><br><br>-->      
-						       
+						<label for="num_max">모집 인원 <p style="color: red; display: inline;">(*)</p> </label><br> 
+						<input type="text" id="num_max" name="num_max" placeholder="모집 인원을 입력해 주세요" style="width: 40%;"><br><br> 				
 										
-						<div id="region_plus">
-							<table id="regionTable">
+						<div id="study_plus">
+							<table id="studyTable">
 								<tr>
 									<td>
 										<input type="text" name="region_name" placeholder="내용" style="width: 20%;"/>
 										<select id='studyLevel' name='studyLevel'>
 											<option value='' selected>선택</option>
-											<option value='상'>상</option>
-											<option value='중'>중</option>
-											<option value='하'>하</option>
+											<c:forEach items="${levelList}" var="level_name">
+												<option id='level_name' value='${level_name}'>${level_name}</option>
+											</c:forEach>
 										</select>
 										<input id="addButton" name="addButton" type="button" style="cursor:hand;" onclick="insRow()" value="추가">
 									</td>
@@ -270,7 +276,7 @@
 		function insRow() {
 			click++;
 			if (click < 5) {
-				oTbl = document.getElementById("regionTable");
+				oTbl = document.getElementById("studyTable");
 				var oRow = oTbl.insertRow();
 				oRow.onmouseover=function(){oTbl.clickedRowIndex=this.rowIndex}; //clickedRowIndex - 클릭한 Row의 위치를 확인;
 				var oCell = oRow.insertCell();
