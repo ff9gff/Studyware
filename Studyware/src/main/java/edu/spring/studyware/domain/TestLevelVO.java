@@ -1,5 +1,8 @@
 package edu.spring.studyware.domain;
 
+// 공부수준 테스트용 VO입니다.
+// 테스트 후 삭제할 예정입니다.
+
 public class TestLevelVO {
 	
 	private int level_no;

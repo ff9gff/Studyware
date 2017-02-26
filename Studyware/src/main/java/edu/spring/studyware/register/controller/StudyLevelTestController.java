@@ -25,8 +25,8 @@ import edu.spring.studyware.member.service.MemberService;
 import edu.spring.studyware.register.service.StudyCreateService;
 import edu.spring.studyware.register.service.TestLevelService;
 
-// 공부수준 로직 연습용 컨트롤러
-// 테스트 종료 후 삭제 예정!
+//공부수준 테스트용 컨트롤러입니다.
+//테스트 후 삭제할 예정입니다.
 
 @Controller
 public class StudyLevelTestController {
@@ -69,8 +69,8 @@ public class StudyLevelTestController {
 	///////////////////////////////////////////////////////////////////////////////////
 
 	// 2. 공부 내용 & 레벨 받아서 DB Insert & select 연습
-	@RequestMapping(value = "/studyCreate/study_level", method = RequestMethod.GET)
-	public void region2(Model model, String level_name, String level_value, HttpServletResponse response) throws IOException {
+	@RequestMapping(value = "/studyCreate/study_level", method = RequestMethod.POST)
+	public void region2(Model model, @RequestParam("level1_name") String level_name, @RequestParam("level1_value") String level_value, HttpServletResponse response) throws IOException {
 		logger.info("studyLevel 호출");
 		logger.info("공부내용: " + level_name);
 		logger.info("공부레벨: " + level_value);

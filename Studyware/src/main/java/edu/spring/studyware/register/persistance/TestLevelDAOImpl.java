@@ -2,6 +2,9 @@ package edu.spring.studyware.register.persistance;
 
 import java.util.List;
 
+//공부수준 테스트용 DAOImpl입니다.
+//테스트 후 삭제할 예정입니다.
+
 import org.apache.ibatis.session.SqlSession;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

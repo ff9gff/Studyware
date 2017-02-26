@@ -22,7 +22,7 @@
 			<div style="width: 100%; text-align: center;">
 
 				<form id="register_form" name="register_form" action="study_level"
-					method="post" style="text-align: left;">
+					method="POST" style="text-align: left;">
 			
 					<div style="margin-left: 5%; margin-right: 5%">
 										
@@ -30,11 +30,11 @@
 							<table id="studyTable">
 								<tr>
 									<td>
-										<input type="text" name="region_name" placeholder="내용" style="width: 20%;"/>
-										<select id='studyLevel' name='studyLevel'>
+										<input type="text" name="level1_name" placeholder="내용" style="width: 20%;"/>
+										<select id='level1_value' name='level1_value'>
 											<option value='' selected>선택</option>
 											<c:forEach items="${levelList}" var="level_name">
-												<option id='level_name' value='${level_name}'>${level_name}</option>
+												<option id='level1_value' value='${level_name}'>${level_name}</option>
 											</c:forEach>
 										</select>
 										<input id="addButton" name="addButton" type="button" style="cursor:hand;" onclick="insRow()" value="추가">
@@ -112,7 +112,7 @@
 			}
 		}
 		
-		$('#studyLevel').change(function() {
+		$('#level1_value').change(function() {
 			alert($(this).val());
 		});
 	        
