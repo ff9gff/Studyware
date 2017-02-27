@@ -93,6 +93,7 @@ public class StudyLevelTestController {
 			
 			if (name_no == value_no) {
 				// 3. select 해온 name_no, value_no를 SW_LEVEL 테이블에 Insert한다!
+				// ggggg
 				int nameValueNoInsertResult;
 			}
 			
