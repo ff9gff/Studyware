@@ -53,19 +53,31 @@
 	<div id ="msg_getter"></div>
 </form>
 
+<!-- 이력 보기 -->
+<form id="history_form" action="admin/history" method="post" target="history_popup">
+	<input type="hidden" id="history_member_no" name="history_member_no"/>
+</form>
+
+<!-- 권한 수정 -->
+<form id="auth_form" action="admin/auth" method="post">
+	<input type="hidden" id="auth_member_no" name="auth_member_no"/>
+	<input type="hidden" id="auth_update_no" name="auth_update_no"/>
+</form>
+
 <!-- Context Menu -->
 <div id="context_menu" hidden>
 	<input type="hidden" type="number" id="context_member_no"/>
+	<input type="hidden" type="text" id="context_auth"/>
 	<ul>
 		<li id="context_msg"><a href="#this">쪽지보내기</a></li>
 		<li id="context_history"><a href="#this">이력보기</a></li>
+		<li id="context_auth_manager"><a href="#this">회원권한</a></li>
+		<li id="context_delete"><a href="#this">강퇴하기</a></li>
 	</ul>
 </div>
 
-
-<button>전체 쪽지보내기</button>
 <button id="btn_msg">쪽지보내기</button>
-<button>강퇴</button>
+
 <hr>
 
 <table id ="member_list">
@@ -84,7 +96,7 @@
 	<c:forEach var="member" items="${memberList}">
 		<tr class="member">
 			<td><input class="rowCheck" name="rowCheck" type="checkbox" value="${member.member_no}"></td>
-			<td><a href="#this" class="btn_id" data-mno="${member.member_no}">${member.id}</a></td>
+			<td><a href="#this" class="btn_id" data-mno="${member.member_no}" data-auth="${member.name_auth}">${member.id}</a></td>
 			<td>${member.name}</td>
 			<td>${member.nick}</td>
 			<td>${member.phone}</td>
@@ -202,6 +214,10 @@
 	$('#member_list').on('click','.member .btn_id',function(){
 		var amno = $(this).attr('data-mno');
 		$('#context_member_no').val(amno);
+		$('#auth_member_no').val(amno);
+		
+		var auth = $(this).attr('data-auth');
+		$('#context_auth').val(auth);
 		
 		var atag = $(this).offset();
 		var menubox = $('#context_menu');
@@ -217,6 +233,47 @@
 				$('#context_menu').hide();
 		} 
 	});
+	
+	// 이력보기 - contextMenu클릭
+	$('#context_history').click(function(){
+		var mno = $('#context_member_no').val();
+		$('#history_member_no').val(mno);
+
+		var f = document.getElementById('history_form');
+		var popOption = "width=400, height=300, resizble=no, scrollbars=no, status=no";
+	
+		window.open('',"history_popup" ,popOption);
+		f.submit();  
+
+	});
+	
+	// 회원 권한 - contextMenu클릭
+	$('#context_auth_manager').click(function(){	
+		var auth = $('#context_auth').val();	
+		
+		var check ;
+		
+		if(auth == '회원'){
+			$('#auth_update_no').val(1);
+			check = confirm('관리자 권한을 부여하시겠습니까?');
+		}else{
+			$('#auth_update_no').val(0);
+			check = confirm('관리자 권한을 해제하시겠습니까?');
+		}// end if(auth=='회원')
+		
+		if(check){
+			var f = document.getElementById('auth_form');
+			f.submit();
+		}// end if(check)
+		
+	});
+	
+	if ('${update_auth_result}' == 'success') {
+		alert('권한 수정이 완료되었습니다.');
+	} else if ('${update_auth_result}' == 'fail') {
+		alert('권한 수정이 실패되었습니다.');
+	}
+	
 
 </script>
 

@@ -32,6 +32,20 @@
 		from sw_member m, sw_region r, sw_member_auth a
 		where m.region_no = r.region_no
 				and m.member_auth_no = a.member_auth_no
-		order by m.joindate asc
+		order by a.name_auth asc, m.joindate asc 
+	</select>
+	
+	<!-- 관리자 : 회원 권한 수정 -->
+	<update id="memberAuth">
+		update sw_member
+		set member_auth_no = #{member_auth_no}
+		where member_no = #{member_no}
+	</update>
+	
+	<!-- 회원의 닉네임을 알아오는 -->
+	<select id="memberSelectNick"
+			resultType="edu.spring.studyware.domain.MemberNickDTO">
+		select member_no, nick
+		from sw_member
 	</select>
 </mapper>

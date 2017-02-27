@@ -1,5 +1,9 @@
 package edu.spring.studyware.message.controller;
 
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,21 +27,18 @@ public class MsgController {
 	@Autowired
 	private MsgService msgService;
 	
-	// ÇØ¾ßÇÒ°Í: insert, select, delete, update(»óÅÂ)
+	// ï¿½Ø¾ï¿½ï¿½Ò°ï¿½: insert, select, delete, update(ï¿½ï¿½ï¿½ï¿½)
 	
-	// ÂÊÁö º¸³»±â - DB¿¡ insert
+	// ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ - DBï¿½ï¿½ insert
 	@RequestMapping(value = "/insertMsg", method = RequestMethod.POST)
 	public String insertMsg(int msg_setter, int[] msg_getter, String msg_content, RedirectAttributes attr){
-		logger.info("msg_setter ->"+msg_setter);
-		
+
 		int result = 0;
 		for(int i=0; i<msg_getter.length; i++){
 			msgVO vo = new msgVO(msg_setter, msg_getter[i], msg_content);
 			result = msgService.create(vo);
 		}
-		
-		logger.info("msg_content ->"+msg_content);
-		
+
 		if(result ==1){
 			attr.addFlashAttribute("insert_result","success");
 		}else{
@@ -48,10 +49,21 @@ public class MsgController {
 		
 	}// end insertMsg()
 	
-	// ÂÊÁö¸¦ º¸³½ ÈÄ °á°ú°ª ¸®ÅÏÇØÁÖ´Â °÷
+	// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ö´ï¿½ ï¿½ï¿½
 	@RequestMapping(value = "/msg", method = RequestMethod.GET)
 	public String popupMsg(){
 		return "msg";
 	}// end popupMsg
 	
+	// ìª½ì§€í•¨ ë¶ˆëŸ¬ì˜¤ê¸°
+	@RequestMapping(value="/msgbox", method = RequestMethod.GET)
+	public String msg(int member_no, Model model){
+		List<msgVO> list = msgService.read(member_no);
+		Map<Integer, String> map = msgService.readNick();
+		
+		model.addAttribute("msgList", list);
+		model.addAttribute("nickMap", map);
+		
+		return "mypage/msg_box";
+	}
 }// end MsgController
