@@ -53,4 +53,12 @@ public class MemberDAOImpl implements MemberDAO {
 		return sqlSession.selectList(NAMESPACE + ".memberDTOList");
 	}
 
+	
+	
+	@Override
+	public MemberVO memberSelectOne(String userid) {
+	logger.info("imple??");
+		MemberVO vo=sqlSession.selectOne(NAMESPACE+".memberSelectOne",userid);
+		return vo;
+	}
 }

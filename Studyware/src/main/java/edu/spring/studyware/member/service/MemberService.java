@@ -19,4 +19,8 @@ public interface MemberService {
 	
 	// 4. 모든 데이터를 가지고 회원 가입을 진행한다. DB Insert
 	public abstract int memberSignUp(MemberVO memberVO);
+	
+	//5. 세션id로 memberVO selectOne
+	public abstract MemberVO memberSelectOne(String id);
+	
 }

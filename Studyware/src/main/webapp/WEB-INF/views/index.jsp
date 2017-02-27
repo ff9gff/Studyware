@@ -8,13 +8,30 @@
 </head>
 <body>
 
+
+
+<c:if test="${empty id }">
 	<a href="member/register">회원가입</a>
 
+
 	<a href="member/login">로그인</a>
+		<a href="search">검색</a>
+	</c:if>
+	
+	<c:if test="${not empty id }">
+
+	<a href="logout">로그아웃</a>
+	
+	
+	
 	
 	<a href="search">검색</a>
+	<p>${ name } 님 방가워용..
+	
+	</c:if>
 	
 	<form action=""> </form>
+	
 	
 	<div
 		style="text-align: center; vertical-align: middle; background-color: white; height: 100%">

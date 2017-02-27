@@ -31,4 +31,8 @@
 				and m.member_auth_no = a.member_auth_no
 		order by m.joindate asc
 	</select>
+	
+	<select id="memberSelectOne" resultType="edu.spring.studyware.domain.MemberVO">
+	select * from sw_member where id = #{userid}
+	</select>
 </mapper>

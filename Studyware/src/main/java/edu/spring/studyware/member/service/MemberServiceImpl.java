@@ -45,4 +45,10 @@ public class MemberServiceImpl implements MemberService {
 	}
 	
 	
+	@Override
+	public MemberVO memberSelectOne(String id) {
+		
+		return memberDAO.memberSelectOne(id);
+	}
+	
 }
