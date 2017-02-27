@@ -3,6 +3,7 @@ package edu.spring.studyware.member.persistance;
 import java.util.List;
 
 import edu.spring.studyware.domain.MemberDTO;
+import edu.spring.studyware.domain.MemberNickDTO;
 import edu.spring.studyware.domain.MemberVO;
 import edu.spring.studyware.domain.Region2VO;
 import edu.spring.studyware.domain.Region1VO;
@@ -23,4 +24,10 @@ public interface MemberDAO {
 	
 	// 5. 모든 멤버 리스트를 조회한다
 	public abstract List<MemberDTO> selectList();
+	
+	// 6. 회원 권한을 수정한다.
+	public abstract int updateAuth(int member_no, int member_auth_no);
+	
+	// 7. 회원 닉네임 리스트를 조회한다
+	public abstract List<MemberNickDTO> selectNicklist();
 }

@@ -12,6 +12,8 @@
 
 	<a href="member/login">로그인</a>
 	
+	<a href="msgbox?member_no=1">쪽지함</a>
+	
 	<a href="studyCreate/register">스터디 등록</a>
 	
 	<a href="search">검색</a>
