@@ -11,6 +11,8 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import edu.spring.studyware.domain.LevelNameVO;
+import edu.spring.studyware.domain.LevelValueVO;
 import edu.spring.studyware.domain.TestLevelVO;
 
 @Repository
@@ -26,6 +28,17 @@ public class TestLevelDAOImpl implements TestLevelDAO {
 	@Override
 	public List<TestLevelVO> levelList() {
 		return sqlSession.selectList(NAMESPACE + ".levelList");
+	}
+
+	@Override
+	public int insertLevelName(LevelNameVO levelNameVO) {
+		return sqlSession.insert(NAMESPACE + ".insertlevelName", levelNameVO);
+	}
+
+	@Override
+	public int insertLevelValue(LevelValueVO levelValueVO) {
+		return sqlSession.insert(NAMESPACE + ".insertlevelValue", levelValueVO);
+
 	}
 
 }

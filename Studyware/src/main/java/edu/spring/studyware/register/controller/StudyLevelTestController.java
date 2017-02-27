@@ -17,6 +17,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import edu.spring.studyware.domain.LevelNameVO;
+import edu.spring.studyware.domain.LevelValueVO;
 import edu.spring.studyware.domain.RecruitCateVO;
 import edu.spring.studyware.domain.RecruitTypeVO;
 import edu.spring.studyware.domain.Region1VO;
@@ -75,20 +77,26 @@ public class StudyLevelTestController {
 		logger.info("공부내용: " + level_name);
 		logger.info("공부레벨: " + level_value);
 
-		// 지역1, 지역2 데이터 받아서 DB에 있는 region_no를 먼저 select한다
-		// select된 region_no를 member 테이블에 집어 넣는다
+		// 1. 공부 내용과 수준을 먼저 Insert 해보자
+		LevelNameVO levelNameVO = new LevelNameVO(level_name, null, null, null, null);
+		LevelValueVO levelValueVO = new LevelValueVO(level_value, null, null, null, null);
 
-		/*Region1VO vo = new Region1VO(region1, region2);
-
-		int region_no = memberService.memberRegionNo(vo);
-
-		PrintWriter out = response.getWriter();
-
-		if (region_no > 0) {
-			out.print(region_no);
+		int nameInsertResult = testLevelService.insertLevelName(levelNameVO);		
+		int valueInsertResult = testLevelService.insertLevelValue(levelValueVO);
+		
+		if (valueInsertResult == 1 && nameInsertResult == 1) {
+			logger.info("공부수준 Insert 성공");
+			
+			// 2. 이제 두 개의 테이블의 name_no, value_no를 select 해온다.
+			int name_no = 0;
+			int value_no = 0;
+			
+			if (name_no == value_no) {
+				// 3. select 해온 name_no, value_no를 SW_LEVEL 테이블에 Insert한다!
+				int nameValueNoInsertResult;
+			}
+			
 		}
-
-		logger.info("지역 번호: " + region_no);*/
 
 	}
 }
