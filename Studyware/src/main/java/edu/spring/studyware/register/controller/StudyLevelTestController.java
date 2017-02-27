@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import edu.spring.studyware.domain.LevelNameVO;
+import edu.spring.studyware.domain.LevelVO;
 import edu.spring.studyware.domain.LevelValueVO;
 import edu.spring.studyware.domain.RecruitCateVO;
 import edu.spring.studyware.domain.RecruitTypeVO;
@@ -32,7 +33,7 @@ import edu.spring.studyware.register.service.TestLevelService;
 
 @Controller
 public class StudyLevelTestController {
-
+	
 	private static final Logger logger = LoggerFactory.getLogger(StudyLevelTestController.class);
 
 	@Autowired
@@ -52,10 +53,6 @@ public class StudyLevelTestController {
 		List<RecruitCateVO> recruitCateList = studyCreateService.recruitCateName();
 		List<Region1VO> depth1List = memberService.memberRegionDepth1();
 		List<TestLevelVO> levelList = testLevelService.levelList();
-
-		for (int i = 0; i < recruitCateList.size(); i++) {
-			System.out.println(recruitCateList.get(i).getName_recruit_cate());
-		}
 
 		logger.info("스터디등록");
 
@@ -77,24 +74,31 @@ public class StudyLevelTestController {
 		logger.info("공부내용: " + level_name);
 		logger.info("공부레벨: " + level_value);
 
-		// 1. 공부 내용과 수준을 먼저 Insert 해보자
+		// 1. 공부 내용과 수준을 먼저 Insert해보자
 		LevelNameVO levelNameVO = new LevelNameVO(level_name, null, null, null, null);
 		LevelValueVO levelValueVO = new LevelValueVO(level_value, null, null, null, null);
 
 		int nameInsertResult = testLevelService.insertLevelName(levelNameVO);		
 		int valueInsertResult = testLevelService.insertLevelValue(levelValueVO);
 		
+		// 2. Insert가 성공했을 경우 name_no, value_no를 select 해온다
 		if (valueInsertResult == 1 && nameInsertResult == 1) {
+			
+			logger.info("이름번호: " + levelNameVO.getLevel_name_no());
+			logger.info("벨류번호: " + levelValueVO.getLevel_value_no());
+			
 			logger.info("공부수준 Insert 성공");
 			
-			// 2. 이제 두 개의 테이블의 name_no, value_no를 select 해온다.
-			int name_no = 0;
-			int value_no = 0;
+			// name_no, value_no는 각 VO 객체 안에 저장되어 있다.
+			int name_no = levelNameVO.getLevel_name_no();
+			int value_no = levelValueVO.getLevel_value_no();
 			
 			if (name_no == value_no) {
-				// 3. select 해온 name_no, value_no를 SW_LEVEL 테이블에 Insert한다!
-				// ggggg
-				int nameValueNoInsertResult;
+				
+				LevelVO levelVO = new LevelVO(name_no, value_no);
+				
+				int nameValueNoInsertResult = testLevelService.insertNameValueNO(levelVO);
+				
 			}
 			
 		}

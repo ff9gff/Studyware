@@ -12,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import edu.spring.studyware.domain.LevelNameVO;
+import edu.spring.studyware.domain.LevelVO;
 import edu.spring.studyware.domain.LevelValueVO;
 import edu.spring.studyware.domain.TestLevelVO;
 
@@ -39,6 +40,12 @@ public class TestLevelDAOImpl implements TestLevelDAO {
 	public int insertLevelValue(LevelValueVO levelValueVO) {
 		return sqlSession.insert(NAMESPACE + ".insertlevelValue", levelValueVO);
 
+	}
+
+	@Override
+	public int insertNameValueNO(LevelVO levelVO) {
+		// TODO Auto-generated method stub
+		return 0;
 	}
 
 }

@@ -3,6 +3,7 @@ package edu.spring.studyware.register.service;
 import java.util.List;
 
 import edu.spring.studyware.domain.LevelNameVO;
+import edu.spring.studyware.domain.LevelVO;
 import edu.spring.studyware.domain.LevelValueVO;
 
 //공부수준 테스트용 Service입니다.
@@ -20,5 +21,8 @@ public interface TestLevelService {
 	
 	// 3. 공부수준 Insert
 	public abstract int insertLevelValue(LevelValueVO levelValueVO);
+	
+	// 4. 내용번호 & 수준번호 Insert
+	public abstract int insertNameValueNO(LevelVO levelVO);
 
 }

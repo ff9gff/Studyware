@@ -51,11 +51,6 @@ public class RegisterController {
 		List<Region1VO> depth1List = memberService.memberRegionDepth1();
 		List<TestLevelVO> levelList = testLevelService.levelList();
 
-		
-		for (int i = 0; i < recruitCateList.size(); i++) {
-			System.out.println(recruitCateList.get(i).getName_recruit_cate());
-		}
-		
 		logger.info("스터디등록");
 		
 		model.addAttribute("recruitTypeList", recruitTypeList);

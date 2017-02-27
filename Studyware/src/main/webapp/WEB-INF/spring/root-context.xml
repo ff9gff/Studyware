@@ -41,7 +41,7 @@
 	<!-- SqlSession 빈: SqlSessionFactory를 사용해서 생성 -->
 	<bean id="sqlSession" class="org.mybatis.spring.SqlSessionTemplate"
 		destroy-method="clearCache">
-		<constructor-arg name="sqlSessionFactory" ref="factory" />
+		<constructor-arg index="0" name="sqlSessionFactory" ref="factory" />
 	</bean>
 
 
