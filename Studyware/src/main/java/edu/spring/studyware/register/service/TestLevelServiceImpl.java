@@ -11,7 +11,7 @@ import org.springframework.stereotype.Service;
 import edu.spring.studyware.domain.LevelNameVO;
 import edu.spring.studyware.domain.LevelVO;
 import edu.spring.studyware.domain.LevelValueVO;
-import edu.spring.studyware.domain.TestLevelVO;
+import edu.spring.studyware.domain.LevelListVO;
 import edu.spring.studyware.register.persistance.TestLevelDAO;
 
 @Service
@@ -21,7 +21,7 @@ public class TestLevelServiceImpl implements TestLevelService {
 	private TestLevelDAO testLevelDAO;
 
 	@Override
-	public List<TestLevelVO> levelList() {
+	public List<LevelListVO> levelList() {
 		return testLevelDAO.levelList();
 	}
 

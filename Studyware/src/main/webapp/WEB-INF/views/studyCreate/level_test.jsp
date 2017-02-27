@@ -21,7 +21,7 @@
 			<!-- <br/> -->
 			<div style="width: 100%; text-align: center;">
 
-				<form id="register_form" name="register_form" action="study_level"
+				<form id="register_form" name="register_form" action="study_level2"
 					method="POST" style="text-align: left;">
 			
 					<div style="margin-left: 5%; margin-right: 5%">
@@ -38,7 +38,7 @@
 											</c:forEach>
 										</select>
 										<input id="addButton" name="addButton" type="button" style="cursor:hand;" onclick="insRow()" value="추가">
-									</td>
+									</td><br />
 								</tr>
 							</table>						
 						</div> <br /> 
@@ -87,15 +87,19 @@
 				var oCell = oRow.insertCell();
 				
 				//삽입될 Form Tag
-				var frmTag = "<input type=text name=region_name placeholder=내용 style='width: 20%;'>";
-				frmTag += " <select id='studyLevel' name='studyLevel'> ";
+				var frmTag = "<input type=text name=level" + (click + 1) +  "_name placeholder=내용 style='width: 20%;'>";
+				frmTag += " <select id='level" + (click + 1) + "_value' name='level" + (click + 1) + "_value'> ";
 				frmTag += " <option value='' selected>선택</option>";
 				frmTag += " <option value='상'>상</option>";
 				frmTag += " <option value='중'>중</option>";
 				frmTag += " <option value='하'>하</option>";
 				frmTag += "	</select>";
-				frmTag += " <input type=button value='삭제' onClick='removeRow()' style='cursor:hand'>";
+				frmTag += " <input type=button value='삭제' onClick='removeRow()' style='cursor:hand'><br>";
+				
+				// $('#plusLevel').html(frmTag);
 				oCell.innerHTML = frmTag;
+				
+				
 			} else {
 				alert("공부 항목은 최대 5개까지 입니다!");
 			}
@@ -113,6 +117,18 @@
 		}
 		
 		$('#level1_value').change(function() {
+			alert($(this).val());
+		});
+		$('#level2_value').change(function() {
+			alert($(this).val());
+		});
+		$('#level3_value').change(function() {
+			alert($(this).val());
+		});
+		$('#level4_value').change(function() {
+			alert($(this).val());
+		});
+		$('#level5_value').change(function() {
 			alert($(this).val());
 		});
 	        

@@ -19,7 +19,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import edu.spring.studyware.domain.RecruitCateVO;
 import edu.spring.studyware.domain.RecruitTypeVO;
 import edu.spring.studyware.domain.Region1VO;
-import edu.spring.studyware.domain.TestLevelVO;
+import edu.spring.studyware.domain.LevelListVO;
 import edu.spring.studyware.member.service.MemberService;
 import edu.spring.studyware.register.service.StudyCreateService;
 import edu.spring.studyware.register.service.TestLevelService;
@@ -49,7 +49,7 @@ public class RegisterController {
 		List<RecruitTypeVO> recruitTypeList = studyCreateService.recruitTypeName();
 		List<RecruitCateVO> recruitCateList = studyCreateService.recruitCateName();
 		List<Region1VO> depth1List = memberService.memberRegionDepth1();
-		List<TestLevelVO> levelList = testLevelService.levelList();
+		List<LevelListVO> levelList = testLevelService.levelList();
 
 		logger.info("스터디등록");
 		
