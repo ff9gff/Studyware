@@ -18,5 +18,10 @@ public class AdminServiceImple implements AdminService {
 	public List<MemberDTO> read() {
 		return memberDAO.selectList();
 	}
+	
+	@Override
+	public int updateAuth(int member_no, int member_auth_no) {
+		return memberDAO.updateAuth(member_no, member_auth_no);
+	}
 
 }

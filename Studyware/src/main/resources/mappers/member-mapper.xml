@@ -4,14 +4,17 @@
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
   
 <mapper namespace="edu.spring.studyware.MemberMapper"> 
+	<!-- 회원가입 페이지에서 맨 처음 보여주는 지역1 리스트 -->
 	<select id="memberRegion1" resultType="edu.spring.studyware.domain.Region1VO">
 		select distinct depth1 from sw_region
 	</select>
 	
+	<!-- 지역1을 가지고 지역2 리스트를 찾는다 -->
 	<select id="memberRegion2" resultType="edu.spring.studyware.domain.Region2VO">
 		select depth2 from sw_region where depth1 = #{depth1}
 	</select>
 	
+	<!-- 지역1 & 지역2를 가지고 최종 지역 번호를 찾는다 -->
 	<select id="memberRegionNo" resultType="Integer">
 		select region_no from sw_region where depth1 = #{depth1} and depth2 = #{depth2}
 	</select>
@@ -29,7 +32,21 @@
 		from sw_member m, sw_region r, sw_member_auth a
 		where m.region_no = r.region_no
 				and m.member_auth_no = a.member_auth_no
-		order by m.joindate asc
+		order by a.name_auth asc, m.joindate asc 
+	</select>
+	
+	<!-- 관리자 : 회원 권한 수정 -->
+	<update id="memberAuth">
+		update sw_member
+		set member_auth_no = #{member_auth_no}
+		where member_no = #{member_no}
+	</update>
+	
+	<!-- 회원의 닉네임을 알아오는 -->
+	<select id="memberSelectNick"
+			resultType="edu.spring.studyware.domain.MemberNickDTO">
+		select member_no, nick
+		from sw_member
 	</select>
 	
 	<select id="memberSelectOne" resultType="edu.spring.studyware.domain.MemberVO">

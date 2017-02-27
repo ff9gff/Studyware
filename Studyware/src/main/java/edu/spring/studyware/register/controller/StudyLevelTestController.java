@@ -15,7 +15,10 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 
+import edu.spring.studyware.domain.LevelNameVO;
+import edu.spring.studyware.domain.LevelValueVO;
 import edu.spring.studyware.domain.RecruitCateVO;
 import edu.spring.studyware.domain.RecruitTypeVO;
 import edu.spring.studyware.domain.Region1VO;
@@ -24,88 +27,77 @@ import edu.spring.studyware.member.service.MemberService;
 import edu.spring.studyware.register.service.StudyCreateService;
 import edu.spring.studyware.register.service.TestLevelService;
 
-/**
- * Handles requests for the application home page.
- */
-@Controller
-public class RegisterController {
+//공부수준 테스트용 컨트롤러입니다.
+//테스트 후 삭제할 예정입니다.
 
-	private static final Logger logger = LoggerFactory.getLogger(RegisterController.class);
+@Controller
+public class StudyLevelTestController {
+
+	private static final Logger logger = LoggerFactory.getLogger(StudyLevelTestController.class);
 
 	@Autowired
 	private StudyCreateService studyCreateService;
-	
+
 	@Autowired
 	private MemberService memberService;
 	
-	// 테스트 종료 후 삭제!
 	@Autowired
 	private TestLevelService testLevelService;
-	
+
 	// 1. 스터디 등록 페이지로 이동
-	@RequestMapping(value = "studyCreate/register", method = RequestMethod.GET)
+	@RequestMapping(value = "studyCreate/studyLevelTest", method = RequestMethod.GET)
 	public String studyRegister(Locale locale, Model model) {
-		
+
 		List<RecruitTypeVO> recruitTypeList = studyCreateService.recruitTypeName();
 		List<RecruitCateVO> recruitCateList = studyCreateService.recruitCateName();
 		List<Region1VO> depth1List = memberService.memberRegionDepth1();
 		List<TestLevelVO> levelList = testLevelService.levelList();
 
-		
 		for (int i = 0; i < recruitCateList.size(); i++) {
 			System.out.println(recruitCateList.get(i).getName_recruit_cate());
 		}
-		
+
 		logger.info("스터디등록");
-		
+
 		model.addAttribute("recruitTypeList", recruitTypeList);
 		model.addAttribute("recruitCateList", recruitCateList);
 		model.addAttribute("depth1List", depth1List);
 		model.addAttribute("levelList", levelList);
 
-		return "studyCreate/register_wr";
+		return "studyCreate/level_test";
 
 	}
 
 	///////////////////////////////////////////////////////////////////////////////////
 
-	// 2. 스터디종류 내용을 이용해서 스터디종류 번호를 찾는다
-	@RequestMapping(value = "/studyCreate/studyCate", method = RequestMethod.POST)
-	public void studyCate(Model model, @RequestBody String recruit_cate_name,
-			HttpServletResponse response) throws IOException {
-		logger.info("스터디종류 메소드 호출");
-		logger.info("스터디종류 : " + recruit_cate_name);
+	// 2. 공부 내용 & 레벨 받아서 DB Insert & select 연습
+	@RequestMapping(value = "/studyCreate/study_level", method = RequestMethod.POST)
+	public void region2(Model model, @RequestParam("level1_name") String level_name, @RequestParam("level1_value") String level_value, HttpServletResponse response) throws IOException {
+		logger.info("studyLevel 호출");
+		logger.info("공부내용: " + level_name);
+		logger.info("공부레벨: " + level_value);
 
-		int recruit_cate_no = studyCreateService.recruitCateNo(recruit_cate_name);
+		// 1. 공부 내용과 수준을 먼저 Insert 해보자
+		LevelNameVO levelNameVO = new LevelNameVO(level_name, null, null, null, null);
+		LevelValueVO levelValueVO = new LevelValueVO(level_value, null, null, null, null);
 
-		PrintWriter out = response.getWriter();
-
-		if (recruit_cate_no > 0) {
-			out.print(recruit_cate_no);
+		int nameInsertResult = testLevelService.insertLevelName(levelNameVO);		
+		int valueInsertResult = testLevelService.insertLevelValue(levelValueVO);
+		
+		if (valueInsertResult == 1 && nameInsertResult == 1) {
+			logger.info("공부수준 Insert 성공");
+			
+			// 2. 이제 두 개의 테이블의 name_no, value_no를 select 해온다.
+			int name_no = 0;
+			int value_no = 0;
+			
+			if (name_no == value_no) {
+				// 3. select 해온 name_no, value_no를 SW_LEVEL 테이블에 Insert한다!
+				// ggggg
+				int nameValueNoInsertResult;
+			}
+			
 		}
-
-		logger.info("스터디종류 번호: " + recruit_cate_no);
-
-	}
-	
-	///////////////////////////////////////////////////////////////////////////////////
-	
-	// 3. 모집구분 내용을 이용해서 모집구분 번호를 찾는다
-	@RequestMapping(value = "/studyCreate/studyType", method = RequestMethod.POST)
-	public void studyType(Model model, @RequestBody String recruit_type_name,
-			HttpServletResponse response) throws IOException {
-		logger.info("모집 구분 메소드 호출");
-		logger.info("모집구분 : " + recruit_type_name);
-
-		int recruit_type_no = studyCreateService.recruitTypeNo(recruit_type_name);
-
-		PrintWriter out = response.getWriter();
-
-		if (recruit_type_no > 0) {
-			out.print(recruit_type_no);
-		}
-
-		logger.info("모집 구분번호: " + recruit_type_no);
 
 	}
 }

@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="edu.spring.studyware.StudyCreateMapper">
+
+	<!-- 모집구분 (신규/충원) 리스트 받기 -->
+	<select id="studyTypeList" resultType="edu.spring.studyware.domain.RecruitTypeVO">
+		select name_recruit_type
+		from sw_recruit_type
+	</select>
+
+	<!-- 스터디종류 (IT, 외국어, 철학, 등등) 리스트 받기 -->
+	<select id="studyCateList" resultType="edu.spring.studyware.domain.RecruitCateVO">
+		select name_recruit_cate
+		from sw_recruit_cate
+	</select>
+
+	<!-- 모집구분 내용을 가지고 모집구분 번호 찾기 -->
+	<select id="studyTypeNo" resultType="Integer">
+		select recruit_type_no 
+		from sw_recruit_type
+		where name_recruit_type = #{name_recruit_type}
+	</select>
+
+	<!-- 스터디종류 내용을 가지고 스터디종류 번호 찾기 -->
+	<select id="studyCateNo" resultType="edu.spring.studyware.domain.RecruitCateVO">
+		select recruit_cate_no 
+		from sw_recruit_cate
+		where name_recruit_cate = #{name_recruit_cate}
+	</select>
+	
+	<!-- 공부수준 리스트 테스트용 쿼리. 테스트 종료 후 삭제! -->
+	<select id="levelList" resultType="edu.spring.studyware.domain.TestLevelVO">
+		select level_name from test_level
+	</select>
+	
+	<!-- 공부내용 Insert. 테스트 종료 후 삭제! -->
+	<insert id="insertlevelName">
+		insert into sw_level_name (level1_name) values (#{level1_name})
+	</insert>
+	
+	<!-- 공부수준 Insert. 테스트 종료 후 삭제! -->
+	<insert id="insertlevelValue">
+		insert into sw_level_val (level1_value) values (#{level1_value})
+	</insert>
+</mapper>

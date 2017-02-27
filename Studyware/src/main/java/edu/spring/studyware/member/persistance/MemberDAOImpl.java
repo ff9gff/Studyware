@@ -1,5 +1,6 @@
 package edu.spring.studyware.member.persistance;
 
+import java.util.HashMap;
 import java.util.List;
 
 import org.apache.ibatis.session.SqlSession;
@@ -10,6 +11,7 @@ import org.springframework.stereotype.Repository;
 import org.springframework.stereotype.Service;
 
 import edu.spring.studyware.domain.MemberDTO;
+import edu.spring.studyware.domain.MemberNickDTO;
 import edu.spring.studyware.domain.MemberVO;
 import edu.spring.studyware.domain.Region2VO;
 import edu.spring.studyware.domain.Region1VO;
@@ -52,12 +54,26 @@ public class MemberDAOImpl implements MemberDAO {
 	public List<MemberDTO> selectList() {
 		return sqlSession.selectList(NAMESPACE + ".memberDTOList");
 	}
+	
+	@Override
+	public int updateAuth(int member_no, int member_auth_no) {
+		HashMap<String, Integer> map = new HashMap<>();
+		map.put("member_no", member_no);
+		map.put("member_auth_no", member_auth_no);
+		return sqlSession.update(NAMESPACE + ".memberAuth", map);
+	}
+	
+	@Override
+	public List<MemberNickDTO> selectNicklist() {
+		// TODO Auto-generated method stub
+		return sqlSession.selectList(NAMESPACE + ".memberSelectNick");
+	}
 
 	
 	
 	@Override
 	public MemberVO memberSelectOne(String userid) {
-	logger.info("imple??");
+	
 		MemberVO vo=sqlSession.selectOne(NAMESPACE+".memberSelectOne",userid);
 		return vo;
 	}

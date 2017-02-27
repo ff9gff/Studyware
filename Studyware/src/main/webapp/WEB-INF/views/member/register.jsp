@@ -258,25 +258,22 @@
 			
 			
 			// 지역 선택
-			// 1. 1차 지역 선택
-			// 2. 1차 지역에 해당되는 2차 지역 리스트 (ajax)
-			// 3. 2차 지역 선택
-			// 4. 1,2차 지역 가지고 지역 코드 찾기 (ajax)
-			var list = '';
-			list += '<option value="" selected>선택</option>'
+			var list = '<option value="" selected>선택</option>';
 			$('#depthTwo').html(list);
 			
 			var city1;
 			var city2;
-			
-			depth2List = [];
-			
+				
 			$('#depthOne').change(function() {
+				list = '';
+				list += '<option value="" selected>선택</option>';
+				
+				depth2List = [];
 				city1 = $(this).val();
-		
+				
 				if (city1 == '선택') {
 					alert('시/도를 입력해주세요');
-				} else {		
+				} else {	
 					$.ajax({
 						type : 'post',
 						url : '../member/region2',
@@ -286,7 +283,7 @@
 						},	
 						data : city1,
 						success : function(data){	
-							$(data).each(function() {
+							$(data).each(function() {	
 								depth2List.push({depth2: this.depth2});	
 							});	
 							getAllRegion2(depth2List);
@@ -297,7 +294,7 @@
 	
 			// 디폴트로 나오는 후기 게시글 데이터를 가져오기
 			function getAllRegion2(depth2List) {
-	
+
 				for(var i=0; i<depth2List.length; i++){
 					console.log(depth2List[i].depth2);
 				}
@@ -307,6 +304,7 @@
 				}
 				
 				$('#depthTwo').html(list);
+				list = '';
 			} 
 				//end of getThumnails()*/
 		
@@ -324,7 +322,7 @@
 						url : '../member/region_no_select',
 						headers : {
 							'Content-Type' : 'application/json',
-							'X-HTTP-Method-Override' : 'POST'
+							'X-HTTP-Method-Override' : 'get'
 						},
 						data : {'city1': city1, 'city2': city2},
 						success : function(response) {
