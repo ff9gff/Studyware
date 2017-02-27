@@ -99,6 +99,8 @@ public class StudyLevelTestController {
 				
 				int nameValueNoInsertResult = testLevelService.insertNameValueNO(levelVO);
 				
+				logger.info("level_no: " + nameValueNoInsertResult);
+				
 			}
 			
 		}

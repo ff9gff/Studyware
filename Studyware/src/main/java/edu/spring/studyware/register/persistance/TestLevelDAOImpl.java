@@ -44,8 +44,7 @@ public class TestLevelDAOImpl implements TestLevelDAO {
 
 	@Override
 	public int insertNameValueNO(LevelVO levelVO) {
-		// TODO Auto-generated method stub
-		return 0;
+		return sqlSession.insert(NAMESPACE + ".insertNameValueNo", levelVO);
 	}
 
 }

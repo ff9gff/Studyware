@@ -56,7 +56,7 @@
 	<insert id="insertNameValueNo" parameterType="LevelVO">
 		insert into sw_level (level_name_no, level_value_no) values (#{level_name_no}, #{level_value_no})
 		<selectKey resultType="Integer" keyProperty="level_no" order="AFTER">
-        	SELECT SW_LEVEL_VAL_SEQ.currval FROM dual
+        	SELECT SW_LEVEL_SEQ.currval FROM dual
     	</selectKey>    
 	</insert>
 </mapper>
