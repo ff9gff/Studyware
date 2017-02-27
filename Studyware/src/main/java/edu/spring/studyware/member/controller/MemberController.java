@@ -134,18 +134,18 @@ public class MemberController {
 	}
 	
 	//login check
-	@RequestMapping(value="/login_check", method=RequestMethod.POST)
+	@RequestMapping(value="/member/login_check", method=RequestMethod.POST)
 	public void loginCheck(HttpServletResponse response, String userid, String password) throws IOException{
 		logger.info("아이디:"+userid);
 		logger.info("비번:"+password);
 		
-		//LoginVO vo = service.loginCheck(userid);
-		//PrintWriter out = response.getWriter();
+		MemberVO vo = memberService.memberSelectOne(userid);
+		PrintWriter out = response.getWriter();
 		
-		/*logger.info("아이디는:"+vo.getId());
-		logger.info("비밀번호"+vo.getPwd());*/
+		logger.info("아이디는:"+vo.getId());
+		logger.info("비밀번호"+vo.getPwd());
 		
-		/*if(vo==null){
+		if(vo==null){
 			out.print("1");
 		}else{
 			logger.info("왜 안찍혀");
@@ -154,8 +154,26 @@ public class MemberController {
 			}else{
 				out.print("NOK");
 			}
-		}*/
+		}
 	}
+	
+	
+	
+	
+	@RequestMapping(value="main", method=RequestMethod.POST)
+	public String mainConnect(String id,Model model){
+		
+		model.addAttribute("id",id);
+		logger.info("이름불러오기-");
+		
+		MemberVO vo=memberService.memberSelectOne(id);
+		
+		model.addAttribute("name",vo.getNick());
+		
+		return "index";
+		
+	}
+	
 
 	// 3. 로그아웃
 	@RequestMapping(value = "logout", method = RequestMethod.GET)
@@ -168,6 +186,6 @@ public class MemberController {
 		// session.removeAttribute("mno");
 		// session.invalidate();
 
-		return "redirect:index";
+		return "redirect:/";
 	}
 }

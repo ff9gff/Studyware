@@ -25,6 +25,10 @@ public interface MemberDAO {
 	// 5. 모든 멤버 리스트를 조회한다
 	public abstract List<MemberDTO> selectList();
 	
+
+	// 6. 세션id값으로 memberVO select
+	public abstract MemberVO memberSelectOne(String userid);
+
 	// 6. 회원 권한을 수정한다.
 	public abstract int updateAuth(int member_no, int member_auth_no);
 	

@@ -21,11 +21,34 @@
 		<beans:property name="suffix" value=".jsp" />
 	</beans:bean>
 	
+	
+		<beans:bean id="LoginInterCeptor" class="edu.spring.studyware.member.interceptor.LoginInterceptor"/>
+		<interceptors>
+			<interceptor>
+				<mapping path="/main"/>
+				<beans:ref bean="LoginInterCeptor"/>
+			</interceptor>
+		</interceptors>	
+	
+	
+		<beans:bean id="LogoutInterCeptor" class="edu.spring.studyware.member.interceptor.LogoutInterceptor"/>
+		<interceptors>
+		
+			<interceptor>
+				<mapping path="/logout"/>
+				<beans:ref bean="LogoutInterCeptor"/>
+			</interceptor>
+		</interceptors>
+		
+	
 	<context:component-scan base-package="edu.spring.studyware.**" />
 	<!-- <context:component-scan base-package="edu.spring.studyware.domain.**" />
 	<context:component-scan base-package="edu.spring.studyware.persistence.**" />
 	<context:component-scan base-package="edu.spring.studyware.service.**" />
 	<context:component-scan base-package="edu.spring.studyware.interceptor.**" /> -->
+	
+
+	
 	
 	
 </beans:beans>

@@ -48,4 +48,8 @@
 		select member_no, nick
 		from sw_member
 	</select>
+	
+	<select id="memberSelectOne" resultType="edu.spring.studyware.domain.MemberVO">
+	select * from sw_member where id = #{userid}
+	</select>
 </mapper>

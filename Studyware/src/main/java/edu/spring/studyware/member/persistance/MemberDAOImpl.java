@@ -69,4 +69,12 @@ public class MemberDAOImpl implements MemberDAO {
 		return sqlSession.selectList(NAMESPACE + ".memberSelectNick");
 	}
 
+	
+	
+	@Override
+	public MemberVO memberSelectOne(String userid) {
+	
+		MemberVO vo=sqlSession.selectOne(NAMESPACE+".memberSelectOne",userid);
+		return vo;
+	}
 }
