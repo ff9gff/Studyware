@@ -92,12 +92,12 @@ underline : 있는 상태
 					<input type="button" id="login_btn" value="login" />
 
 					<%-- "로그인" 버튼을 클릭했을 때 서버로 ff쿼리 스트링을 보내기 위해서 --%>
-				<%-- 	<%
+					<%
 						System.out.println(request.getQueryString());
 					%>
 					
 					<input type="hidden" name="query" value="<%=request.getQueryString()%>" />
-					 --%>
+					 
 				</form>
 
 				<a href="find_id">아이디</a>·<a href="find_password">비밀번호 찾기</a>&nbsp;&nbsp;<a 	href="register">회원가입</a></br></br>

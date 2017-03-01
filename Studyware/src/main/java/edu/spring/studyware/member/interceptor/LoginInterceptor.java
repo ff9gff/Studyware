@@ -12,6 +12,11 @@ import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
 public class LoginInterceptor extends HandlerInterceptorAdapter {
 
 	private static final String SESSION_ATTR_ID="login_id";
+	private static final String SESSION_ATTR_MEMBER_NO = "member_no";
+	private static final String SESSION_ATTR_MEMBER_AUTH_NO = "member_auth_no";
+	private static final String SESSION_ATTR_NICK = "login_nick";
+	private static final String SESSION_ATTR_NAME = "login_name";
+
 	
 	private static final Logger logger=LoggerFactory.getLogger(LoginInterceptor.class);
 	@Override
@@ -47,6 +52,7 @@ public class LoginInterceptor extends HandlerInterceptorAdapter {
 		//로그인한다음? 세션정보 저장..
 		
 		HttpSession session=request.getSession();
+		
 		String id=(String)modelAndView.getModel().get("id");
 		String name=(String)modelAndView.getModel().get("name");
 		logger.info("아이디 : "+id);

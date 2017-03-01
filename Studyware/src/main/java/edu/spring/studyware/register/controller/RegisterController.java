@@ -18,8 +18,12 @@ import org.springframework.web.bind.annotation.RequestMethod;
 
 import edu.spring.studyware.domain.RecruitCateVO;
 import edu.spring.studyware.domain.RecruitTypeVO;
+import edu.spring.studyware.domain.RecruitVO;
 import edu.spring.studyware.domain.Region1VO;
 import edu.spring.studyware.domain.LevelListVO;
+import edu.spring.studyware.domain.LevelNameVO;
+import edu.spring.studyware.domain.LevelVO;
+import edu.spring.studyware.domain.LevelValueVO;
 import edu.spring.studyware.member.service.MemberService;
 import edu.spring.studyware.register.service.StudyCreateService;
 import edu.spring.studyware.register.service.TestLevelService;
@@ -103,4 +107,42 @@ public class RegisterController {
 		logger.info("모집 구분번호: " + recruit_type_no);
 
 	}
+
+	///////////////////////////////////////////////////////////////////////////////////
+
+	// 2. 공부 내용 & 레벨  여러개 받기 연습
+	@RequestMapping(value = "/studyCreate/study_create", method = RequestMethod.POST)
+	public void region3(Model model, RecruitVO recruitVO, LevelNameVO levelNameVO, LevelValueVO levelValueVO) {
+		logger.info("studyLevel 호출");
+		
+		int nameInsertResult = testLevelService.insertLevelName(levelNameVO);
+		int valueInsertResult = testLevelService.insertLevelValue(levelValueVO);
+
+		// 2. Insert가 성공했을 경우 name_no, value_no를 select 해온다
+		if (valueInsertResult == 1 && nameInsertResult == 1) {
+
+			logger.info("이름번호: " + levelNameVO.getLevel_name_no());
+			logger.info("벨류번호: " + levelValueVO.getLevel_value_no());
+
+			logger.info("공부수준 Insert 성공");
+
+			// name_no, value_no는 각 VO 객체 안에 저장되어 있다.
+			int name_no = levelNameVO.getLevel_name_no();
+			int value_no = levelValueVO.getLevel_value_no();
+
+			if (name_no == value_no) {
+
+				LevelVO levelVO = new LevelVO(name_no, value_no);
+
+				int nameValueNoInsertResult = testLevelService.insertNameValueNO(levelVO);
+
+				logger.info("level_no: " + nameValueNoInsertResult);
+				
+				
+
+			}
+
+		}
+	}
+	
 }

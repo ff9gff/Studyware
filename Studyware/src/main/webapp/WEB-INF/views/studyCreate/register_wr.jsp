@@ -11,6 +11,9 @@
 </head>
 <body>
 	
+	${ name } ㅎㅎㅎ <br>
+	${ member_no }
+	
 	<div style="text-align: center; vertical-align: middle; background-color: white; height: 100%">
 
 		<div style="display: inline-block; vertical-align: middle; background-color: white; width: 50%; height: 100%; text-align: center;">
@@ -75,15 +78,15 @@
 							<table id="studyTable">
 								<tr>
 									<td>
-										<input type="text" name="region_name" placeholder="내용" style="width: 20%;"/>
-										<select id='studyLevel' name='studyLevel'>
+										<input type="text" name="level1_name" placeholder="내용" style="width: 20%;"/>
+										<select id='level1_value' name='level1_value'>
 											<option value='' selected>선택</option>
 											<c:forEach items="${levelList}" var="level_name">
-												<option id='level_name' value='${level_name}'>${level_name}</option>
+												<option id='level1_value' value='${level_name}'>${level_name}</option>
 											</c:forEach>
 										</select>
 										<input id="addButton" name="addButton" type="button" style="cursor:hand;" onclick="insRow()" value="추가">
-									</td>
+									</td><br />
 								</tr>
 							</table>						
 						</div> <br /> 
@@ -282,15 +285,19 @@
 				var oCell = oRow.insertCell();
 				
 				//삽입될 Form Tag
-				var frmTag = "<input type=text name=region_name placeholder=내용 style='width: 20%;'>";
-				frmTag += " <select id='studyLevel' name='studyLevel'> ";
+				var frmTag = "<input type=text name=level" + (click + 1) +  "_name placeholder=내용 style='width: 20%;'>";
+				frmTag += " <select id='level" + (click + 1) + "_value' name='level" + (click + 1) + "_value'> ";
 				frmTag += " <option value='' selected>선택</option>";
 				frmTag += " <option value='상'>상</option>";
 				frmTag += " <option value='중'>중</option>";
 				frmTag += " <option value='하'>하</option>";
 				frmTag += "	</select>";
-				frmTag += " <input type=button value='삭제' onClick='removeRow()' style='cursor:hand'>";
+				frmTag += " <input type=button value='삭제' onClick='removeRow()' style='cursor:hand'><br>";
+				
+				// $('#plusLevel').html(frmTag);
 				oCell.innerHTML = frmTag;
+				
+				
 			} else {
 				alert("공부 항목은 최대 5개까지 입니다!");
 			}
@@ -307,7 +314,19 @@
 			}
 		}
 		
-		$('#studyLevel').change(function() {
+		$('#level1_value').change(function() {
+			alert($(this).val());
+		});
+		$('#level2_value').change(function() {
+			alert($(this).val());
+		});
+		$('#level3_value').change(function() {
+			alert($(this).val());
+		});
+		$('#level4_value').change(function() {
+			alert($(this).val());
+		});
+		$('#level5_value').change(function() {
 			alert($(this).val());
 		});
 	        

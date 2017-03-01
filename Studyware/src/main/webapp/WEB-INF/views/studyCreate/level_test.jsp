@@ -1,6 +1,3 @@
-
-<!-- 공부수준 등록 연습용 jsp 페이지. 테스트 종료 후 삭제 예정! -->
-
 <%@ page language="java" contentType="text/html; charset=UTF-8"
    pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
@@ -21,7 +18,7 @@
 			<!-- <br/> -->
 			<div style="width: 100%; text-align: center;">
 
-				<form id="register_form" name="register_form" action="study_level2"
+				<form id="register_form" name="register_form" action="study_level"
 					method="POST" style="text-align: left;">
 			
 					<div style="margin-left: 5%; margin-right: 5%">
