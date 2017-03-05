@@ -5,14 +5,13 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<link rel="stylesheet"
+   href="//code.jquery.com/ui/1.8.18/themes/base/jquery-ui.css" />
 <script src="//ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
 <script src="//code.jquery.com/ui/1.8.18/jquery-ui.min.js"></script>
 <title>Insert title here</title>
 </head>
 <body>
-	
-	${ name } ㅎㅎㅎ <br>
-	${ member_no }
 	
 	<div style="text-align: center; vertical-align: middle; background-color: white; height: 100%">
 
@@ -21,20 +20,23 @@
 			<!-- <br/> -->
 			<div style="width: 100%; text-align: center;">
 
-				<form id="register_form" name="register_form" action="study_create"
-					method="post" style="text-align: left;">
+				<form id="register_form" name="register_form" action="study_create"	
+					method="POST" style="text-align: left;">
 			
 					<div style="margin-left: 5%; margin-right: 5%">
 						<span>
 							<p style="color: red; display: inline;">(*)</p> 항목은 반드시 입력해 주세요.
 						</span> <br /> <br />
 						
-						<input type="hidden" name="board_name_no" value="1" readonly="readonly" /> 
+						<input type="number" name="board_name_no" value="1" readonly="readonly" /> 
 						
-						<input type="hidden" name="member_no" value="1" readonly="readonly" /> 
+						<input type="number" name="member_no" value="1" readonly="readonly" /> 
 						
-						<input type="hidden" name="num_now" value="1" readonly="readonly" /> 
+						<input type="number" name="num_now" value="1" readonly="readonly" /> 
 						
+						<input type="number" name="num_max" value="5" readonly="readonly" /> 
+						
+						<input type="number" name="level_no" value="1" readonly="readonly" /> 	
 						
 						<label for="recruitOption">모집 구분 <p style="color: red; display: inline;">(*)</p></label><br> 
 						<select id='recruitType' name='recruitType'>
@@ -42,8 +44,8 @@
 							<c:forEach items="${recruitTypeList}" var="name_recruit_type">
 								<option id='recruit_type' value='${name_recruit_type}'>${name_recruit_type}</option>
 							</c:forEach>
-						</select><br> <br>  
-						<textarea id="recruit_type_no" style="display:none;" name="recruit_type_no" placeholder="모집 구분 번호"></textarea> 
+						</select><br>
+						<textarea id="recruit_type_no" name="recruit_type_no" placeholder="모집 구분 번호"></textarea> <br> <br>  
 						
 	
 						<label for="studyCate">스터디 분류 <p style="color: red; display: inline;">(*)</p></label><br> 
@@ -52,8 +54,8 @@
 							<c:forEach items="${recruitCateList}" var="name_recruit_cate">
 								<option id='study_cate' value='${name_recruit_cate}'>${name_recruit_cate}</option>
 							</c:forEach>
-						</select><br> <br> 
-						<textarea id="recruit_cate_no" style="display:none;" name="recruit_cate_no" placeholder="스터디 분류 번호"></textarea> 
+						</select><br> 
+						<textarea id="recruit_cate_no" name="recruit_cate_no" placeholder="스터디 분류 번호"></textarea> <br> <br>  
 						
 						
 						<label for="depthOne">지역 선택 <p style="color: red; display: inline;">(*)</p></label><br> 
@@ -65,15 +67,15 @@
 						</select>
 						
 						<select id='depthTwo' name='depthTwo'>
-						</select><br> <br> 
-						<textarea id="region_no" style="display:none;" name="region_no" placeholder="지역 번호"></textarea> 
+						</select><br> 
+						<textarea id="region_no" name="region_no" placeholder="지역 번호"></textarea> <br> <br> 
 					
 						<label for="study_name">스터디 제목 <p style="color: red; display: inline;">(*)</p> </label><br> 
 						<input type="text" id="recruit_title" name="recruit_title" placeholder="스터디 제목을 입력해 주세요" style="width: 60%;"><br><br>  						       
 						
-						<label for="num_max">모집 인원 <p style="color: red; display: inline;">(*)</p> </label><br> 
-						<input type="text" id="num_max" name="num_max" placeholder="모집 인원을 입력해 주세요" style="width: 40%;"><br><br> 				
-										
+						<!-- <label for="num_max">모집 인원 <p style="color: red; display: inline;">(*)</p> </label><br> 
+						<input type="text" id="num_max" name="num_max" placeholder="모집 인원을 입력해 주세요" style="width: 40%;"><br><br>  -->				
+										 
 						<div id="study_plus">
 							<table id="studyTable">
 								<tr>
@@ -90,16 +92,21 @@
 								</tr>
 							</table>						
 						</div> <br /> 
+										
+						<input type="text" id="end_date" name="end_date" placeholder="??일" style="border:none;"> <br /> <br />
+								
+						<input type="text" id="recruit_date" name="recruit_date" placeholder="마감일" style="border:none;"> <br /> <br />
 						
-						<div>
-							<textarea id="study_content" name="content" style="width: 100%" rows="15" placeholder="스터디 소개" required></textarea>
+				 		<div>
+							<textarea id="study_content" name="recruit_content" style="width: 100%" rows="15" placeholder="스터디 소개" required></textarea>
 						</div>					
 
 					</div>
 			
 					<br />
-			
-					<div style="width: 100%; display: inline-block; text-align: center;">
+				</form>
+				
+				<div style="width: 100%; display: inline-block; text-align: center;">
 						<div style="width: 25%; display: inline-block;; text-align: center;">
 							<button type="button" id="study_submit_OK">스터디 등록</button>
 						</div>
@@ -108,10 +115,6 @@
 							<button type="button" id="study_submit_Cancel">등록 취소</button>
 						</div>
 					</div><br /><br />
-					
-					<hr />
-						
-				</form>
 				
 			</div>
 			
@@ -147,6 +150,7 @@
 					success : function(data){	
 						recruit_type_no = data;
 						alert("모집 구분 번호: " + recruit_type_no);
+						$('#recruit_type_no').html(recruit_type_no);
 					}
 				});
 			}
@@ -178,6 +182,7 @@
 					success : function(data){	
 						recruit_cate_no = data;
 						alert("모집 구분 번호: " + recruit_cate_no);
+						$('#recruit_cate_no').html(recruit_cate_no);
 					}
 				});
 			}
@@ -346,7 +351,12 @@
 		
 ////////////////////////////////////////////////////////////////////////////////////////////
 			
-		
+		$(function() { //전역변수선언
+			
+			$("#end_date, #recruit_date").datepicker({
+				dateFormat : 'yy-mm-dd'
+			});
+		});
 		
 	</script>
 

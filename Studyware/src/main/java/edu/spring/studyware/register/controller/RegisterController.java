@@ -115,7 +115,12 @@ public class RegisterController {
 	public void region3(Model model, RecruitVO recruitVO, LevelNameVO levelNameVO, LevelValueVO levelValueVO) {
 		logger.info("studyLevel 호출");
 		
-		int nameInsertResult = testLevelService.insertLevelName(levelNameVO);
+		logger.info("스터디제목: " + recruitVO.getRecruit_title());
+		logger.info("스터디지역: " + recruitVO.getRecruit_no());
+		logger.info("스터디내용: " + recruitVO.getRecruit_content());
+		logger.info("스터디마감: " + recruitVO.getRecruit_date());
+		
+		/*int nameInsertResult = testLevelService.insertLevelName(levelNameVO);
 		int valueInsertResult = testLevelService.insertLevelValue(levelValueVO);
 
 		// 2. Insert가 성공했을 경우 name_no, value_no를 select 해온다
@@ -142,7 +147,7 @@ public class RegisterController {
 
 			}
 
-		}
+		}*/
 	}
 	
 }

@@ -25,7 +25,7 @@
 	</select>
 
 	<!-- 스터디종류 내용을 가지고 스터디종류 번호 찾기 -->
-	<select id="studyCateNo" resultType="edu.spring.studyware.domain.RecruitCateVO">
+	<select id="studyCateNo" resultType="Integer">
 		select recruit_cate_no 
 		from sw_recruit_cate
 		where name_recruit_cate = #{name_recruit_cate}
