@@ -28,16 +28,14 @@
 							<p style="color: red; display: inline;">(*)</p> 항목은 반드시 입력해 주세요.
 						</span> <br /> <br />
 						
-						<input type="number" name="board_name_no" value="1" readonly="readonly" /> 
+						<input type="hidden" name="board_name_no" value="1" readonly="readonly" /> 
 						
-						<input type="number" name="member_no" value="1" readonly="readonly" /> 
+						<input type="hidden" name="member_no" value="1" readonly="readonly" /> 
 						
-						<input type="number" name="num_now" value="1" readonly="readonly" /> 
+						<input type="hidden" name="num_now" value="1" readonly="readonly" /> 
 						
-						<input type="number" name="num_max" value="5" readonly="readonly" /> 
-						
-						<input type="number" name="level_no" value="1" readonly="readonly" /> 	
-						
+						<input type="hidden" name="num_max" value="5" readonly="readonly" /> 
+												
 						<label for="recruitOption">모집 구분 <p style="color: red; display: inline;">(*)</p></label><br> 
 						<select id='recruitType' name='recruitType'>
 							<option value='' selected>선택</option>
@@ -92,9 +90,7 @@
 								</tr>
 							</table>						
 						</div> <br /> 
-										
-						<input type="text" id="end_date" name="end_date" placeholder="??일" style="border:none;"> <br /> <br />
-								
+																		
 						<input type="text" id="recruit_date" name="recruit_date" placeholder="마감일" style="border:none;"> <br /> <br />
 						
 				 		<div>

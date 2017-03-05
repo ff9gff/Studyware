@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import edu.spring.studyware.domain.RecruitCateVO;
 import edu.spring.studyware.domain.RecruitTypeVO;
+import edu.spring.studyware.domain.RecruitVO;
 import edu.spring.studyware.member.persistance.MemberDAOImpl;
 
 @Repository
@@ -39,6 +40,11 @@ public class StudyCreateDAOImpl implements StudyCreateDAO {
 	@Override
 	public int recruitCateNo(String studyCate) {
 		return sqlSession.selectOne(NAMESPACE + ".studyCateNo", studyCate);
+	}
+
+	@Override
+	public int insertRecruit(RecruitVO recruitVO) {
+		return sqlSession.insert(NAMESPACE + ".insertRecruit", recruitVO);
 	}
 	
 
