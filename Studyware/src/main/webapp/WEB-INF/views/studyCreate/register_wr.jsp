@@ -335,11 +335,8 @@
 		// 7. 스터디 모집글을 등록한다
         $('#study_submit_OK').click(function() {
         	alert('일해라');
-			/* if (final_check == 1) {
-				$("#register_form").submit();
-			} else {
-				alert('똑바로서라');
-			} */
+			$("#register_form").submit();
+			
 		});
 		
 		// 8. 스터디 모집글 작성을 취소한다
