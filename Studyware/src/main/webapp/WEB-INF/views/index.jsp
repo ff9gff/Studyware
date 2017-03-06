@@ -8,10 +8,27 @@
 </head>
 <body>
 
+
+
+<c:if test="${empty id }">
 	<a href="member/register">회원가입</a>
 
+
 	<a href="member/login">로그인</a>
+		<a href="search">검색</a>
+	</c:if>
 	
+	<c:if test="${not empty id }">
+
+	<a href="logout">로그아웃</a>
+	
+	
+	
+	
+	<a href="search">검색</a>
+	<p>${ name } 님 방가워용..
+	
+	</c:if>
 	<a href="msgbox?member_no=1">쪽지함</a>
 	
 	<a href="studyCreate/register">스터디 등록</a>
@@ -21,6 +38,7 @@
 	<a href="studyCreate/studyLevelTest">공부수준 등록 연습</a>
 	
 	<form action=""> </form>
+	
 	
 	<div
 		style="text-align: center; vertical-align: middle; background-color: white; height: 100%">

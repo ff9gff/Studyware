@@ -19,6 +19,7 @@
 		select region_no from sw_region where depth1 = #{depth1} and depth2 = #{depth2}
 	</select>
 	
+	<!-- 입력정보를 가지고 회원가입 진행 (Insert) -->
 	<insert id="memberSignUp">
 		insert into sw_member (id, pwd, name, nick, phone, email, region_no)
 		values (#{id}, #{pwd}, #{name}, #{nick}, #{phone}, #{email}, #{region_no})
@@ -47,5 +48,9 @@
 			resultType="edu.spring.studyware.domain.MemberNickDTO">
 		select member_no, nick
 		from sw_member
+	</select>
+	
+	<select id="memberSelectOne" resultType="edu.spring.studyware.domain.MemberVO">
+	select * from sw_member where id = #{userid}
 	</select>
 </mapper>

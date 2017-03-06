@@ -5,6 +5,8 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<link rel="stylesheet"
+   href="//code.jquery.com/ui/1.8.18/themes/base/jquery-ui.css" />
 <script src="//ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
 <script src="//code.jquery.com/ui/1.8.18/jquery-ui.min.js"></script>
 <title>Insert title here</title>
@@ -18,8 +20,8 @@
 			<!-- <br/> -->
 			<div style="width: 100%; text-align: center;">
 
-				<form id="register_form" name="register_form" action="study_create"
-					method="post" style="text-align: left;">
+				<form id="register_form" name="register_form" action="study_create"	
+					method="POST" style="text-align: left;">
 			
 					<div style="margin-left: 5%; margin-right: 5%">
 						<span>
@@ -32,15 +34,16 @@
 						
 						<input type="hidden" name="num_now" value="1" readonly="readonly" /> 
 						
-						
+						<input type="hidden" name="num_max" value="5" readonly="readonly" /> 
+												
 						<label for="recruitOption">모집 구분 <p style="color: red; display: inline;">(*)</p></label><br> 
 						<select id='recruitType' name='recruitType'>
 							<option value='' selected>선택</option>
 							<c:forEach items="${recruitTypeList}" var="name_recruit_type">
 								<option id='recruit_type' value='${name_recruit_type}'>${name_recruit_type}</option>
 							</c:forEach>
-						</select><br> <br>  
-						<textarea id="recruit_type_no" style="display:none;" name="recruit_type_no" placeholder="모집 구분 번호"></textarea> 
+						</select><br>
+						<textarea id="recruit_type_no" name="recruit_type_no" placeholder="모집 구분 번호"></textarea> <br> <br>  
 						
 	
 						<label for="studyCate">스터디 분류 <p style="color: red; display: inline;">(*)</p></label><br> 
@@ -49,8 +52,8 @@
 							<c:forEach items="${recruitCateList}" var="name_recruit_cate">
 								<option id='study_cate' value='${name_recruit_cate}'>${name_recruit_cate}</option>
 							</c:forEach>
-						</select><br> <br> 
-						<textarea id="recruit_cate_no" style="display:none;" name="recruit_cate_no" placeholder="스터디 분류 번호"></textarea> 
+						</select><br> 
+						<textarea id="recruit_cate_no" name="recruit_cate_no" placeholder="스터디 분류 번호"></textarea> <br> <br>  
 						
 						
 						<label for="depthOne">지역 선택 <p style="color: red; display: inline;">(*)</p></label><br> 
@@ -62,41 +65,44 @@
 						</select>
 						
 						<select id='depthTwo' name='depthTwo'>
-						</select><br> <br> 
-						<textarea id="region_no" style="display:none;" name="region_no" placeholder="지역 번호"></textarea> 
+						</select><br> 
+						<textarea id="region_no" name="region_no" placeholder="지역 번호"></textarea> <br> <br> 
 					
 						<label for="study_name">스터디 제목 <p style="color: red; display: inline;">(*)</p> </label><br> 
 						<input type="text" id="recruit_title" name="recruit_title" placeholder="스터디 제목을 입력해 주세요" style="width: 60%;"><br><br>  						       
 						
-						<label for="num_max">모집 인원 <p style="color: red; display: inline;">(*)</p> </label><br> 
-						<input type="text" id="num_max" name="num_max" placeholder="모집 인원을 입력해 주세요" style="width: 40%;"><br><br> 				
-										
+						<!-- <label for="num_max">모집 인원 <p style="color: red; display: inline;">(*)</p> </label><br> 
+						<input type="text" id="num_max" name="num_max" placeholder="모집 인원을 입력해 주세요" style="width: 40%;"><br><br>  -->				
+										 
 						<div id="study_plus">
 							<table id="studyTable">
 								<tr>
 									<td>
-										<input type="text" name="region_name" placeholder="내용" style="width: 20%;"/>
-										<select id='studyLevel' name='studyLevel'>
+										<input type="text" name="level1_name" placeholder="내용" style="width: 20%;"/>
+										<select id='level1_value' name='level1_value'>
 											<option value='' selected>선택</option>
 											<c:forEach items="${levelList}" var="level_name">
-												<option id='level_name' value='${level_name}'>${level_name}</option>
+												<option id='level1_value' value='${level_name}'>${level_name}</option>
 											</c:forEach>
 										</select>
 										<input id="addButton" name="addButton" type="button" style="cursor:hand;" onclick="insRow()" value="추가">
-									</td>
+									</td><br />
 								</tr>
 							</table>						
 						</div> <br /> 
+																		
+						<input type="text" id="recruit_date" name="recruit_date" placeholder="마감일" style="border:none;"> <br /> <br />
 						
-						<div>
-							<textarea id="study_content" name="content" style="width: 100%" rows="15" placeholder="스터디 소개" required></textarea>
+				 		<div>
+							<textarea id="study_content" name="recruit_content" style="width: 100%" rows="15" placeholder="스터디 소개" required></textarea>
 						</div>					
 
 					</div>
 			
 					<br />
-			
-					<div style="width: 100%; display: inline-block; text-align: center;">
+				</form>
+				
+				<div style="width: 100%; display: inline-block; text-align: center;">
 						<div style="width: 25%; display: inline-block;; text-align: center;">
 							<button type="button" id="study_submit_OK">스터디 등록</button>
 						</div>
@@ -105,10 +111,6 @@
 							<button type="button" id="study_submit_Cancel">등록 취소</button>
 						</div>
 					</div><br /><br />
-					
-					<hr />
-						
-				</form>
 				
 			</div>
 			
@@ -144,6 +146,7 @@
 					success : function(data){	
 						recruit_type_no = data;
 						alert("모집 구분 번호: " + recruit_type_no);
+						$('#recruit_type_no').html(recruit_type_no);
 					}
 				});
 			}
@@ -175,6 +178,7 @@
 					success : function(data){	
 						recruit_cate_no = data;
 						alert("모집 구분 번호: " + recruit_cate_no);
+						$('#recruit_cate_no').html(recruit_cate_no);
 					}
 				});
 			}
@@ -282,15 +286,19 @@
 				var oCell = oRow.insertCell();
 				
 				//삽입될 Form Tag
-				var frmTag = "<input type=text name=region_name placeholder=내용 style='width: 20%;'>";
-				frmTag += " <select id='studyLevel' name='studyLevel'> ";
+				var frmTag = "<input type=text name=level" + (click + 1) +  "_name placeholder=내용 style='width: 20%;'>";
+				frmTag += " <select id='level" + (click + 1) + "_value' name='level" + (click + 1) + "_value'> ";
 				frmTag += " <option value='' selected>선택</option>";
 				frmTag += " <option value='상'>상</option>";
 				frmTag += " <option value='중'>중</option>";
 				frmTag += " <option value='하'>하</option>";
 				frmTag += "	</select>";
-				frmTag += " <input type=button value='삭제' onClick='removeRow()' style='cursor:hand'>";
+				frmTag += " <input type=button value='삭제' onClick='removeRow()' style='cursor:hand'><br>";
+				
+				// $('#plusLevel').html(frmTag);
 				oCell.innerHTML = frmTag;
+				
+				
 			} else {
 				alert("공부 항목은 최대 5개까지 입니다!");
 			}
@@ -307,7 +315,19 @@
 			}
 		}
 		
-		$('#studyLevel').change(function() {
+		$('#level1_value').change(function() {
+			alert($(this).val());
+		});
+		$('#level2_value').change(function() {
+			alert($(this).val());
+		});
+		$('#level3_value').change(function() {
+			alert($(this).val());
+		});
+		$('#level4_value').change(function() {
+			alert($(this).val());
+		});
+		$('#level5_value').change(function() {
 			alert($(this).val());
 		});
 	        
@@ -316,11 +336,8 @@
 		// 7. 스터디 모집글을 등록한다
         $('#study_submit_OK').click(function() {
         	alert('일해라');
-			/* if (final_check == 1) {
-				$("#register_form").submit();
-			} else {
-				alert('똑바로서라');
-			} */
+			$("#register_form").submit();
+			
 		});
 		
 		// 8. 스터디 모집글 작성을 취소한다
@@ -330,7 +347,12 @@
 		
 ////////////////////////////////////////////////////////////////////////////////////////////
 			
-		
+		$(function() { //전역변수선언
+			
+			$("#end_date, #recruit_date").datepicker({
+				dateFormat : 'yy-mm-dd'
+			});
+		});
 		
 	</script>
 

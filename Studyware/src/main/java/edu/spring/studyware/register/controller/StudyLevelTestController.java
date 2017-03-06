@@ -18,11 +18,12 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import edu.spring.studyware.domain.LevelNameVO;
+import edu.spring.studyware.domain.LevelVO;
 import edu.spring.studyware.domain.LevelValueVO;
 import edu.spring.studyware.domain.RecruitCateVO;
 import edu.spring.studyware.domain.RecruitTypeVO;
 import edu.spring.studyware.domain.Region1VO;
-import edu.spring.studyware.domain.TestLevelVO;
+import edu.spring.studyware.domain.LevelListVO;
 import edu.spring.studyware.member.service.MemberService;
 import edu.spring.studyware.register.service.StudyCreateService;
 import edu.spring.studyware.register.service.TestLevelService;
@@ -40,7 +41,7 @@ public class StudyLevelTestController {
 
 	@Autowired
 	private MemberService memberService;
-	
+
 	@Autowired
 	private TestLevelService testLevelService;
 
@@ -51,11 +52,7 @@ public class StudyLevelTestController {
 		List<RecruitTypeVO> recruitTypeList = studyCreateService.recruitTypeName();
 		List<RecruitCateVO> recruitCateList = studyCreateService.recruitCateName();
 		List<Region1VO> depth1List = memberService.memberRegionDepth1();
-		List<TestLevelVO> levelList = testLevelService.levelList();
-
-		for (int i = 0; i < recruitCateList.size(); i++) {
-			System.out.println(recruitCateList.get(i).getName_recruit_cate());
-		}
+		List<LevelListVO> levelList = testLevelService.levelList();
 
 		logger.info("스터디등록");
 
@@ -69,35 +66,4 @@ public class StudyLevelTestController {
 	}
 
 	///////////////////////////////////////////////////////////////////////////////////
-
-	// 2. 공부 내용 & 레벨 받아서 DB Insert & select 연습
-	@RequestMapping(value = "/studyCreate/study_level", method = RequestMethod.POST)
-	public void region2(Model model, @RequestParam("level1_name") String level_name, @RequestParam("level1_value") String level_value, HttpServletResponse response) throws IOException {
-		logger.info("studyLevel 호출");
-		logger.info("공부내용: " + level_name);
-		logger.info("공부레벨: " + level_value);
-
-		// 1. 공부 내용과 수준을 먼저 Insert 해보자
-		LevelNameVO levelNameVO = new LevelNameVO(level_name, null, null, null, null);
-		LevelValueVO levelValueVO = new LevelValueVO(level_value, null, null, null, null);
-
-		int nameInsertResult = testLevelService.insertLevelName(levelNameVO);		
-		int valueInsertResult = testLevelService.insertLevelValue(levelValueVO);
-		
-		if (valueInsertResult == 1 && nameInsertResult == 1) {
-			logger.info("공부수준 Insert 성공");
-			
-			// 2. 이제 두 개의 테이블의 name_no, value_no를 select 해온다.
-			int name_no = 0;
-			int value_no = 0;
-			
-			if (name_no == value_no) {
-				// 3. select 해온 name_no, value_no를 SW_LEVEL 테이블에 Insert한다!
-				// ggggg
-				int nameValueNoInsertResult;
-			}
-			
-		}
-
-	}
 }

@@ -25,24 +25,123 @@
 	</select>
 
 	<!-- 스터디종류 내용을 가지고 스터디종류 번호 찾기 -->
-	<select id="studyCateNo" resultType="edu.spring.studyware.domain.RecruitCateVO">
+	<select id="studyCateNo" resultType="Integer">
 		select recruit_cate_no 
 		from sw_recruit_cate
 		where name_recruit_cate = #{name_recruit_cate}
 	</select>
 	
 	<!-- 공부수준 리스트 테스트용 쿼리. 테스트 종료 후 삭제! -->
-	<select id="levelList" resultType="edu.spring.studyware.domain.TestLevelVO">
-		select level_name from test_level
+	<select id="levelList" resultType="edu.spring.studyware.domain.LevelListVO">
+		select level_name from sw_level_list
 	</select>
 	
-	<!-- 공부내용 Insert. 테스트 종료 후 삭제! -->
-	<insert id="insertlevelName">
-		insert into sw_level_name (level1_name) values (#{level1_name})
+	<!-- 공부내용 1개 Insert. 테스트 종료 후 삭제! -->
+	<insert id="insertlevelName1" parameterType="LevelNameVO">
+		insert into sw_level_name (level1_name) 
+		values (#{level1_name})
+		<selectKey resultType="Integer" keyProperty="level_name_no" order="AFTER">
+        	SELECT SW_LEVEL_NAME_SEQ.currval FROM dual
+    	</selectKey>    
 	</insert>
 	
-	<!-- 공부수준 Insert. 테스트 종료 후 삭제! -->
-	<insert id="insertlevelValue">
-		insert into sw_level_val (level1_value) values (#{level1_value})
+	<!-- 공부내용 2개 Insert. 테스트 종료 후 삭제! -->
+	<insert id="insertlevelName2" parameterType="LevelNameVO">
+		insert into sw_level_name (level1_name, level2_name) 
+		values (#{level1_name}, #{level2_name})
+		<selectKey resultType="Integer" keyProperty="level_name_no" order="AFTER">
+        	SELECT SW_LEVEL_NAME_SEQ.currval FROM dual
+    	</selectKey>    
 	</insert>
+	
+	<!-- 공부내용 3개 Insert. 테스트 종료 후 삭제! -->
+	<insert id="insertlevelName3" parameterType="LevelNameVO">
+		insert into sw_level_name (level1_name, level2_name, level3_name) 
+		values (#{level1_name}, #{level2_name}, #{level3_name})
+		<selectKey resultType="Integer" keyProperty="level_name_no" order="AFTER">
+        	SELECT SW_LEVEL_NAME_SEQ.currval FROM dual
+    	</selectKey>    
+	</insert>
+	
+	<!-- 공부내용 4개 Insert. 테스트 종료 후 삭제! -->
+	<insert id="insertlevelName4" parameterType="LevelNameVO">
+		insert into sw_level_name (level1_name, level2_name, level3_name, level4_name) 
+		values (#{level1_name}, #{level2_name}, #{level3_name}, #{level4_name})
+		<selectKey resultType="Integer" keyProperty="level_name_no" order="AFTER">
+        	SELECT SW_LEVEL_NAME_SEQ.currval FROM dual
+    	</selectKey>    
+	</insert>
+	
+	<!-- 공부내용 5개 Insert. 테스트 종료 후 삭제! -->
+	<insert id="insertlevelName5" parameterType="LevelNameVO">
+		insert into sw_level_name (level1_name, level2_name, level3_name, level4_name, level5_name) 
+		values (#{level1_name}, #{level2_name}, #{level3_name}, #{level4_name}, #{level5_name})
+		<selectKey resultType="Integer" keyProperty="level_name_no" order="AFTER">
+        	SELECT SW_LEVEL_NAME_SEQ.currval FROM dual
+    	</selectKey>    
+	</insert>
+
+	<!-- ///////////////////////////////////////////////////////////////////////////////////////////////  -->
+
+	<!-- 공부수준 1개 Insert. 테스트 종료 후 삭제! -->
+	<insert id="insertlevelValue1" parameterType="LevelValueVO">
+		insert into sw_level_val (level1_value) 
+		values (#{level1_value})
+		<selectKey resultType="Integer" keyProperty="level_value_no" order="AFTER">
+        	SELECT SW_LEVEL_VAL_SEQ.currval FROM dual
+    	</selectKey>    
+	</insert>
+	
+	<!-- 공부수준 2개 Insert. 테스트 종료 후 삭제! -->
+	<insert id="insertlevelValue2" parameterType="LevelValueVO">
+		insert into sw_level_val (level1_value, level2_value) 
+		values (#{level1_value}, #{level2_value})
+		<selectKey resultType="Integer" keyProperty="level_value_no" order="AFTER">
+        	SELECT SW_LEVEL_VAL_SEQ.currval FROM dual
+    	</selectKey>    
+	</insert>
+	
+	<!-- 공부수준 3개 Insert. 테스트 종료 후 삭제! -->
+	<insert id="insertlevelValue3" parameterType="LevelValueVO">
+		insert into sw_level_val (level1_value, level2_value, level3_value) 
+		values (#{level1_value}, #{level2_value}, #{level3_value})
+		<selectKey resultType="Integer" keyProperty="level_value_no" order="AFTER">
+        	SELECT SW_LEVEL_VAL_SEQ.currval FROM dual
+    	</selectKey>    
+	</insert>
+	
+	<!-- 공부수준 4개 Insert. 테스트 종료 후 삭제! -->
+	<insert id="insertlevelValue4" parameterType="LevelValueVO">
+		insert into sw_level_val (level1_value, level2_value, level3_value, level4_value) 
+		values (#{level1_value}, #{level2_value}, #{level3_value}, #{level4_value})
+		<selectKey resultType="Integer" keyProperty="level_value_no" order="AFTER">
+        	SELECT SW_LEVEL_VAL_SEQ.currval FROM dual
+    	</selectKey>    
+	</insert>
+	
+	<!-- 공부수준 5개 Insert. 테스트 종료 후 삭제! -->
+	<insert id="insertlevelValue5" parameterType="LevelValueVO">
+		insert into sw_level_val (level1_value, level2_value, level3_value, level4_value, level5_value) 
+		values (#{level1_value}, #{level2_value}, #{level3_value}, #{level4_value}, #{level5_value})
+		<selectKey resultType="Integer" keyProperty="level_value_no" order="AFTER">
+        	SELECT SW_LEVEL_VAL_SEQ.currval FROM dual
+    	</selectKey>    
+	</insert>
+	
+	<!-- ///////////////////////////////////////////////////////////////////////////////////////////////  -->
+	
+	<!-- 내용번호, 수준번호 Insert. 테스트 종료 후 삭제! -->
+	<insert id="insertNameValueNo" parameterType="LevelVO">
+		insert into sw_level (level_name_no, level_value_no) values (#{level_name_no}, #{level_value_no})
+		<selectKey resultType="Integer" keyProperty="level_no" order="AFTER">
+        	SELECT SW_LEVEL_SEQ.currval FROM dual
+    	</selectKey>    
+	</insert>
+	
+	<insert id="insertRecruit">
+		insert into sw_recruit (board_name_no, recruit_cate_no, recruit_type_no, member_no, num_now, num_max, region_no, level_no, recruit_title, recruit_content, recruit_date)
+		values (#{board_name_no}, #{recruit_cate_no}, #{recruit_type_no}, #{member_no}, #{num_now}, #{num_max}, #{region_no}, #{level_no}, #{recruit_title}, #{recruit_content}, #{recruit_date})
+	</insert>
+	
+	
 </mapper>

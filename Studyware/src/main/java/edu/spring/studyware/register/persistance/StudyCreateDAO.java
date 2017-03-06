@@ -4,6 +4,7 @@ import java.util.List;
 
 import edu.spring.studyware.domain.RecruitCateVO;
 import edu.spring.studyware.domain.RecruitTypeVO;
+import edu.spring.studyware.domain.RecruitVO;
 
 public interface StudyCreateDAO {
 
@@ -18,5 +19,8 @@ public interface StudyCreateDAO {
 
 	// 4. 스터디 종류 내용을 가지고 스터디 종류 번호를 찾는다
 	public abstract int recruitCateNo(String studyCate);
+
+	// 5. 스터디 등록(Insert)
+	public abstract int insertRecruit(RecruitVO recruitVO);
 
 }

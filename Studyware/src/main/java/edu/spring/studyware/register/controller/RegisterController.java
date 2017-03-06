@@ -18,8 +18,12 @@ import org.springframework.web.bind.annotation.RequestMethod;
 
 import edu.spring.studyware.domain.RecruitCateVO;
 import edu.spring.studyware.domain.RecruitTypeVO;
+import edu.spring.studyware.domain.RecruitVO;
 import edu.spring.studyware.domain.Region1VO;
-import edu.spring.studyware.domain.TestLevelVO;
+import edu.spring.studyware.domain.LevelListVO;
+import edu.spring.studyware.domain.LevelNameVO;
+import edu.spring.studyware.domain.LevelVO;
+import edu.spring.studyware.domain.LevelValueVO;
 import edu.spring.studyware.member.service.MemberService;
 import edu.spring.studyware.register.service.StudyCreateService;
 import edu.spring.studyware.register.service.TestLevelService;
@@ -34,30 +38,25 @@ public class RegisterController {
 
 	@Autowired
 	private StudyCreateService studyCreateService;
-	
+
 	@Autowired
 	private MemberService memberService;
-	
+
 	// 테스트 종료 후 삭제!
 	@Autowired
 	private TestLevelService testLevelService;
-	
+
 	// 1. 스터디 등록 페이지로 이동
 	@RequestMapping(value = "studyCreate/register", method = RequestMethod.GET)
 	public String studyRegister(Locale locale, Model model) {
-		
+
 		List<RecruitTypeVO> recruitTypeList = studyCreateService.recruitTypeName();
 		List<RecruitCateVO> recruitCateList = studyCreateService.recruitCateName();
 		List<Region1VO> depth1List = memberService.memberRegionDepth1();
-		List<TestLevelVO> levelList = testLevelService.levelList();
+		List<LevelListVO> levelList = testLevelService.levelList();
 
-		
-		for (int i = 0; i < recruitCateList.size(); i++) {
-			System.out.println(recruitCateList.get(i).getName_recruit_cate());
-		}
-		
 		logger.info("스터디등록");
-		
+
 		model.addAttribute("recruitTypeList", recruitTypeList);
 		model.addAttribute("recruitCateList", recruitCateList);
 		model.addAttribute("depth1List", depth1List);
@@ -71,8 +70,8 @@ public class RegisterController {
 
 	// 2. 스터디종류 내용을 이용해서 스터디종류 번호를 찾는다
 	@RequestMapping(value = "/studyCreate/studyCate", method = RequestMethod.POST)
-	public void studyCate(Model model, @RequestBody String recruit_cate_name,
-			HttpServletResponse response) throws IOException {
+	public void studyCate(Model model, @RequestBody String recruit_cate_name, HttpServletResponse response)
+			throws IOException {
 		logger.info("스터디종류 메소드 호출");
 		logger.info("스터디종류 : " + recruit_cate_name);
 
@@ -87,13 +86,13 @@ public class RegisterController {
 		logger.info("스터디종류 번호: " + recruit_cate_no);
 
 	}
-	
+
 	///////////////////////////////////////////////////////////////////////////////////
-	
+
 	// 3. 모집구분 내용을 이용해서 모집구분 번호를 찾는다
 	@RequestMapping(value = "/studyCreate/studyType", method = RequestMethod.POST)
-	public void studyType(Model model, @RequestBody String recruit_type_name,
-			HttpServletResponse response) throws IOException {
+	public void studyType(Model model, @RequestBody String recruit_type_name, HttpServletResponse response)
+			throws IOException {
 		logger.info("모집 구분 메소드 호출");
 		logger.info("모집구분 : " + recruit_type_name);
 
@@ -108,4 +107,61 @@ public class RegisterController {
 		logger.info("모집 구분번호: " + recruit_type_no);
 
 	}
+
+	///////////////////////////////////////////////////////////////////////////////////
+
+	// 2. 공부 내용 & 레벨 여러개 받기 연습
+	@RequestMapping(value = "/studyCreate/study_create", method = RequestMethod.POST)
+	public void region3(Model model, RecruitVO recruitVO, LevelNameVO levelNameVO, LevelValueVO levelValueVO) {
+		logger.info("studyLevel 호출");
+
+		logger.info("스터디제목: " + recruitVO.getRecruit_title());
+		logger.info("스터디지역: " + recruitVO.getRecruit_no());
+		logger.info("스터디내용: " + recruitVO.getRecruit_content());
+		logger.info("스터디마감: " + recruitVO.getRecruit_date());
+
+		int nameInsertResult = testLevelService.insertLevelName(levelNameVO);
+		int valueInsertResult = testLevelService.insertLevelValue(levelValueVO);
+
+		// 2. Insert가 성공했을 경우 name_no, value_no를 select 해온다
+		if (valueInsertResult == 1 && nameInsertResult == 1) {
+
+			logger.info("이름번호: " + levelNameVO.getLevel_name_no());
+			logger.info("벨류번호: " + levelValueVO.getLevel_value_no());
+
+			logger.info("공부수준 Insert 성공");
+
+			// name_no, value_no는 각 VO 객체 안에 저장되어 있다.
+			int name_no = levelNameVO.getLevel_name_no();
+			int value_no = levelValueVO.getLevel_value_no();
+
+			if (name_no == value_no) {
+
+				// name_no, value_no를 담아 level_no를 가져올 준비를 한다.
+				LevelVO levelVO = new LevelVO(name_no, value_no);
+
+				// levelVO를 이용해서 level_no를 가져온다.
+				int level_no = testLevelService.insertNameValueNO(levelVO);
+
+				logger.info("level_no: " + level_no);
+
+				if (level_no > 0) {
+
+					recruitVO = new RecruitVO(recruitVO.getBoard_name_no(), recruitVO.getRecruit_cate_no(),
+							recruitVO.getRecruit_type_no(), recruitVO.getMember_no(), recruitVO.getNum_now(),
+							recruitVO.getNum_max(), recruitVO.getRegion_no(), level_no, recruitVO.getRecruit_title(),
+							recruitVO.getRecruit_date(), recruitVO.getRecruit_content(), null, 0, 0);
+					
+					int insertRecruitResult = studyCreateService.insertRecruit(recruitVO);
+
+					if (insertRecruitResult > 0) {
+						logger.info("스터디 등록 성공!");
+					}
+				}
+
+			}
+
+		}
+	}
+
 }

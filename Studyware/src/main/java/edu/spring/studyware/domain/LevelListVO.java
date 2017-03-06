@@ -3,16 +3,16 @@ package edu.spring.studyware.domain;
 // 공부수준 테스트용 VO입니다.
 // 테스트 후 삭제할 예정입니다.
 
-public class TestLevelVO {
+public class LevelListVO {
 	
 	private int level_no;
 	private String level_name;
 	
-	public TestLevelVO() {
+	public LevelListVO() {
 		
 	}
 	
-	public TestLevelVO(int level_no, String level_name) {
+	public LevelListVO(int level_no, String level_name) {
 		this.level_no = level_no;
 		this.level_name = level_name;
 	}

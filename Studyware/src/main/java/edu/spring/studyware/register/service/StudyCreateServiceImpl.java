@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import edu.spring.studyware.domain.RecruitCateVO;
 import edu.spring.studyware.domain.RecruitTypeVO;
+import edu.spring.studyware.domain.RecruitVO;
 import edu.spring.studyware.register.persistance.StudyCreateDAO;
 
 @Service
@@ -34,6 +35,11 @@ public class StudyCreateServiceImpl implements StudyCreateService {
 	@Override
 	public int recruitCateNo(String studyCate) {
 		return studyCreateDAO.recruitCateNo(studyCate);
+	}
+
+	@Override
+	public int insertRecruit(RecruitVO recruitVO) {
+		return studyCreateDAO.insertRecruit(recruitVO);
 	}
 	
 
