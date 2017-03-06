@@ -138,9 +138,12 @@
     	</selectKey>    
 	</insert>
 	
-	<insert id="insertRecruit">
+	<insert id="insertRecruit" parameterType="RecruitVO">
 		insert into sw_recruit (board_name_no, recruit_cate_no, recruit_type_no, member_no, num_now, num_max, region_no, level_no, recruit_title, recruit_content, recruit_date)
 		values (#{board_name_no}, #{recruit_cate_no}, #{recruit_type_no}, #{member_no}, #{num_now}, #{num_max}, #{region_no}, #{level_no}, #{recruit_title}, #{recruit_content}, #{recruit_date})
+		<selectKey resultType="Integer" keyProperty="recruit_no" order="AFTER">
+        	SELECT SW_RECRUIT_SEQ.currval FROM dual
+    	</selectKey>    
 	</insert>
 	
 	

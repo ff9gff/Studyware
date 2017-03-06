@@ -33,12 +33,7 @@
 	
 	<a href="studyCreate/register">스터디 등록</a>
 	
-	<a href="search">검색</a> <br><br><br>
-	
-	<a href="studyCreate/studyLevelTest">공부수준 등록 연습</a>
-	
-	<form action=""> </form>
-	
+	<a href="search">검색</a> <br><br>	
 	
 	<div
 		style="text-align: center; vertical-align: middle; background-color: white; height: 100%">
