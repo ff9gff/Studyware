@@ -63,6 +63,8 @@ public class MsgController {
 		
 		model.addAttribute("msgList", list);
 		model.addAttribute("nickMap", map);
+		model.addAttribute("my_no", member_no);
+		
 		
 		return "mypage/msg_box";
 	}

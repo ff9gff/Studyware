@@ -1,4 +1,3 @@
-
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
@@ -6,11 +5,11 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>Insert title here</title>
+<title>쪽지</title>
 </head>
 <body>
 
-<h1>쪽지보내기</h1>
+<h1>쪽지보기</h1>
 <form id="msg_form" method="post" action="../insertMsg">
 	<span>보내는이</span>
 	<input name="msg_setter" value="${msg_setter }"/>
