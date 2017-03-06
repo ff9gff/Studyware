@@ -41,6 +41,13 @@ public class StudyCreateServiceImpl implements StudyCreateService {
 	public int insertRecruit(RecruitVO recruitVO) {
 		return studyCreateDAO.insertRecruit(recruitVO);
 	}
+
+	@Override
+	public List<RecruitVO> recruitDetail() {
+		return studyCreateDAO.recruitDetail();
+	}
+	
+	
 	
 
 }

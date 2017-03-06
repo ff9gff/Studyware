@@ -1,10 +1,14 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8"%>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
-
+    pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
-<title>Home</title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>Insert title here</title>
+<script src="//code.jquery.com/jquery.min.js"></script>
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"></script>
+<title>Insert title here</title>
 </head>
 <body>
 
@@ -65,8 +69,68 @@
 		</div>
 
 	</div>
-
 	
+	<div class="row" id="TopReview">
+
+	</div>
+	
+	<script>
+	
+	$(document).ready(function() {
+		
+		get_default_recruit();
+	
+		// 디폴트로 나오는 후기 게시글 데이터를 가져오기
+		function get_default_recruit() {
+			
+			DefaultRecruit = [];
+			
+			$.ajax({
+				type : 'GET',
+				url : '/studyware/index/defaultRecruit',
+				headers : {
+					'Content-Type' : 'application/json',
+					'X-HTTP-Method-Override' : 'GET'
+				},	
+				success : function(data){	
+					$(data).each(function() {	
+						DefaultRecruit.push({recruit_title: this.recruit_title, recruit_no: this.recruit_no});	
+					});	
+					push_default_recruit(DefaultRecruit);
+				}
+			});
+				
+		};//end of getThumnails()
+		
+		// 가져온 데이터를 뿌려주자
+		function push_default_recruit(DefaultRecruit) {
+						
+			var list = '';
+			
+			var length = 0;
+			
+			if (DefaultRecruit.length < 4) {
+				length = DefaultRecruit.length;
+			} else {
+				length = 4;
+			}
+			// 무조건 4개만 뿌린다!
+			
+			for(var i = 0; i < length; i++){
+		
+				list += '<div>'
+					  + '<a href="/studyCreate/register_re?recruit_no=' + DefaultRecruit[i].recruit_no + '">'
+					  + DefaultRecruit[i].recruit_title
+					  + '</a>'
+					  + '</div>';
+			}
+
+			$('#TopReview').html(list);
+		};
+		
+	});
+		
+	</script>
 
 </body>
 </html>

@@ -46,6 +46,11 @@ public class StudyCreateDAOImpl implements StudyCreateDAO {
 	public int insertRecruit(RecruitVO recruitVO) {
 		return sqlSession.insert(NAMESPACE + ".insertRecruit", recruitVO);
 	}
+
+	@Override
+	public List<RecruitVO> recruitDetail() {
+		return sqlSession.selectList(NAMESPACE + ".defaultRecruitList");
+	}
 	
 
 }

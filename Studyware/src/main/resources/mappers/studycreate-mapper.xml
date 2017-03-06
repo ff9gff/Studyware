@@ -36,7 +36,7 @@
 		select level_name from sw_level_list
 	</select>
 	
-	<!-- 공부내용 1개 Insert. 테스트 종료 후 삭제! -->
+	<!-- 공부내용 1개 Insert. 동시에 level_name_no 가져옴 -->
 	<insert id="insertlevelName1" parameterType="LevelNameVO">
 		insert into sw_level_name (level1_name) 
 		values (#{level1_name})
@@ -45,7 +45,7 @@
     	</selectKey>    
 	</insert>
 	
-	<!-- 공부내용 2개 Insert. 테스트 종료 후 삭제! -->
+	<!-- 공부내용 2개 Insert. 동시에 level_name_no 가져옴 -->
 	<insert id="insertlevelName2" parameterType="LevelNameVO">
 		insert into sw_level_name (level1_name, level2_name) 
 		values (#{level1_name}, #{level2_name})
@@ -54,7 +54,7 @@
     	</selectKey>    
 	</insert>
 	
-	<!-- 공부내용 3개 Insert. 테스트 종료 후 삭제! -->
+	<!-- 공부내용 3개 Insert. 동시에 level_name_no 가져옴 -->
 	<insert id="insertlevelName3" parameterType="LevelNameVO">
 		insert into sw_level_name (level1_name, level2_name, level3_name) 
 		values (#{level1_name}, #{level2_name}, #{level3_name})
@@ -63,7 +63,7 @@
     	</selectKey>    
 	</insert>
 	
-	<!-- 공부내용 4개 Insert. 테스트 종료 후 삭제! -->
+	<!-- 공부내용 4개 Insert. 동시에 level_name_no 가져옴 -->
 	<insert id="insertlevelName4" parameterType="LevelNameVO">
 		insert into sw_level_name (level1_name, level2_name, level3_name, level4_name) 
 		values (#{level1_name}, #{level2_name}, #{level3_name}, #{level4_name})
@@ -72,7 +72,7 @@
     	</selectKey>    
 	</insert>
 	
-	<!-- 공부내용 5개 Insert. 테스트 종료 후 삭제! -->
+	<!-- 공부내용 5개 Insert. 동시에 level_name_no 가져옴 -->
 	<insert id="insertlevelName5" parameterType="LevelNameVO">
 		insert into sw_level_name (level1_name, level2_name, level3_name, level4_name, level5_name) 
 		values (#{level1_name}, #{level2_name}, #{level3_name}, #{level4_name}, #{level5_name})
@@ -83,7 +83,7 @@
 
 	<!-- ///////////////////////////////////////////////////////////////////////////////////////////////  -->
 
-	<!-- 공부수준 1개 Insert. 테스트 종료 후 삭제! -->
+	<!-- 공부수준 1개 Insert. 동시에 level_value_no 가져옴 -->
 	<insert id="insertlevelValue1" parameterType="LevelValueVO">
 		insert into sw_level_val (level1_value) 
 		values (#{level1_value})
@@ -92,7 +92,7 @@
     	</selectKey>    
 	</insert>
 	
-	<!-- 공부수준 2개 Insert. 테스트 종료 후 삭제! -->
+	<!-- 공부수준 2개 Insert. 동시에 level_value_no 가져옴 -->
 	<insert id="insertlevelValue2" parameterType="LevelValueVO">
 		insert into sw_level_val (level1_value, level2_value) 
 		values (#{level1_value}, #{level2_value})
@@ -101,7 +101,7 @@
     	</selectKey>    
 	</insert>
 	
-	<!-- 공부수준 3개 Insert. 테스트 종료 후 삭제! -->
+	<!-- 공부수준 3개 Insert. 동시에 level_value_no 가져옴 -->
 	<insert id="insertlevelValue3" parameterType="LevelValueVO">
 		insert into sw_level_val (level1_value, level2_value, level3_value) 
 		values (#{level1_value}, #{level2_value}, #{level3_value})
@@ -110,7 +110,7 @@
     	</selectKey>    
 	</insert>
 	
-	<!-- 공부수준 4개 Insert. 테스트 종료 후 삭제! -->
+	<!-- 공부수준 4개 Insert. 동시에 level_value_no 가져옴 -->
 	<insert id="insertlevelValue4" parameterType="LevelValueVO">
 		insert into sw_level_val (level1_value, level2_value, level3_value, level4_value) 
 		values (#{level1_value}, #{level2_value}, #{level3_value}, #{level4_value})
@@ -119,7 +119,7 @@
     	</selectKey>    
 	</insert>
 	
-	<!-- 공부수준 5개 Insert. 테스트 종료 후 삭제! -->
+	<!-- 공부수준 5개 Insert. 동시에 level_value_no 가져옴 -->
 	<insert id="insertlevelValue5" parameterType="LevelValueVO">
 		insert into sw_level_val (level1_value, level2_value, level3_value, level4_value, level5_value) 
 		values (#{level1_value}, #{level2_value}, #{level3_value}, #{level4_value}, #{level5_value})
@@ -130,7 +130,7 @@
 	
 	<!-- ///////////////////////////////////////////////////////////////////////////////////////////////  -->
 	
-	<!-- 내용번호, 수준번호 Insert. 테스트 종료 후 삭제! -->
+	<!-- 내용번호, 수준번호 Insert. 동시에 level_no 가져옴 -->
 	<insert id="insertNameValueNo" parameterType="LevelVO">
 		insert into sw_level (level_name_no, level_value_no) values (#{level_name_no}, #{level_value_no})
 		<selectKey resultType="Integer" keyProperty="level_no" order="AFTER">
@@ -146,5 +146,10 @@
     	</selectKey>    
 	</insert>
 	
+	<!-- ///////////////////////////////////////////////////////////////////////////////////////////////  -->
+	
+	<select id="defaultRecruitList" resultType="edu.spring.studyware.domain.RecruitVO">
+		select * from sw_recruit
+	</select>
 	
 </mapper>

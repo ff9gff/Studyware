@@ -183,5 +183,10 @@ public class RecruitVO {
 	public void setHit(int hit) {
 		this.hit = hit;
 	}
+	
+	@Override
+	public String toString() {
+		return recruit_title;
+	}
 
 }
