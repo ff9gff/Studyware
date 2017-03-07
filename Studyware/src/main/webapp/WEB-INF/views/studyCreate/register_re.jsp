@@ -438,7 +438,7 @@ font-size: 12px;
 	</tr>	
 </table>
 
-<c:if test="${mno eq tourVO.mno}">
+<c:if test="${member_no eq recruitVO.member_no}">
 	<div class="menu">Apply for</div>
 	<table class="apply_panel">
 		<tr style="padding: 0; height: 30px; text-align: center;"><td colspan="3" ><span id="span_join"></span></td></tr>
@@ -456,24 +456,23 @@ font-size: 12px;
 
 <div class="menu" style="margin-top: 20px;"><p style="display: inline-block;">Content</p> 
 	<div style="display: inline-block; float: right;">
-		<c:if test="${mno eq tourVO.mno}">
+		<c:if test="${member_no eq recruitVO.member_no}">
 			<form action="TourBoardUpdateRequest" method="post" id="frm1" style="display: inline-block;">
 				<input type="hidden" name='trip_no' value='${tourVO.trip_no}'/>
 				<input type="button" id='updateButton' class="content_btns" value='수정' />
 			</form>
 		</c:if>
 		
-		<c:if test="${mno eq tourVO.mno or authority >= 2}" >
+		<c:if test="${member_no eq recruitVO.member_no or member_auth_no >= 2}" >
 			<form action="TourBoardDelete" method="post" id="frm2" style="display: inline-block;">
-				<input type="hidden" name='trip_no' value='${tourVO.trip_no}'/>
+				<input type="hidden" name='trip_no' value='${recruitVO.recruit_no}'/>
 				<input type="button" id='deleteButton' class="content_btns" value='삭제' />
 			</form>
 		</c:if>
 		<button type="button" id="tourBoardButton" class="content_btns">목록</button>
 	</div>
 </div>
-<input type="hidden" id="start_date" value="${tourVO.start_date}"/>
-<input type="hidden" id="end_date" value="${tourVO.end_date}"/>
+<input type="hidden" id="end_date" value="${recruitVO.recruit_date}"/>
 
 <div id="content">
 ${tourVO.content}
@@ -481,19 +480,19 @@ ${tourVO.content}
 
 <div class="menu">Comment</div>
 
-<c:if test="${not empty login_id && authority ne 0 }">
+<c:if test="${not empty id && member_auth_no ne 0 }">
 	<div class="reply_panel">
 		<input type="text" name="rcontent" id="rcontent" placeholder="댓글을 입력하세요" required/>
-		<input hidden type="number" name="mno" id="mno" value="${mno}" required/>
+		<input hidden type="number" name="mno" id="mno" value="${member_no}" required/>
 		<button type="button" id="btn_Create">댓글 입력</button>
 	</div>
 </c:if>
-<c:if test="${empty login_id }">
+<c:if test="${empty id }">
 	<div class="reply_panel">
 		<p class="reply_panel_under">로그인 사용자만 사용가능합니다.</p>
 	</div>
 </c:if>
-<c:if test="${not empty login_id && authority eq 0 }">
+<c:if test="${not empty id && member_auth_no eq 0 }">
 	<div class="reply_panel">
 		<p class="reply_panel_under">승인된 사용자만 사용가능합니다.</p>
 	</div>
@@ -516,342 +515,6 @@ $(document).ready(function(){
 	var sessionaut= '<%=(String)session.getAttribute("authority")%>';
 	var sessionnick='<%=(String)session.getAttribute("login_nickname")%>';
 	
-	
-	// wm_tour_reply 리스트
-	replylist=[];
-	// wm_personal 리스트
-	reply_personlist=[];
-	getReplyAlldata();
-	
-	// 댓글 리스트+개인정보 리스트 합체
-	function getReplyAlldata(){
-		// wm_tour_reply 리스트
-		replylist=[];
-		// wm_personal 리스트
-		reply_personlist=[];
-		
-		var url1= '/project03/tour/detail/reply/all/'+trip_no;
-		$.getJSON(url1, function(data1){
-			$(data1).each(function(){
-				replylist.push({rno:this.rno, parentrno:this.parentrno, trip_no:this.trip_no, mno: this.mno, rcontent:this.rcontent, regdate:this.regdate, person:{}});
-			});// end data.each();
-			
-			var url2= '/project03/tour/detail/reply/person/'+trip_no;
-			$.getJSON(url2, function(data2){
-				$(data2).each(function(){
-				reply_personlist.push({mno: this.mno, name: this.name, sex: this.sex, age: this.age, nickname: this.nickname, introduce:this.introduce});
-				});// end data.each();
-			
-			for(var i=0; i<replylist.length; i++){
-				for(var j=0; j<reply_personlist.length; j++){
-					if(replylist[i].mno == reply_personlist[j].mno){
-						replylist[i].person = reply_personlist[j];	
-					};
-				};// end for(j)
-			};// end for(i)
-			getAllReplies();
-			});// end getJSON url2
-		});// end getJSON url1
-	};// getReplyAlldata();
-
-	// DB에서 해당 글번호(trip_no)의 모든 댓글을 읽어오는 함수 정의
-	function getAllReplies(){
-			var list= '';
-			/*data의 개수만큼 function()의 내용을 반복해서 수행*/
-
-			for(var i = 0; i<replylist.length; i++){
-				// date 타입으로 변환
-				var date = new Date(replylist[i].regdate);
-				var dateString = date.toLocaleDateString();
-				var parentrno = replylist[i].rno;
-				
-				if(replylist[i].parentrno == 0){
-				// list에 html추가 - 댓글만
-				list +='<li class="reply_list" data-rno="'+replylist[i].rno+'" data-parent="'+replylist[i].parentrno+'">'
-					+'<dl class="reply_body">'
-						+'<dt class="icno">'+'</dt>'
-						+'<dt class="reply_header">'
-							+'<strong class="nickname"><a href="#this" class="btn_nickname" data-rno="'+replylist[i].mno+'" data-listno="'+i+'">'+replylist[i].person["nickname"]+'</a></strong>'
-							+'<span class="regdate">'+dateString+'</span>'
-							+'<span class="btns">'
-						if( sessionmno != 'null'){
-							if(sessionaut != 0){
-								list +='<a href="#this" class="btn_reply">답글</a>';
-							}	
-							if(replylist[i].mno == sessionmno){
-								list +='<span class="btn_div">|</span>'
-								+'<a href="#this" class="btn_update">수정</a>';
-							}
-							if(replylist[i].mno == sessionmno || sessionaut==2 || sessionaut==3){
-								list+='<span class="btn_div">|</span>'
-								+'<a href="#this" class="btn_delete">삭제</a>';
-							}
-						}
-							list+='</span>'
-						+'</dt>'
-						+'<dd class="rcontent">'+replylist[i].rcontent+'</dd>'
-						+'<dd>'
-							+'<div class="rcon_modify" style="display: none;">'
-								+'<input type="hidden" class="update_rno" value="'+replylist[i].rno+'"/>'
-								+'<table class="update_table">'
-									+'<tbody>'
-										+'<tr>'
-											+'<td><textarea cols="90" rows="3" class="update_textarea">'+replylist[i].rcontent+'</textarea></td>'
-											+'<td><input type="button" class="update_commit" value="수정완료"/></td>'
-										+'</tr>'
-									+'</tbody>'
-								+'</table>'
-							+'<div>'
-						+'</dd>'
-					+'</dl>'
-				+'</li>'
-				+'<li class="reply_insert" style="display: none;" id="'+replylist[i].rno+'">'
-					+'<div class="re_reply_body">'
-						+'<input type="hidden" class="parent_rno" value="'+replylist[i].rno+'"/>'
-						+'<table class="reply_table">'
-							+'<tbody>'
-								+'<tr>'
-									+'<td><strong class="nickname"><a href="#this" class="btn_nickname" data-rno="'+sessionmno+'" data-listno="'+i+'">'+sessionnick+'</a></strong></td>'
-									+'<td><textarea cols="80" rows="3" class="reply_textarea"></textarea></td>'
-									+'<td><input type="button" class="reply_commit" value="답글달기"/></td>'
-								+'</tr>'
-							+'</tbody>'
-						+'</table>'
-					+'</div>'
-				+'</li>';
-		
-					// 대댓글
-					for(var j=0; j<replylist.length; j++){
-						// date 타입으로 변환
-						var date = new Date(replylist[j].regdate);
-						var dateString = date.toLocaleDateString();
-						
-						if(replylist[j].parentrno == parentrno){
-							list +='<li class="reply_list" data-rno="'+replylist[j].rno+'" data-parent="'+replylist[j].parentrno+'">'
-							+'<dl class="re_reply_body">'
-								+'<dt class="icno">'+'</dt>'
-								+'<dt class="reply_header">'
-									+'<strong class="nickname"><a href="#this" class="btn_nickname" data-rno="'+replylist[j].mno+'" data-listno="'+j+'">'+replylist[j].person["nickname"]+'</a></strong>'
-									+'<span class="regdate">'+dateString+'</span>'
-									+'<span class="btns">';
-								if( sessionmno != 'null'){
-									if(sessionaut != 0){
-										list +='<a href="#this" class="btn_reply">답글</a>';
-									}
-										if(replylist[j].mno == sessionmno){
-											list +='<span class="btn_div">|</span>'
-											+'<a href="#this" class="btn_update">수정</a>';
-										}
-										if(replylist[j].mno == sessionmno || sessionaut==2 || sessionaut==3){
-											list+='<span class="btn_div">|</span>'
-											+'<a href="#this" class="btn_delete">삭제</a>';
-										}
-								}
-									list+='</span>'
-								+'</dt>'
-								+'<dd class="rcontent">'+replylist[j].rcontent+'</dd>'
-								+'<dd>'
-									+'<div class="rcon_modify" style="display: none;">'
-										+'<input type="hidden" class="update_rno" value="'+replylist[j].rno+'"/>'
-										+'<table class="update_table">'
-											+'<tbody>'
-												+'<tr>'
-													+'<td><textarea cols="90" rows="3" class="update_textarea">'+replylist[j].rcontent+'</textarea></td>'
-													+'<td><input type="button" class="update_commit" value="수정완료"/></td>'
-												+'</tr>'
-											+'</tbody>'
-										+'</table>'
-									+'<div>'
-								+'</dd>'
-							+'</dl>'
-						+'</li>'
-						+'<li class="reply_insert" style="display: none;" id="'+replylist[j].rno+'">'
-							+'<div class="re_reply_body">'
-								+'<input type="hidden" class="parent_rno" value="'+replylist[j].parentrno+'"/>'
-								+'<table class="reply_table">'
-									+'<tbody>'
-										+'<tr>'
-											+'<td><strong class="nickname"><a href="#this" class="btn_nickname" data-rno="'+sessionmno+'" data-listno="'+j+'">'+sessionnick+'</a></strong></td>'
-											+'<td><textarea cols="80" rows="3" class="reply_textarea"></textarea></td>'
-											+'<td><input type="button" class="reply_commit" value="답글달기"/></td>'
-										+'</tr>'
-									+'</tbody>'
-								+'</table>'
-							+'</div>'
-						+'</li>';
-						};// end if
-					};// end for(j); 
-				
-				}; // end if(this.parentrno == 'null')
-				
-			};// end for(i)
-			
-			$('#replies').html(list);
-			
-	}; // end getAllReplies()
-	
-	// 댓글 입력 버튼 처리
-	$('#btn_Create').click(function(){
-		var rtextString = $('#rcontent').val();
-		if(rtextString == ""){
-			alert('댓글 내용을 입력하세요');
-		}else{
-			var mnoString = $('#mno').val();
-			
-			$.ajax({
-				type: 'post',
-				url: '/project03/tour/detail/reply',
-				headers:{
-					'Content-Type':'application/json',
-					'X-HTTP-Method-Override':'POST'
-				},
-				data: JSON.stringify({
-					parentrno: null,
-					trip_no: trip_no,
-					mno: mnoString,
-					rcontent: rtextString
-				}),
-				success: function(result){
-					if(result == 1){
-						alert('댓글 입력 성공');
-					}
-					getReplyAlldata();
-					$('#rcontent').val('');
-				}
-			});// end ajax
-		}
-		
-	});// end btn_create()
-	
-
-
-	// 댓글 수정 처리 - 수정 눌렀을때 보이기/숨기기/글자바꾸기
-	$('#replies').on('click','.reply_list .btn_update',function(){
-		if($(this).text()=='수정'){ // 수정 버튼 눌렀을 때
-			// 해당 reply_body 찾기
-			var targetbody = $(this).parent().parent().parent();
-			// 기존 rcontent 숨기기
-			targetbody.children('.rcontent').hide();
-			// 수정글씨를 수정 취소로 바꾸기
-			$(this).text('수정 취소');
-			// 수정하는 textarea 나타내기
-			var targetdiv = targetbody.children().children('.rcon_modify');
-			targetdiv.show();
-			
-		}else{
-			// 해당 reply_body 찾기
-			var targetbody = $(this).parent().parent().parent();
-			// 기존 rcontent 숨기기
-			targetbody.children('.rcontent').show();
-			// 수정글씨를 수정 취소로 바꾸기
-			$(this).text('수정');
-			// 수정하는 textarea 나타내기
-			var targetdiv = targetbody.children().children('.rcon_modify');
-			targetdiv.hide();
-
-		}// end if
-
-	});// end update
-	
-	// 수정 완료하기
-	
-	$('#replies').on('click','.reply_list .update_commit',function(){
-		var update_rno = $(this).parent().parent().parent().parent().parent().children('.update_rno').val();
-		var update_text = $(this).parent().parent().children().children('.update_textarea').val();
-	
-		$.ajax({
-			type:'put',
-			url:'/project03/tour/detail/reply/'+update_rno,
-			headers:{
-				'Content-Type':'application/json',
-				'X-Http-Method-Ovveride':'PUT'
-			},
-			data: JSON.stringify({
-				rno: update_rno,
-				rcontent: update_text
-			}),
-			success: function(result){
-				if(result == 'success'){
-					alert('댓글이 수정되었습니다.');
-					getReplyAlldata();
-				}
-			}
-		});// end ajax
-		
-	});// end 수정완료
-
-	
-	// 대댓글 처리 - 답글 눌렀을때 보이기/숨기기/글자바꾸기
-	$('#replies').on('click','.reply_list .btn_reply',function(){
-		var rno = $(this).parent().parent().parent().parent().attr('data-rno');
-		var targetinsert = $('#replies').children('#'+rno);
-		
-		if($(this).text()=='답글'){
-			targetinsert.show();
-			$(this).text('답글 취소');
-		}else{
-			targetinsert.hide();
-			$(this).text('답글');
-		}
-	});// end 대댓글 처리
-	
-	// 대댓글 입력 완료
-	$('#replies').on('click','.reply_insert .re_reply_body .reply_table .reply_commit',function(){
-		var targetdiv = $(this).parent().parent().parent().parent().parent();
-		var targetparent = targetdiv.children('.parent_rno').val();
-		var replycontent = targetdiv.children('.reply_table').children().children().children().children('.reply_textarea').val();
-		var mnoString = $('#mno').val();
-		
-		$.ajax({
-			type: 'post',
-			url: '/project03/tour/detail/reply',
-			headers:{
-				'Content-Type':'application/json',
-				'X-HTTP-Method-Override':'POST'
-			},
-			data: JSON.stringify({
-				parentrno: targetparent,
-				trip_no: trip_no,
-				mno: mnoString,
-				rcontent: replycontent
-			}),
-			success: function(result){
-				if(result == 1){
-					alert('답글 입력 성공');
-					getReplyAlldata();
-				}
-				
-			}
-		});// end ajax
-		
-	}); // end 대댓글 입력
-
-
-	// 댓글 삭제
-	$('#replies').on('click','.reply_list .btn_delete',function(){
-		var targetli = $(this).parent().parent().parent().parent();
-		var rno = targetli.attr('data-rno');
-		var parent = targetli.attr('data-parent');
-		console.log(parent);
-		var check = confirm('정말 삭제하시겠습니까?');
-		if(check == true){
-			$.ajax({
-				type:'delete',
-				url:'/project03/tour/detail/reply/'+rno+'/'+parent,
-				headers:{
-					'Content-Type':'application/json',
-					'X-HTTP-Method-Override':'DELETE'
-				},
-				success: function(result){
-					if(result == 'success'){
-						alert('댓글이 삭제됐습니다.');
-						getReplyAlldata();
-					}
-				}
-			});
-		}// end if
-	});// end reply delete
-		
 	<%-- 신청부분 --%>
 	// wm_tour_join 리스트
 	var applylist = [];
