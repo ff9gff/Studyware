@@ -34,4 +34,8 @@ public interface MemberDAO {
 	
 	// 7. 회원 닉네임 리스트를 조회한다
 	public abstract List<MemberNickDTO> selectNicklist();
+
+	// 8. 로그인 
+	public abstract MemberVO login(MemberVO memberVO);
+	
 }

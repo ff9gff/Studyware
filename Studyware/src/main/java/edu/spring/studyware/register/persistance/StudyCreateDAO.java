@@ -23,4 +23,7 @@ public interface StudyCreateDAO {
 	// 5. 스터디 등록(Insert)
 	public abstract int insertRecruit(RecruitVO recruitVO);
 
+	// 6. 메인화면 스터디 디테일 Test
+	public abstract List<RecruitVO> recruitDetail();
+
 }

@@ -12,6 +12,9 @@
 <title>Insert title here</title>
 </head>
 <body>
+
+<p>${ name } 님 방가워용.. 
+	회원번호: ${ member_no }
 	
 	<div style="text-align: center; vertical-align: middle; background-color: white; height: 100%">
 

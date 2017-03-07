@@ -112,7 +112,7 @@ public class RegisterController {
 
 	// 2. 공부 내용 & 레벨 여러개 받기 연습
 	@RequestMapping(value = "/studyCreate/study_create", method = RequestMethod.POST)
-	public void region3(Model model, RecruitVO recruitVO, LevelNameVO levelNameVO, LevelValueVO levelValueVO) {
+	public String region3(Model model, RecruitVO recruitVO, LevelNameVO levelNameVO, LevelValueVO levelValueVO) {
 		logger.info("studyLevel 호출");
 
 		logger.info("스터디제목: " + recruitVO.getRecruit_title());
@@ -120,6 +120,8 @@ public class RegisterController {
 		logger.info("스터디내용: " + recruitVO.getRecruit_content());
 		logger.info("스터디마감: " + recruitVO.getRecruit_date());
 
+		int recruit_no = 0;
+		
 		int nameInsertResult = testLevelService.insertLevelName(levelNameVO);
 		int valueInsertResult = testLevelService.insertLevelValue(levelValueVO);
 
@@ -141,11 +143,13 @@ public class RegisterController {
 				LevelVO levelVO = new LevelVO(name_no, value_no);
 
 				// levelVO를 이용해서 level_no를 가져온다.
-				int level_no = testLevelService.insertNameValueNO(levelVO);
-
+				int insertLevelResult = testLevelService.insertNameValueNO(levelVO);
+				
+				int level_no = levelVO.getLevel_no();
+				
 				logger.info("level_no: " + level_no);
 
-				if (level_no > 0) {
+				if (insertLevelResult > 0) {
 
 					recruitVO = new RecruitVO(recruitVO.getBoard_name_no(), recruitVO.getRecruit_cate_no(),
 							recruitVO.getRecruit_type_no(), recruitVO.getMember_no(), recruitVO.getNum_now(),
@@ -156,12 +160,26 @@ public class RegisterController {
 
 					if (insertRecruitResult > 0) {
 						logger.info("스터디 등록 성공!");
+						recruit_no = recruitVO.getRecruit_no();
+						
+						logger.info("recruit_no: " + recruit_no);
+						
+						recruitVO = new RecruitVO(recruitVO.getBoard_name_no(), recruit_no, recruitVO.getRecruit_cate_no(),
+								recruitVO.getRecruit_type_no(), recruitVO.getMember_no(), recruitVO.getNum_now(),
+								recruitVO.getNum_max(), recruitVO.getRegion_no(), level_no, recruitVO.getRecruit_title(),
+								recruitVO.getRecruit_date(), recruitVO.getRecruit_content(), null, 0, 0);
+						
+						
 					}
 				}
 
 			}
 
 		}
+		
+		model.addAttribute("recruitVO", recruitVO);
+
+		return "redirect:/studyCreate/register_re?recruit_no=" + recruit_no;
 	}
 
 }

@@ -75,7 +75,7 @@ underline : 있는 상태
 				<h2>로그인</h2>
 				<br /> <br />
 
-				<form id="form">
+				<%-- <form id="form">
 
 					<div style="margin: 5px;">
 						<input type="text" name="id" id="id" placeholder="아이디" required />
@@ -91,16 +91,33 @@ underline : 있는 상태
 					
 					<input type="button" id="login_btn" value="login" />
 
-					<%-- "로그인" 버튼을 클릭했을 때 서버로 ff쿼리 스트링을 보내기 위해서 --%>
+					"로그인" 버튼을 클릭했을 때 서버로 ff쿼리 스트링을 보내기 위해서
 					<%
 						System.out.println(request.getQueryString());
 					%>
 					
 					<input type="hidden" name="query" value="<%=request.getQueryString()%>" />
 					 
+				</form> --%>
+				
+				<form action="login-post" method="post" >
+						
+					<div style="margin: 5px;">
+						<input type="text" name="id" id="id" placeholder="아이디" required />
+					</div>
+					<div style="margin: 5px;">
+						<input type="password" name="pwd" id="pwd" placeholder="비밀번호" required />
+					</div>
+					
+					<br/><br/>
+					<input type="submit" value="로그인" />
+					
+					<%-- "로그인" 버튼을 클릭했을 때 서버로 쿼리 스트링을 보내기 위해서 --%>
+					<% System.out.println(request.getQueryString()); %>
+					<input type="hidden" name="query" value="<%=request.getQueryString()%>" />
 				</form>
-
-				<a href="find_id">아이디</a>·<a href="find_password">비밀번호 찾기</a>&nbsp;&nbsp;<a 	href="register">회원가입</a></br></br>
+				
+				<a href="find_id">아이디</a>·<a href="find_password">비밀번호 찾기</a>&nbsp;&nbsp;<a href="member_register01">회원가입</a>
 				<a href="../../studyware">홈으로</a>
 
 			</div>
@@ -112,7 +129,7 @@ underline : 있는 상태
 	 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
  
 	<script>
-	$(document).ready(function(){
+	/* $(document).ready(function(){
 		$('#login_btn').click(function(){
 		var id=$('#id').val();
 		var pwd=$('#pwd').val();
@@ -129,7 +146,7 @@ underline : 있는 상태
 			success:function(res, status, xhr){
 				
 				if(res=='OK'){
-					$('#form').attr("action","/studyware/main");
+					$('#form').attr("action","/studyware/login-post");
 					$("#form").attr("method","post");
 					$("#form").submit();
 				
@@ -150,7 +167,7 @@ underline : 있는 상태
 		
 		
 		
-	})
+	}) */
 	</script>
 
 </body>

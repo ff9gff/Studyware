@@ -50,5 +50,10 @@ public class MemberServiceImpl implements MemberService {
 		
 		return memberDAO.memberSelectOne(id);
 	}
+
+	@Override
+	public MemberVO login(MemberVO memberVO) {
+		return memberDAO.login(memberVO);
+	}
 	
 }

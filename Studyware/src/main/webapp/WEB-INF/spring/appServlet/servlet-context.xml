@@ -25,7 +25,7 @@
 		<beans:bean id="LoginInterCeptor" class="edu.spring.studyware.member.interceptor.LoginInterceptor"/>
 		<interceptors>
 			<interceptor>
-				<mapping path="/main"/>
+				<mapping path="/member/login-post"/>
 				<beans:ref bean="LoginInterCeptor"/>
 			</interceptor>
 		</interceptors>	
