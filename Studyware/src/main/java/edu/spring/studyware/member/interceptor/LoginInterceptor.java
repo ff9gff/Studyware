@@ -16,8 +16,8 @@ public class LoginInterceptor extends HandlerInterceptorAdapter {
 	private static final String SESSION_ATTR_ID = "id";
 	private static final String SESSION_ATTR_MEMBER_NO = "member_no";
 	private static final String SESSION_ATTR_MEMBER_AUTH_NO = "member_auth_no";
-	private static final String SESSION_ATTR_NICK = "login_nick";
-	private static final String SESSION_ATTR_NAME = "login_name";
+	private static final String SESSION_ATTR_NICK = "nick";
+	private static final String SESSION_ATTR_NAME = "name";
 
 	private static final Logger logger = LoggerFactory.getLogger(LoginInterceptor.class);
 
@@ -69,9 +69,9 @@ public class LoginInterceptor extends HandlerInterceptorAdapter {
 			session.setAttribute(SESSION_ATTR_MEMBER_AUTH_NO, String.valueOf(result.getMember_auth_no()));
 			logger.info(String.valueOf("member_auth_no : " + result.getMember_auth_no()));
 			session.setAttribute(SESSION_ATTR_NICK, String.valueOf(result.getNick()));
-			logger.info(String.valueOf("login_nick : " + result.getNick()));
+			logger.info(String.valueOf("nick : " + result.getNick()));
 			session.setAttribute(SESSION_ATTR_NAME, String.valueOf(result.getName()));
-			logger.info(String.valueOf("login_name : " + result.getName()));
+			logger.info(String.valueOf("name : " + result.getName()));
 
 			// 기존에 최종 요청 주소(dest)가 있는 경우는 해당 페이지로 이동
 			Object dest = session.getAttribute("dest");

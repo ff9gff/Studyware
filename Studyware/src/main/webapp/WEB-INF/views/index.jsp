@@ -30,7 +30,8 @@
 	
 	
 	<a href="search">검색</a>
-	<p>${ name } 님 방가워용..
+	<p>${ name } 님 방가워용.. 
+	회원번호: ${ member_no }
 	
 	</c:if>
 	<a href="msgbox?member_no=1">쪽지함</a>

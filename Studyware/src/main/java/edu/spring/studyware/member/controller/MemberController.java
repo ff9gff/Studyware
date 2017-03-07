@@ -134,7 +134,7 @@ public class MemberController {
 		}
 	}
 
-	// login check
+	/*// login check
 	@RequestMapping(value = "/member/login_check", method = RequestMethod.POST)
 	public void loginCheck(HttpServletResponse response, String userid, String password) throws IOException {
 		logger.info("아이디:" + userid);
@@ -156,7 +156,7 @@ public class MemberController {
 				out.print("NOK");
 			}
 		}
-	}
+	}*/
 
 	/*
 	 * @RequestMapping(value = "main", method = RequestMethod.POST) public
@@ -180,8 +180,8 @@ public class MemberController {
 
 		// 세션에 저장된 로그인 관련 정보를 모두 삭제, 세션 무효화(invalidate)
 		HttpSession session = req.getSession();
-		session.removeAttribute("login_id");
-		session.removeAttribute("mno");
+		session.removeAttribute("id");
+		session.removeAttribute("member_no");
 		session.invalidate();
 
 		return "redirect:/";
