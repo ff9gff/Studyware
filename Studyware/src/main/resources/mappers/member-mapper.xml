@@ -53,4 +53,9 @@
 	<select id="memberSelectOne" resultType="edu.spring.studyware.domain.MemberVO">
 	select * from sw_member where id = #{userid}
 	</select>
+	
+	<select id="login" resultType="edu.spring.studyware.domain.MemberVO">
+      select * from sw_member
+      where id = #{id} and pwd = #{pwd}
+   </select>
 </mapper>

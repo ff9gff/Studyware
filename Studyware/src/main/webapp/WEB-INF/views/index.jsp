@@ -70,7 +70,7 @@
 
 	</div>
 	
-	<div class="row" id="TopReview">
+	<div id="RecruitDetail">
 
 	</div>
 	
@@ -125,7 +125,7 @@
 					  + '</div>';
 			}
 
-			$('#TopReview').html(list);
+			$('#RecruitDetail').html(list);
 		};
 		
 	});

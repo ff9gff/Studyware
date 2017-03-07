@@ -29,27 +29,7 @@ public class DetailTestController {
 	@Autowired
 	private StudyCreateService studyCreateService;
 
-	@RequestMapping(value = "/index/defaultRecruit", method = RequestMethod.GET)
-	public ResponseEntity<List<RecruitVO>> ajaxDetailStudyTest() {
-		
-		logger.info("디폴트 리쿠르트 호출");
-
-		ResponseEntity<List<RecruitVO>> entity = null;
-
-		List<RecruitVO> list = studyCreateService.recruitDetail();
-
-		if (list != null) {
-			// select 성공 한것이다.
-			entity = new ResponseEntity<List<RecruitVO>>(list, HttpStatus.OK);
-		} else {
-			// select 실패이다.
-			entity = new ResponseEntity<List<RecruitVO>>(list, HttpStatus.BAD_REQUEST);
-		}
-
-		logger.info("entity " + entity.getBody());
-
-		return entity;
-	}
+	
 	
 	/*@RequestMapping(value = "/review_detail", method = RequestMethod.GET)
 	public String reviewDetail(int review_no, Model model, HttpSession session) {

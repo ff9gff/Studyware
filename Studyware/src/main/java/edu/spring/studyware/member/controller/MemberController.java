@@ -8,6 +8,7 @@ import java.util.Locale;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -45,8 +46,6 @@ public class MemberController {
 
 	}
 
-	
-
 	// 2. 아이디 중복 체크
 	@RequestMapping(value = "/member/checkid", method = RequestMethod.POST)
 	public void checkid(@RequestBody MemberVO memberVO, HttpServletRequest request, HttpServletResponse response)
@@ -68,9 +67,9 @@ public class MemberController {
 
 		PrintWriter out = response.getWriter();
 
-		 if (memberVO.getNick() != null) {
-			 out.print("NOK");
-		 } // end if
+		if (memberVO.getNick() != null) {
+			out.print("NOK");
+		} // end if
 	} // checkid(request, response)
 
 	// 4. 데이터 받아서 회원가입하기
@@ -93,13 +92,14 @@ public class MemberController {
 		if (signUpResult > 0) {
 			logger.info("회원가입 성공");
 		}
-		
+
 		return "member/welcome";
 
 	}
 
-	////////////////////////////////////// 로 그 인  ////////////////////////////////////// 
-	
+	////////////////////////////////////// 로 그 인
+	////////////////////////////////////// //////////////////////////////////////
+
 	// 1. 로그인.jsp 호출
 	@RequestMapping(value = "/member/login", method = RequestMethod.GET)
 	public String loginGET(HttpServletRequest request) {
@@ -114,10 +114,11 @@ public class MemberController {
 		logger.info("입력 ID : " + memberVO.getId());
 		logger.info("입력 PW : " + memberVO.getPwd());
 
-		// MemberVO result = memberService.login(vo);
+		MemberVO result = memberService.login(memberVO);
 		// logger.info("result : " + result.toString()); // 로그인 실패시 result 값이
 		// null 값이 오기 때문에 NullPointerException 발생
-		// model.addAttribute("login_result", result);
+
+		model.addAttribute("login_result", result);
 		// 모델 객체에 속성(attribute)를 설정하면,
 		// 인터셉터의 postHandle() 메소드의 ModelAndView 객체로 전달됨.
 
@@ -125,66 +126,63 @@ public class MemberController {
 		logger.info("query : " + query);
 		if (query != null && !query.equals("null")) {
 			// 요청 파라미터 query에 값이 들어 있는 경우
-			String dest = query.substring(4); // substring : 문자열을 잘라서, 4번째 문자열부터
+			String dest = query.substring(4); // substring : 문자열을 잘라서, 4번째
+												// 문자열부터
 			// 시작하겠다. (0 부터 시작!)
 			logger.info("dest : " + dest);
 			request.getSession().setAttribute("dest", dest);
 		}
-
 	}
-	
-	//login check
-	@RequestMapping(value="/member/login_check", method=RequestMethod.POST)
-	public void loginCheck(HttpServletResponse response, String userid, String password) throws IOException{
-		logger.info("아이디:"+userid);
-		logger.info("비번:"+password);
-		
+
+	// login check
+	@RequestMapping(value = "/member/login_check", method = RequestMethod.POST)
+	public void loginCheck(HttpServletResponse response, String userid, String password) throws IOException {
+		logger.info("아이디:" + userid);
+		logger.info("비번:" + password);
+
 		MemberVO vo = memberService.memberSelectOne(userid);
 		PrintWriter out = response.getWriter();
-		
-		logger.info("아이디는:"+vo.getId());
-		logger.info("비밀번호"+vo.getPwd());
-		
-		if(vo==null){
+
+		logger.info("아이디는:" + vo.getId());
+		logger.info("비밀번호" + vo.getPwd());
+
+		if (vo == null) {
 			out.print("1");
-		}else{
+		} else {
 			logger.info("왜 안찍혀");
-			if(password.equals(vo.getPwd())){
+			if (password.equals(vo.getPwd())) {
 				out.print("OK");
-			}else{
+			} else {
 				out.print("NOK");
 			}
 		}
 	}
-	
-	
-	
-	
-	@RequestMapping(value="main", method=RequestMethod.POST)
-	public String mainConnect(String id,Model model){
-		
-		model.addAttribute("id",id);
-		logger.info("이름불러오기-");
-		
-		MemberVO vo=memberService.memberSelectOne(id);
-		
-		model.addAttribute("name",vo.getNick());
-		
-		return "index";
-		
-	}
-	
+
+	/*
+	 * @RequestMapping(value = "main", method = RequestMethod.POST) public
+	 * String mainConnect(String id, Model model) {
+	 * 
+	 * model.addAttribute("id", id); logger.info("이름불러오기-");
+	 * 
+	 * MemberVO vo = memberService.memberSelectOne(id);
+	 * 
+	 * model.addAttribute("name", vo.getNick());
+	 * 
+	 * return "index";
+	 * 
+	 * }
+	 */
 
 	// 3. 로그아웃
 	@RequestMapping(value = "logout", method = RequestMethod.GET)
 	public String logout(HttpServletRequest req) {
 		logger.info("logout() 호출...");
 
-		// // 세션에 저장된 로그인 관련 정보를 모두 삭제, 세션 무효화(invalidate)
-		// HttpSession session = req.getSession();
-		// session.removeAttribute("login_id");
-		// session.removeAttribute("mno");
-		// session.invalidate();
+		// 세션에 저장된 로그인 관련 정보를 모두 삭제, 세션 무효화(invalidate)
+		HttpSession session = req.getSession();
+		session.removeAttribute("login_id");
+		session.removeAttribute("mno");
+		session.invalidate();
 
 		return "redirect:/";
 	}
