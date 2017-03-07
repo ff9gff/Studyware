@@ -31,11 +31,29 @@ public class MsgDAOImple implements MsgDAO {
 	}
 
 	@Override
-	public int update(int msg_no) {
+	public msgVO selectRow(int msg_no) {
+		logger.info("selectRow(): msg_no="+msg_no);
+		return sqlSession.selectOne(NAMESPACE+".selectRow", msg_no);
+	}
+	
+	@Override
+	public int updateState(int msg_no) {
 		logger.info("update(): msg_no:"+msg_no);
-		return sqlSession.update(NAMESPACE+".update",msg_no);
+		return sqlSession.update(NAMESPACE+".updateState",msg_no);
 	}
 
+	@Override
+	public int deleteSe(int msg_no) {
+		logger.info("deleteSe(): msg_no:"+msg_no);
+		return sqlSession.update(NAMESPACE+".delete_se",msg_no);
+	}
+	
+	@Override
+	public int deleteRe(int msg_no) {
+		logger.info("deleteRe(): msg_no:"+msg_no);
+		return sqlSession.update(NAMESPACE+".delete_re",msg_no);
+	}
+	
 	@Override
 	public int delete(int msg_no) {
 		logger.info("delete(): msg_no:"+msg_no);

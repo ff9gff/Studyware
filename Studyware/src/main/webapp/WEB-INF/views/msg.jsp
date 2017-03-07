@@ -11,7 +11,7 @@
 <body>
 
 <h1>쪽지보내기</h1>
-<form id="msg_form" method="post" action="../insertMsg">
+<form id="msg_form" method="post" action="../studyware/insertMsg">
 	<span>보내는이</span>
 	<input name="msg_setter" value="${msg_setter }"/>
 	<br>

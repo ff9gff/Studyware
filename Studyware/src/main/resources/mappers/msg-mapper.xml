@@ -16,14 +16,32 @@
 		order by reg_date asc
 	</select>
 	
-	<update id="update">
+	<select id="selectRow"
+			resultType="edu.spring.studyware.domain.msgVO">
+		select*from sw_msg
+		where msg_no = #{msg_no}
+	</select>
+	
+	<update id="updateState">
 		update sw_msg
 		set state = 1
 		where msg_no = #{msg_no}
 	</update>
 	
+	<update id="delete_se">
+		update sw_msg
+		set se_del = 1
+		where msg_no = #{msg_no}
+	</update>
+	
+	<update id="delete_re">
+		update sw_msg
+		set re_del = 1
+		where msg_no = #{msg_no}
+	</update>
+	
 	<delete id="delete">
-		delete from sw_msg where msg_no = #{msgno}
+		delete from sw_msg where msg_no = #{msg_no}
 	</delete>
 
 

@@ -48,7 +48,7 @@
 
 
 <!-- 쪽지 보내기 -->
-<form id="msg_form" action="admin/msg" method="post" target="testpop">
+<form id="msg_form" action="../studyware/popupMsg" method="post" target="testpop">
 	<input type="hidden" id="msg_setter" name="msg_setter" value="1"/>
 	<div id ="msg_getter"></div>
 </form>

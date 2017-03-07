@@ -39,17 +39,7 @@ public class AdminController {
 		return "management/admin";
 	}
 	
-	// 쪽지보내기 처음 팝업 실행
-	@RequestMapping(value = "/msg", method = RequestMethod.POST)
-	public String toggleMsg(int msg_setter, int[] msg_getter, Model model) {
-		System.out.println("setter: " + msg_setter);
-		System.out.println("getter: " + msg_getter);
 
-		model.addAttribute("msg_setter", msg_setter);
-		model.addAttribute("msg_getter", msg_getter);
-
-		return "msg";
-	}
 	
 	// 회원 권한 수정
 	@RequestMapping(value = "/auth", method = RequestMethod.POST)

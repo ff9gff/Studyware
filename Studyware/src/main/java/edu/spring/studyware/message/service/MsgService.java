@@ -9,8 +9,9 @@ public interface MsgService {
 
 	public abstract int create(msgVO vo);
 	public abstract List<msgVO> read(int member_no);
-	public abstract int update(int msg_no);
-	public abstract int delete(int msg_no);
+	public abstract msgVO readRow(int msg_no);
+	public abstract int updateState(int msg_no);
+	public abstract int delete(String member, int msg_no);
 	public abstract Map<Integer, String> readNick();
 	
 	

@@ -10,20 +10,20 @@
 <body>
 
 <h1>쪽지보기</h1>
-<form id="msg_form" method="post" action="../insertMsg">
+<form id="msg_form" method="post" action="/studyware/popupMsg" target="popupMsg">
 	<span>보내는이</span>
-	<input name="msg_setter" value="${msg_setter }"/>
+	<input name="msg_getter" value="${msgVO.se_member_no }"/>
 	<br>
 	<span>받는이</span>
-	<c:forEach items="${msg_getter }" var="getter">
-		<input name="msg_getter" value="${getter }"/>
-		<br>
-	</c:forEach>
-	<textarea name="msg_content"></textarea>
+		<input name="msg_setter" value="${msgVO.re_member_no }"/>
+	<textarea name="msg_content">${msgVO.content}</textarea>
 	
 </form>
 
-<button id="send_button">보내기</button>
+<c:if test="${readType eq 'getter' }">
+<button id="send_button">답장하기</button>
+</c:if>
+<button id="close_button">닫기</button>
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
 <script>
@@ -31,18 +31,18 @@
 
 $('#send_button').click(function(){
 	var f = document.getElementById('msg_form');
+	var popOption = "width=400, height=300, resizble=no, scrollbars=no, status=no";
+
+	window.open('',"popupMsg" ,popOption);
 	f.submit();
+	self.close();
+
 
 });
 
-if ('${insert_result}' == 'success') {
-	alert('쪽지 보내기 성공!');
+$('#close_button').click(function(){
 	self.close();
-	
-} else if ('${insert_result}' == 'fail') {
-	alert('쪽지 보내기 실패!');
-	self.close();
-}
+});
 
 
 </script>

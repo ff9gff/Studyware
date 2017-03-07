@@ -51,6 +51,7 @@ ul.tabs li.active {
     padding: 5px;
     font-size: 12px;
     display: none;
+	border-collapse:collapse;
 }
 .tab_container .tab_content ul {
     width:100%;
@@ -87,8 +88,9 @@ ul.tabs li.active {
 	text-align: center;
 }
 .msg_th{
-	border-bottom: 3px solid #eee; 
+	border-bottom: 1px solid #eee; 
 }
+
 #context_menu{
 	width: 80px;
 	position: absolute;
@@ -123,7 +125,7 @@ ul.tabs li.active {
 	</ul>
 </div>
 <!-- 쪽지 보내기 -->
-<form id="msg_form" action="admin/msg" method="post" target="testpop">
+<form id="msg_form" action="/studyware/popupMsg" method="post" target="testpop">
 	<input type="hidden" id="msg_setter" name="msg_setter" value="1"/>
 	<div id ="msg_getter"></div>
 </form>
@@ -133,9 +135,19 @@ ul.tabs li.active {
 	<input type="hidden" id="history_member_no" name="history_member_no"/>
 </form>
 
+<!-- 삭제하기 -->
+<form id="msg_delete_form" action="/studyware/deleteMsg" method="post">
+	<input type="hidden" id="delete_member_no" name="delete_member_no" value="${my_no}"/>
+	<input type="hidden" id="delete_member" name="delete_member"/>
+	<div id ="delete_msg"></div>
+</form>
 
+<!-- 쪽지 보기 -->
+<form id="msg_read_form" action="/studyware/readMsg" method="post" target="read_popup">
+	<input type="hidden" id="read_msg_no" name="read_msg_no" value="0"/>
+	<input type="hidden" id="read_type" name="read_type"/>
+</form>
 	<h1>여기는 쪽지함입니다.</h1>
-	<button id="btn_send_msg">답장</button>
 	<button id="btn_delete_msg">삭제</button>
 	<div id="container">
 		<ul class="tabs">
@@ -152,7 +164,7 @@ ul.tabs li.active {
 
 				</tr>
 				<c:forEach var="msg" items="${msgList}">
-					<c:if test="${msg.re_member_no == my_no}">
+					<c:if test="${msg.re_member_no == my_no && msg.re_del == 0}">
 						<tr class="msg_td" onmouseover="mouseoverTR(this)" onmouseout="mouseoutTR(this)">
 							<td class="table_check"><input class="rowCheck" onclick="clickRowCheck('rowCheck1')" name="rowCheck1" type="checkbox"
 								value="${msg.msg_no}"/></td>
@@ -163,10 +175,9 @@ ul.tabs li.active {
 							</td>
 							<td class="table_state">
 								<c:if test="${msg.state == 0}">new</c:if>
-								<c:if test="${msg.state == 1}">읽음</c:if>
 							</td>
 							<td class="table_content">
-								<a href="#this" class="btn_content" data-msgno="${msg.msg_no}">
+								<a href="#this" class="btn_content" data-msgno="${msg.msg_no}" onclick="clickContent(this)">
 								${msg.content}
 								</a>
 							</td>
@@ -186,7 +197,7 @@ ul.tabs li.active {
 
 				</tr>
 				<c:forEach var="msg" items="${msgList}">
-					<c:if test="${msg.se_member_no == my_no}">
+					<c:if test="${msg.se_member_no == my_no && msg.se_del == 0}">
 						<tr class="msg_td"  onmouseover="mouseoverTR(this)" onmouseout="mouseoutTR(this)">
 							<td class="table_check"><input class="rowCheck"  onclick="clickRowCheck('rowCheck2')" name="rowCheck2" type="checkbox"
 								value="${msg.msg_no}"/></td>
@@ -197,7 +208,7 @@ ul.tabs li.active {
 							</td>
 							<td class="table_state"></td>
 							<td class="table_content">
-								<a href="#this" class="btn_content" data-msgno="${msg.msg_no}">
+								<a href="#this" class="btn_content" data-msgno="${msg.msg_no}" onclick="clickContent(this)">
 								${msg.content}
 								</a>
 							</td>
@@ -339,6 +350,75 @@ $(function(){
 		f.submit();  
 
 	});
+	
+	// 쪽지 삭제하기 
+	$('#btn_delete_msg').click(function(){
+		var active = document.getElementsByClassName("active");
+		var activeTab = active[0].innerHTML;
+
+		var chkObj;
+		if(activeTab == '받은쪽지'){
+			$('#delete_member').val("getter");
+			chkObj= document.getElementsByName("rowCheck1");
+		}else{
+			$('#delete_member').val("setter");
+			chkObj= document.getElementsByName("rowCheck2");
+		}
+		
+		var blank = 0;
+		for(var i = 0; i < chkObj.length; i++){
+			if(chkObj[i].checked == true){
+				$('#delete_msg').append('<input type="hidden" id="delete_msg_no" name="delete_msg_no" value="'+chkObj[i].value+'">');
+			}else{
+				blank++;
+			}
+		}// end for
+		
+		
+		// 삭제하기 실행
+		if(blank == chkObj.length){
+			alert('삭제할 쪽지를 선택하세요');
+		}else{
+			var f = document.getElementById('msg_delete_form');
+			f.submit();
+		}
+	});
+	
+	if ('${delete_result}' == 'success') {
+		alert('삭제가 완료되었습니다.');
+	} else if ('${delete_result}' == 'fail') {
+		alert('삭제가 실패되었습니다.');
+	}
+	
+	// 쪽지 보기
+	function clickContent(e){
+		var msg_no = $(e).attr('data-msgno');
+		$('#read_msg_no').val(msg_no);
+		
+		var active = document.getElementsByClassName("active");
+		var activeTab = active[0].innerHTML;
+
+		if(activeTab == '받은쪽지'){
+			$('#read_type').val("getter");
+		}else{
+			$('#read_type').val("setter");
+		}
+		
+		var f = document.getElementById('msg_read_form');
+		var popOption = "width=400, height=300, resizble=no, scrollbars=no, status=no";
+	
+		window.open('',"read_popup" ,popOption);
+		f.submit(); 
+		
+		if(activeTab == '받은쪽지'){
+		    setTimeout( function (){
+		    	window.location.reload(true);
+		    }, 2000);
+		}
+ 
+		
+	}
+
 </script>
 </body>
 </html>

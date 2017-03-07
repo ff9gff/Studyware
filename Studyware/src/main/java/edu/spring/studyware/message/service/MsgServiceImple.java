@@ -31,13 +31,33 @@ public class MsgServiceImple implements MsgService {
 	}
 
 	@Override
-	public int update(int msg_no) {
-		return msgDAO.update(msg_no);
+	public msgVO readRow(int msg_no) {
+		return msgDAO.selectRow(msg_no);
+	}
+	
+	@Override
+	public int updateState(int msg_no) {
+		return msgDAO.updateState(msg_no);
 	}
 
+	
 	@Override
-	public int delete(int msg_no) {
-		return msgDAO.delete(msg_no);
+	public int delete(String member, int msg_no) {
+		msgVO vo = msgDAO.selectRow(msg_no);
+		
+		if(member.equals("setter")){
+			if(vo.getRe_del()==1){
+				return msgDAO.delete(msg_no);
+			}else{
+				return msgDAO.deleteSe(msg_no);
+			}
+		}else{
+			if(vo.getSe_del()==1){
+				return msgDAO.delete(msg_no);
+			}else{
+				return msgDAO.deleteRe(msg_no);
+			}
+		}
 	}
 	
 	@Override
