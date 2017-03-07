@@ -369,10 +369,6 @@ font-size: 12px;
 </head>
 <body>
 
-
-<div id="overlay"></div>
-<div id="overlay2"><p style="margin-top: 400px;">- 마감된 여행입니다 -</p> </div>
-
 <div id="contextmenu" hidden>
 	<input hidden type="number" name="mno" id="context_mno"/>
 	<input hidden type="text" name="context_nickname" id="context_nickname"/>
@@ -399,9 +395,6 @@ font-size: 12px;
 	</table>
 </div>
 
-
-<!-- 회원가입/로그인 부분 -->
-
 	
 <div style="height: 150px;"></div>
 
@@ -414,7 +407,7 @@ font-size: 12px;
 	<input type="hidden" id="msg_address" name="msg_address" value="tour/toggle_msg"/>
 </form>
 
-<c:if test="${mno ne tourVO.mno && not empty login_id}">
+<c:if test="${member_no ne recruitVO.member_no && not empty id}">
 	<div id="joinmenu">
 		<p id="joinmenu_count">몇명이 참여중이다</p>
 		<button id="joinmenu_apply">신청하기</button>
@@ -430,13 +423,6 @@ font-size: 12px;
 	
 	</div>
 </div>
-<table id=content_condition>
-	<tr>
-		<td id="condition_date"><img src="../resources/theme/images/date.png" class="condition_img"/><div>??</div></td>
-		<td id="condition_sex"><img src="../resources/theme/images/date.png" class="condition_img"/></td>
-		<td id="condition_age"></td>
-	</tr>	
-</table>
 
 <c:if test="${member_no eq recruitVO.member_no}">
 	<div class="menu">Apply for</div>
@@ -458,14 +444,14 @@ font-size: 12px;
 	<div style="display: inline-block; float: right;">
 		<c:if test="${member_no eq recruitVO.member_no}">
 			<form action="TourBoardUpdateRequest" method="post" id="frm1" style="display: inline-block;">
-				<input type="hidden" name='trip_no' value='${tourVO.trip_no}'/>
+				<input type="hidden" name='recruit_no' value='${recruitVO.recruit_no}'/>
 				<input type="button" id='updateButton' class="content_btns" value='수정' />
 			</form>
 		</c:if>
 		
 		<c:if test="${member_no eq recruitVO.member_no or member_auth_no >= 2}" >
 			<form action="TourBoardDelete" method="post" id="frm2" style="display: inline-block;">
-				<input type="hidden" name='trip_no' value='${recruitVO.recruit_no}'/>
+				<input type="hidden" name='recruit' value='${recruitVO.recruit_no}'/>
 				<input type="button" id='deleteButton' class="content_btns" value='삭제' />
 			</form>
 		</c:if>
@@ -509,11 +495,11 @@ ${tourVO.content}
 <%-- 댓글 부분 script --%>
 <script>
 $(document).ready(function(){
-	var trip_no = ${tourVO.trip_no};
+	var recruit_no = ${recruitVO.recruit_no};
 
-	var sessionmno = '<%=(String)session.getAttribute("mno")%>';
-	var sessionaut= '<%=(String)session.getAttribute("authority")%>';
-	var sessionnick='<%=(String)session.getAttribute("login_nickname")%>';
+	var sessionmno = '<%=(String)session.getAttribute("member_no")%>';
+	var sessionaut= '<%=(String)session.getAttribute("member_auth_no")%>';
+	var sessionnick='<%=(String)session.getAttribute("nick")%>';
 	
 	<%-- 신청부분 --%>
 	// wm_tour_join 리스트
@@ -708,7 +694,7 @@ $(document).click(function(e){
 	} 
 });
 
-<c:if test="${not empty login_id}">
+<c:if test="${not empty id}">
 
 // 수락에서 - 닉네임 클릭시 메뉴 보이기
 $('#applicants').on('click','.apply_td .table_name .btn_nickname',function(){

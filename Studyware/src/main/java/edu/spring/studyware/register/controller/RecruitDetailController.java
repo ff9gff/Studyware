@@ -30,9 +30,9 @@ import edu.spring.studyware.register.service.TestLevelService;
 //테스트 후 삭제할 예정입니다.
 
 @Controller
-public class StudyDetailController {
+public class RecruitDetailController {
 
-	private static final Logger logger = LoggerFactory.getLogger(StudyDetailController.class);
+	private static final Logger logger = LoggerFactory.getLogger(RecruitDetailController.class);
 
 	@Autowired
 	private StudyCreateService studyCreateService;
