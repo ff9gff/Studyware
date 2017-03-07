@@ -370,7 +370,7 @@ font-size: 12px;
 <body>
 
 <div id="contextmenu" hidden>
-	<input hidden type="number" name="mno" id="context_mno"/>
+	<input hidden type="number" name="member_no" id="context_mno"/>
 	<input hidden type="text" name="context_nickname" id="context_nickname"/>
 	<input hidden type="number" name="listno" id="context_listno"/>
 	<input hidden type="text" id="context_type"/>
@@ -383,7 +383,7 @@ font-size: 12px;
 
 
 <div id="profilemenu" hidden>
-	<input hidden type="number" name="mno" id="profile_mno"/>
+	<input hidden type="number" name="member_no" id="profile_mno"/>
 	<table>
 		<tr>
 			<td rowspan="3" id="profile_image">프로필 사진</td>
@@ -399,8 +399,8 @@ font-size: 12px;
 <div style="height: 150px;"></div>
 
 <form id="msg_form" method="post" action="toggle_msg" target="msg">
-	<input type="hidden" id="msg_setter" name="msg_setter" value="${mno }"/>
-	<input type="hidden" id="msg_getter" name="msg_getter" value="${mno }"/>
+	<input type="hidden" id="msg_setter" name="msg_setter" value="${member_no }"/>
+	<input type="hidden" id="msg_getter" name="msg_getter" value="${member_no }"/>
 	<div id="msg_getterList">
 		<input type="hidden" id="msg_getnick" name="msg_getnick"/>
 	</div>
