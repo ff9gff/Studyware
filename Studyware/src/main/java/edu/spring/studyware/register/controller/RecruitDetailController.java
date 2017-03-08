@@ -140,7 +140,7 @@ public class RecruitDetailController {
 		
 		int updateRecruitResult = studyInfoService.updateRecruit(recruitVO);
 		
-		logger.info("리쿠르트 업데이트?: " + updateRecruitResult);
+		logger.info("업데이트3?: " + updateRecruitResult);
 		
 	}
 
