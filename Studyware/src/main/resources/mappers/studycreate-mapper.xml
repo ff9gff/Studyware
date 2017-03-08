@@ -37,7 +37,7 @@
 	</select>
 	
 	<!-- progress - 진행중인 스터디 검색 -->
-	<select id="selectProgressRecruit" resultType="edu.spring.studyware.domain.RecruitDTO">
+	<select id="selectRecruitProgress" resultType="edu.spring.studyware.domain.RecruitDTO">
 		select b.name_board, r.recruit_no, c.name_recruit_cate, t.name_recruit_type, r.member_no,
      			 r.num_now, r.num_max, r.region_no, r.level_no, r.recruit_title,
      			 r.recruit_content, r.recruit_date, r.reg_date, r.expire, r.hit
@@ -50,7 +50,7 @@
 	</select>
 	
 	<!-- progress - 신청중인 스터디 검색 -->
-	<select id="selectProgressApply" resultType="edu.spring.studyware.domain.ApplyVO">
+	<select id="selectApplyProgress" resultType="edu.spring.studyware.domain.ApplyVO">
 		select a.recruit_no, a.apply_no, a.member_no, a.level_no, a.content, a.reg_date, a.agree
 		from sw_apply a, sw_recruit r
 		where a.recruit_no = r.recruit_no

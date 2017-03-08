@@ -2,7 +2,9 @@ package edu.spring.studyware.register.persistance;
 
 import java.util.List;
 
+import edu.spring.studyware.domain.ApplyVO;
 import edu.spring.studyware.domain.RecruitCateVO;
+import edu.spring.studyware.domain.RecruitDTO;
 import edu.spring.studyware.domain.RecruitTypeVO;
 import edu.spring.studyware.domain.RecruitVO;
 
@@ -25,5 +27,11 @@ public interface StudyCreateDAO {
 
 	// 6. 메인화면 스터디 디테일 Test
 	public abstract List<RecruitVO> recruitDetail();
+	
+	// 7. 진행중인 모집 리스트 찾기
+	public abstract List<RecruitDTO> selectRecruitProgress(int member_no);
+	
+	// 8. 진행중인 신청 리스트 찾기
+	public abstract List<ApplyVO> selectApplyProgress(int member_no);
 
 }

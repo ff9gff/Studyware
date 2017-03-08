@@ -7,7 +7,10 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
+
+import edu.spring.studyware.domain.ApplyVO;
 import edu.spring.studyware.domain.RecruitCateVO;
+import edu.spring.studyware.domain.RecruitDTO;
 import edu.spring.studyware.domain.RecruitTypeVO;
 import edu.spring.studyware.domain.RecruitVO;
 import edu.spring.studyware.member.persistance.MemberDAOImpl;
@@ -52,5 +55,14 @@ public class StudyCreateDAOImpl implements StudyCreateDAO {
 		return sqlSession.selectList(NAMESPACE + ".defaultRecruitList");
 	}
 	
+	@Override
+	public List<RecruitDTO> selectRecruitProgress(int member_no) {
+		return sqlSession.selectList(NAMESPACE + ".selectRecruitProgress");
+	}
+	
+	@Override
+	public List<ApplyVO> selectApplyProgress(int member_no) {
+		return sqlSession.selectList(NAMESPACE + ".selectApplyProgress");
+	}
 
 }
