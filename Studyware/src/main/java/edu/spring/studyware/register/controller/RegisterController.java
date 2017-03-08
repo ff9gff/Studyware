@@ -62,7 +62,7 @@ public class RegisterController {
 		model.addAttribute("depth1List", depth1List);
 		model.addAttribute("levelList", levelList);
 
-		return "studyCreate/register_wr";
+		return "studyCreate/register_recruit";
 
 	}
 
@@ -179,7 +179,7 @@ public class RegisterController {
 		
 		model.addAttribute("recruitVO", recruitVO);
 
-		return "redirect:/studyCreate/register_re?recruit_no=" + recruit_no;
+		return "redirect:/studyCreate/register_detail?recruit_no=" + recruit_no;
 	}
 	
 	/////////////////////////////////////////////////////////////////////////////////////////////////////////////////

@@ -112,7 +112,7 @@
 			for(var i = 0; i < length; i++){
 		
 				list += '<div>'
-					  + '<a href="/studyware/studyCreate/register_re?recruit_no=' + DefaultRecruit[i].recruit_no + '">'
+					  + '<a href="/studyware/studyCreate/register_detail?recruit_no=' + DefaultRecruit[i].recruit_no + '">'
 					  + DefaultRecruit[i].recruit_title
 					  + '</a>'
 					  + '</div>';
