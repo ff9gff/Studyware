@@ -39,12 +39,17 @@ public class RecruitDetailController {
 
 	@Autowired
 	private StudyInfoService studyInfoService;
+	
+	@Autowired
+	private MemberService memberService;
+
+	// 테스트 종료 후 삭제!
+	@Autowired
+	private TestLevelService testLevelService;
 
 	// 1. 현재 등록된 모집글들 보여주기(select)
 	@RequestMapping(value = "/index/defaultRecruit", method = RequestMethod.GET)
 	public ResponseEntity<List<RecruitVO>> ajaxDetailStudyTest() {
-
-		logger.info("디폴트 리쿠르트 호출");
 
 		ResponseEntity<List<RecruitVO>> entity = null;
 
@@ -61,6 +66,7 @@ public class RecruitDetailController {
 		logger.info("entity " + entity.getBody());
 
 		return entity;
+		
 	}
 
 	///////////////////////////////////////////////////////////////////////////////////
@@ -86,13 +92,24 @@ public class RecruitDetailController {
 	// 2. 모집글 내용 수정
 	@RequestMapping(value = "studyCreate/updateRecruit", method = RequestMethod.POST)
 	public String updateRecruit(int recruit_no, Model model, HttpSession session) {
+		
+		logger.info("모집글 번호: " + recruit_no);
 
-		logger.info("모집글 수정");
-		logger.info("recruit_no: " + recruit_no);
+		RecruitVO recruitVO = studyInfoService.recruitInfo(recruit_no);
+		List<RecruitTypeVO> recruitTypeList = studyCreateService.recruitTypeName();
+		List<RecruitCateVO> recruitCateList = studyCreateService.recruitCateName();
+		List<Region1VO> depth1List = memberService.memberRegionDepth1();
+		List<LevelListVO> levelList = testLevelService.levelList();
 
-		// model.addAttribute("recruitVO", recruitVO);
+		logger.info("스터디등록");
 
-		return "studyCreate/register_update";
+		model.addAttribute("recruitTypeList", recruitTypeList);
+		model.addAttribute("recruitCateList", recruitCateList);
+		model.addAttribute("depth1List", depth1List);
+		model.addAttribute("levelList", levelList);
+		model.addAttribute("recruitVO", recruitVO);
+
+		return "studyCreate/recruit_update";
 
 	}
 
@@ -102,9 +119,7 @@ public class RecruitDetailController {
 	@RequestMapping(value = "studyCreate/deleteRecruit", method = RequestMethod.POST)
 	public String deleteRecruit(int recruit_no, Model model, HttpSession session) {
 
-		logger.info("모집글 삭제");
-
-		logger.info("recruit_no: " + recruit_no);
+		
 
 		return "redirect:/";
 	}
