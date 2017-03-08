@@ -47,7 +47,7 @@ public class RegisterController {
 	private TestLevelService testLevelService;
 
 	// 1. 스터디 등록 페이지로 이동
-	@RequestMapping(value = "studyCreate/register", method = RequestMethod.GET)
+	@RequestMapping(value = "/studyCreate/register", method = RequestMethod.GET)
 	public String studyRegister(Locale locale, Model model) {
 
 		List<RecruitTypeVO> recruitTypeList = studyCreateService.recruitTypeName();
@@ -62,11 +62,11 @@ public class RegisterController {
 		model.addAttribute("depth1List", depth1List);
 		model.addAttribute("levelList", levelList);
 
-		return "studyCreate/register_wr";
+		return "studyCreate/register_recruit";
 
 	}
 
-	///////////////////////////////////////////////////////////////////////////////////
+	/////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 	// 2. 스터디종류 내용을 이용해서 스터디종류 번호를 찾는다
 	@RequestMapping(value = "/studyCreate/studyCate", method = RequestMethod.POST)
@@ -87,7 +87,7 @@ public class RegisterController {
 
 	}
 
-	///////////////////////////////////////////////////////////////////////////////////
+	/////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 	// 3. 모집구분 내용을 이용해서 모집구분 번호를 찾는다
 	@RequestMapping(value = "/studyCreate/studyType", method = RequestMethod.POST)
@@ -108,7 +108,7 @@ public class RegisterController {
 
 	}
 
-	///////////////////////////////////////////////////////////////////////////////////
+	/////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 	// 2. 공부 내용 & 레벨 여러개 받기 연습
 	@RequestMapping(value = "/studyCreate/study_create", method = RequestMethod.POST)
@@ -179,7 +179,11 @@ public class RegisterController {
 		
 		model.addAttribute("recruitVO", recruitVO);
 
-		return "redirect:/studyCreate/register_re?recruit_no=" + recruit_no;
+		return "redirect:/studyCreate/register_detail?recruit_no=" + recruit_no;
 	}
+	
+	/////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+	
 
 }

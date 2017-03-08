@@ -27,6 +27,7 @@
 		<a href="search">검색</a>
 		<a href="msgbox?member_no=1">쪽지함</a>
 		<a href="studyCreate/register">스터디 등록</a>
+		<a href="studyCreate/quickOpen">바로개설</a>
 	</c:if>
 	
 	<br><br>	
@@ -111,7 +112,7 @@
 			for(var i = 0; i < length; i++){
 		
 				list += '<div>'
-					  + '<a href="/studyware/studyCreate/register_re?recruit_no=' + DefaultRecruit[i].recruit_no + '">'
+					  + '<a href="/studyware/studyCreate/register_detail?recruit_no=' + DefaultRecruit[i].recruit_no + '">'
 					  + DefaultRecruit[i].recruit_title
 					  + '</a>'
 					  + '</div>';
