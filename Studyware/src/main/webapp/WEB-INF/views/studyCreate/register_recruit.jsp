@@ -38,6 +38,8 @@
 						<input type="hidden" name="num_now" value="1" readonly="readonly" /> 
 						
 						<input type="hidden" name="num_max" value="5" readonly="readonly" /> 
+						
+						<input type="hidden" name="recruit_no" value="${recruitVO.recruit_no }" readonly="readonly" /> 
 												
 						<label for="recruitOption">모집 구분 <p style="color: red; display: inline;">(*)</p></label><br> 
 						<select id='recruitType' name='recruitType'>

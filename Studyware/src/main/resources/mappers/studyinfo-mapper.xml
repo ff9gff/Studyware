@@ -9,7 +9,105 @@
 	<select id="recruitInfo" resultType="edu.spring.studyware.domain.RecruitVO">
 		select * from sw_recruit where recruit_no = #{recruit_no}
 	</select>
-
 	
+	<!-- 공부수준 수정을 위해 공부수준 번호 / 레벨 번호를 가져온다 -->
+	<select id="selectLevelNameNo" resultType="Integer">
+		select level_name_no from sw_level where level_no = #{level_no}
+	</select>
+	<select id="selectLevelValueNo" resultType="Integer">
+		select level_value_no from sw_level where level_no = #{level_no}
+	</select>
+	
+	<!-- ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// -->
+	
+	<update id="updateLevelName1"> 
+		update sw_level_name
+		set level1_name = #{level1_name}
+		where level_name_no = #{level_name_no}
+	</update>
+	<update id="updateLevelValue1"> 
+		update sw_level_val
+		set level1_value = #{level1_value}
+		where level_value_no = #{level_value_no}
+	</update>
+	
+	<!-- ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// -->
+	
+	<update id="updateLevelName2"> 
+		update sw_level_name
+		set level1_name = #{level1_name}, level2_name = #{level2_name}
+		where level_name_no = #{level_name_no}
+	</update>
+	<update id="updateLevelValue2"> 
+		update sw_level_val
+		set level1_value = #{level1_value}, level2_value = #{level2_value}
+		where level_value_no = #{level_value_no}
+	</update>
+	
+	<!-- ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// -->
+	
+	<update id="updateLevelName3"> 
+		update sw_level_name
+		set level1_name = #{level1_name}, level2_name = #{level2_name}, level3_name = #{level3_name}
+		where level_name_no = #{level_name_no}
+	</update>
+	<update id="updateLevelValue3"> 
+		update sw_level_val
+		set level1_value = #{level1_value}, level2_value = #{level2_value}, level3_value = #{level3_value}
+		where level_value_no = #{level_value_no}
+	</update>
+	
+	<!-- ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// -->
+	
+	<update id="updateLevelName4"> 
+		update sw_level_name
+		set level1_name = #{level1_name}, level2_name = #{level2_name}, level3_name = #{level3_name}, level4_name = #{level4_name}
+		where level_name_no = #{level_name_no}
+	</update>
+	<update id="updateLevelValue4"> 
+		update sw_level_val
+		set level1_value = #{level1_value}, level2_value = #{level2_value}, level3_value = #{level3_value}, level4_value = #{level4_value}
+		where level_value_no = #{level_value_no}
+	</update>
+	
+	<!-- ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// -->
+	
+	<update id="updateLevelName5"> 
+		update sw_level_name
+		set level1_name = #{level1_name}, level2_name = #{level2_name}, level3_name = #{level3_name}, level4_name = #{level4_name}, level5_name = #{level5_name}
+		where level_name_no = #{level_name_no}
+	</update>
+	<update id="updateLevelValue5"> 
+		update sw_level_val
+		set level1_value = #{level1_value}, level2_value = #{level2_value}, level3_value = #{level3_value}, level4_value = #{level4_value}, level5_value = #{level5_value}
+		where level_value_no = #{level_value_no}
+	</update>
+	
+	<!-- ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// -->
+	
+	<update id="updateRecruit">
+		update sw_recruit
+		set recruit_cate_no = #{recruit_cate_no}, recruit_type_no = #{recruit_type_no}, num_now = #{num_now}, num_max = #{num_max}, region_no = #{region_no}, level_no = #{level_no}, recruit_title = #{recruit_title}, recruit_date = #{recruit_date}, recruit_content = #{recruit_content}
+		where recruit_no = #{recruit_no}
+	</update>
+	
+	<!-- ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// -->
+	
+	<delete id="deleteLevelName">
+		delete from sw_level_name
+		where level_name_no = #{level_name_no}
+	</delete>
+	<delete id="deleteLevelValue">
+		delete from sw_level_val
+		where level_value_no = #{level_value_no}
+	</delete>
+	<delete id="deleteLevel">
+		delete from sw_level
+		where level_no = #{level_no}
+	</delete>
+	<delete id="deleteRecruit">
+		delete from sw_recruit
+		where recruit_no = #{recruit_no}
+	</delete>
 	
 </mapper>

@@ -21,6 +21,9 @@ import edu.spring.studyware.domain.RecruitTypeVO;
 import edu.spring.studyware.domain.RecruitVO;
 import edu.spring.studyware.domain.Region1VO;
 import edu.spring.studyware.domain.LevelListVO;
+import edu.spring.studyware.domain.LevelNameVO;
+import edu.spring.studyware.domain.LevelVO;
+import edu.spring.studyware.domain.LevelValueVO;
 import edu.spring.studyware.member.service.MemberService;
 import edu.spring.studyware.register.service.StudyCreateService;
 import edu.spring.studyware.register.service.StudyInfoService;
@@ -39,7 +42,7 @@ public class RecruitDetailController {
 
 	@Autowired
 	private StudyInfoService studyInfoService;
-	
+
 	@Autowired
 	private MemberService memberService;
 
@@ -66,7 +69,7 @@ public class RecruitDetailController {
 		logger.info("entity " + entity.getBody());
 
 		return entity;
-		
+
 	}
 
 	///////////////////////////////////////////////////////////////////////////////////
@@ -89,10 +92,10 @@ public class RecruitDetailController {
 
 	///////////////////////////////////////////////////////////////////////////////////
 
-	// 2. 모집글 내용 수정
+	// 2. 모집글 내용 수정페이지 이동
 	@RequestMapping(value = "studyCreate/updateRecruit", method = RequestMethod.POST)
-	public String updateRecruit(int recruit_no, Model model, HttpSession session) {
-		
+	public String goUpdateRecruit(int recruit_no, Model model, HttpSession session) {
+
 		logger.info("모집글 번호: " + recruit_no);
 
 		RecruitVO recruitVO = studyInfoService.recruitInfo(recruit_no);
@@ -101,13 +104,12 @@ public class RecruitDetailController {
 		List<Region1VO> depth1List = memberService.memberRegionDepth1();
 		List<LevelListVO> levelList = testLevelService.levelList();
 
-		logger.info("스터디등록");
-
 		model.addAttribute("recruitTypeList", recruitTypeList);
 		model.addAttribute("recruitCateList", recruitCateList);
 		model.addAttribute("depth1List", depth1List);
 		model.addAttribute("levelList", levelList);
 		model.addAttribute("recruitVO", recruitVO);
+		model.addAttribute("recruit_no", recruit_no);
 
 		return "studyCreate/recruit_update";
 
@@ -115,13 +117,57 @@ public class RecruitDetailController {
 
 	///////////////////////////////////////////////////////////////////////////////////
 
-	// 3. 모집글 삭제
+	// 3. 모집글 수정
+	@RequestMapping(value = "studyCreate/recruit_update", method = RequestMethod.POST)
+	public void region3(Model model, RecruitVO recruitVO, LevelNameVO levelNameVO, LevelValueVO levelValueVO) {
+		logger.info("수정작업 호출: " + recruitVO.getLevel_no());
+
+		int level_name_no = studyInfoService.selectLevelNameNO(recruitVO.getLevel_no());
+		int level_value_no = studyInfoService.selectLevelValueNO(recruitVO.getLevel_no());
+
+		levelNameVO = new LevelNameVO(level_name_no, levelNameVO.getLevel1_name(), levelNameVO.getLevel2_name(),
+				levelNameVO.getLevel3_name(), levelNameVO.getLevel4_name(), levelNameVO.getLevel5_name());
+		levelValueVO = new LevelValueVO(level_value_no, levelValueVO.getLevel1_value(), levelValueVO.getLevel2_value(),
+				levelValueVO.getLevel3_value(), levelValueVO.getLevel4_value(), levelValueVO.getLevel5_value());
+
+		int levelNameUpdateResult = studyInfoService.updateLevelName(levelNameVO);
+		int levelValueUpdateResult = studyInfoService.updateLevelValue(levelValueVO);
+		
+		logger.info("업데이트1?: " + levelNameUpdateResult);
+		logger.info("업데이트2?: " + levelValueUpdateResult);
+
+		recruitVO = new RecruitVO(recruitVO.getBoard_name_no(), recruitVO.getRecruit_no(), recruitVO.getRecruit_cate_no(), recruitVO.getRecruit_type_no(), recruitVO.getMember_no(), recruitVO.getNum_now(), recruitVO.getNum_max(), recruitVO.getRegion_no(), recruitVO.getLevel_no(), recruitVO.getRecruit_title(), recruitVO.getRecruit_date(), recruitVO.getRecruit_content());
+		
+		int updateRecruitResult = studyInfoService.updateRecruit(recruitVO);
+		
+		logger.info("리쿠르트 업데이트?: " + updateRecruitResult);
+		
+	}
+
+	// 4. 모집글 삭제
 	@RequestMapping(value = "studyCreate/deleteRecruit", method = RequestMethod.POST)
 	public String deleteRecruit(int recruit_no, Model model, HttpSession session) {
-
 		
+		logger.info("삭제작업 호출: " + recruit_no);
+		RecruitVO recruitVO = studyInfoService.recruitInfo(recruit_no);
+		
+		// 1. 공부수준/레벨도 삭제해야 한다. level_no와 level_name_no, level_value_no를 찾아서 삭제한다.
+		int level_no = recruitVO.getLevel_no();
+		int level_name_no = studyInfoService.selectLevelNameNO(level_no);
+		int level_value_no = studyInfoService.selectLevelValueNO(level_no);
+		
+		int deleteLevelNameResult = studyInfoService.deleteLevelName(level_name_no);
+		int deleteLevelValueResult = studyInfoService.deleteLevelValue(level_value_no); 
+		int deleteLevelResult = studyInfoService.deleteLevel(level_no);
+		
+		
+		int deleteRecruitResult = studyInfoService.deleteRecruit(recruit_no);
+		
+		logger.info("삭제1: " + deleteLevelNameResult);
+		logger.info("삭제2: " + deleteLevelValueResult);
+		logger.info("삭제3: " + deleteLevelResult);
+		logger.info("삭제4: " + deleteRecruitResult);
 
 		return "redirect:/";
 	}
-
 }

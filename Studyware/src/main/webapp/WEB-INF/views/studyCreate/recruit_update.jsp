@@ -16,6 +16,10 @@
 <p>${ name } 님 방가워용.. 
 	회원번호: ${ member_no }
 	
+	${recruit_no}번 게시글입니다.
+	
+	${recruitVO.level_no}레벨입니다.
+	
 	<div style="text-align: center; vertical-align: middle; background-color: white; height: 100%">
 
 		<div style="display: inline-block; vertical-align: middle; background-color: white; width: 50%; height: 100%; text-align: center;">
@@ -38,6 +42,11 @@
 						<input type="hidden" name="num_now" value="1" readonly="readonly" /> 
 						
 						<input type="hidden" name="num_max" value="5" readonly="readonly" /> 
+						
+						<input type="hidden" name="recruit_no" value="${recruit_no	 }" readonly="readonly" /> 
+
+						<input type="hidden" name="level_no" value="${recruitVO.level_no }" readonly="readonly" /> 
+					
 												
 						<label for="recruitOption">모집 구분 <p style="color: red; display: inline;">(*)</p></label><br> 
 						<select id='recruitType' name='recruitType'>

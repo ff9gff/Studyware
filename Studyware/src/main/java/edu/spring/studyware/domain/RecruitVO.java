@@ -18,9 +18,9 @@ public class RecruitVO {
 	private Date reg_date;
 	private int expire;
 	private int hit;
-	
+
 	public RecruitVO() {
-		
+
 	}
 
 	public RecruitVO(int board_name_no, int recruit_cate_no, int recruit_type_no, int member_no, int num_now,
@@ -41,6 +41,24 @@ public class RecruitVO {
 		this.reg_date = reg_date;
 		this.expire = expire;
 		this.hit = hit;
+	}
+
+	public RecruitVO(int board_name_no, int recruit_no, int recruit_cate_no, int recruit_type_no, int member_no,
+			int num_now, int num_max, int region_no, int level_no, String recruit_title, String recruit_date,
+			String recruit_content) {
+		super();
+		this.board_name_no = board_name_no;
+		this.recruit_no = recruit_no;
+		this.recruit_cate_no = recruit_cate_no;
+		this.recruit_type_no = recruit_type_no;
+		this.member_no = member_no;
+		this.num_now = num_now;
+		this.num_max = num_max;
+		this.region_no = region_no;
+		this.level_no = level_no;
+		this.recruit_title = recruit_title;
+		this.recruit_date = recruit_date;
+		this.recruit_content = recruit_content;
 	}
 
 	public RecruitVO(int board_name_no, int recruit_no, int recruit_cate_no, int recruit_type_no, int member_no,
@@ -183,7 +201,7 @@ public class RecruitVO {
 	public void setHit(int hit) {
 		this.hit = hit;
 	}
-	
+
 	@Override
 	public String toString() {
 		return recruit_title;
