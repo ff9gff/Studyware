@@ -36,6 +36,27 @@
 		select level_name from sw_level_list
 	</select>
 	
+	<!-- progress - 진행중인 스터디 검색 -->
+	<select id="selectProgressRecruit" resultType="edu.spring.studyware.domain.RecruitDTO">
+		select b.name_board, r.recruit_no, c.name_recruit_cate, t.name_recruit_type, r.member_no,
+     			 r.num_now, r.num_max, r.region_no, r.level_no, r.recruit_title,
+     			 r.recruit_content, r.recruit_date, r.reg_date, r.expire, r.hit
+		from sw_board_name b, sw_recruit r, sw_recruit_cate c, sw_recruit_type t, sw_apply a
+		where b.board_name_no=r.board_name_no 
+     		 and c.recruit_cate_no = r.recruit_cate_no
+     		 and t.recruit_type_no = r.recruit_type_no
+    		 and a.recruit_no = r.recruit_no
+     		 and (r.member_no = #{member_no} or a.member_no = #{member_no});
+	</select>
+	
+	<!-- progress - 신청중인 스터디 검색 -->
+	<select id="selectProgressApply" resultType="edu.spring.studyware.domain.ApplyVO">
+		select a.recruit_no, a.apply_no, a.member_no, a.level_no, a.content, a.reg_date, a.agree
+		from sw_apply a, sw_recruit r
+		where a.recruit_no = r.recruit_no
+      			and (r.member_no = #{member_no} or a.member_no = #{member_no});
+	</select>
+	
 	<!-- 공부내용 1개 Insert. 동시에 level_name_no 가져옴 -->
 	<insert id="insertlevelName1" parameterType="LevelNameVO">
 		insert into sw_level_name (level1_name) 
