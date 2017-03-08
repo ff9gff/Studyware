@@ -1,6 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-    <%String data = (String)request.getParameter("data"); %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -8,20 +7,20 @@
 <title>Insert title here</title>
 </head>
 <body>
+<h1>마이페이지 메인</h1>
 
-<h2>진행중인 스터디</h2>
-<p>헤헿헿<%=data %></p>
+<button id="btn_progress">진행중인스터디</button>
+<div id="progress">
+	<jsp:include page="../studyCreate/progress.jsp" flush="false">
+		<jsp:param name="data" value="1"/>
+	</jsp:include>
+</div>
+
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
 <script>
-	var member_no =  '<%= (String)request.getParameter("data") %>'
-	
-		getProgressList();
-	
-	function getProgressList(){
-		var url = '/studyware/mypage/progress/all/'+member_no;
-		console.log(url);
-	}// end getProgressList()
+
 </script>
+
 </body>
 </html>
