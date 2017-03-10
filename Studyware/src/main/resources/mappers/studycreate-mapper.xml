@@ -46,7 +46,7 @@
      		 and c.recruit_cate_no = r.recruit_cate_no
      		 and t.recruit_type_no = r.recruit_type_no
     		 and a.recruit_no = r.recruit_no
-     		 and (r.member_no = #{member_no} or a.member_no = #{member_no});
+     		 and (r.member_no = #{member_no} or a.member_no = #{member_no})
 	</select>
 	
 	<!-- progress - 신청중인 스터디 검색 -->
@@ -54,7 +54,7 @@
 		select a.recruit_no, a.apply_no, a.member_no, a.level_no, a.content, a.reg_date, a.agree
 		from sw_apply a, sw_recruit r
 		where a.recruit_no = r.recruit_no
-      			and (r.member_no = #{member_no} or a.member_no = #{member_no});
+      			and (r.member_no = #{member_no} or a.member_no = #{member_no})
 	</select>
 	
 	<!-- 공부내용 1개 Insert. 동시에 level_name_no 가져옴 -->

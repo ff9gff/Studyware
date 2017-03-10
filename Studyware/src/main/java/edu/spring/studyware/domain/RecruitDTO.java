@@ -11,15 +11,17 @@ public class RecruitDTO {
 	private int num_now;
 	private int num_max;
 	private int region_no;
-	private int level_np;
+	private int level_no;
 	private String recruit_title;
 	private String recruit_content;
 	private Date recruit_date;
 	private Date reg_date;
 	private int expire;
 	private int hit;
+	
+	public RecruitDTO(){}
 	public RecruitDTO(String name_board, int recruit_no, String name_recruit_cate, String name_recruit_type,
-			int member_no, int num_now, int num_max, int region_no, int level_np, String recruit_title,
+			int member_no, int num_now, int num_max, int region_no, int level_no, String recruit_title,
 			String recruit_content, Date recruit_date, Date reg_date, int expire, int hit) {
 		super();
 		this.name_board = name_board;
@@ -30,7 +32,7 @@ public class RecruitDTO {
 		this.num_now = num_now;
 		this.num_max = num_max;
 		this.region_no = region_no;
-		this.level_np = level_np;
+		this.level_no = level_no;
 		this.recruit_title = recruit_title;
 		this.recruit_content = recruit_content;
 		this.recruit_date = recruit_date;
@@ -86,11 +88,11 @@ public class RecruitDTO {
 	public void setRegion_no(int region_no) {
 		this.region_no = region_no;
 	}
-	public int getLevel_np() {
-		return level_np;
+	public int getLevel_no() {
+		return level_no;
 	}
-	public void setLevel_np(int level_np) {
-		this.level_np = level_np;
+	public void setLevel_no(int level_no) {
+		this.level_no = level_no;
 	}
 	public String getRecruit_title() {
 		return recruit_title;
@@ -129,5 +131,7 @@ public class RecruitDTO {
 		this.hit = hit;
 	}
 	
+	
+
 	
 }

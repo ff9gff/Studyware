@@ -10,6 +10,9 @@ public class ApplyVO {
 	private String content;
 	private Date reg_date;
 	private int agree;
+	
+	public ApplyVO(){}
+	
 	public ApplyVO(int recruit_no, int apply_no, int member_no, int level_no, String content, Date reg_date,
 			int agree) {
 		super();

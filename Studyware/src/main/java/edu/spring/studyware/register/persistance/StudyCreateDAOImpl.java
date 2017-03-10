@@ -57,12 +57,13 @@ public class StudyCreateDAOImpl implements StudyCreateDAO {
 	
 	@Override
 	public List<RecruitDTO> selectRecruitProgress(int member_no) {
-		return sqlSession.selectList(NAMESPACE + ".selectRecruitProgress");
+		System.out.println("studyCreate Service: "+member_no);
+		return sqlSession.selectList(NAMESPACE + ".selectRecruitProgress",member_no);
 	}
 	
 	@Override
 	public List<ApplyVO> selectApplyProgress(int member_no) {
-		return sqlSession.selectList(NAMESPACE + ".selectApplyProgress");
+		return sqlSession.selectList(NAMESPACE + ".selectApplyProgress",member_no);
 	}
 
 }
